@@ -66,9 +66,7 @@ The framework source tree remains the source of truth for the implementation. Th
 \index{C++20@C++20}
 
 
-SNode.C is a modern C++ framework.
-
-The build system expects CMake and a C++20-capable compiler. The top-level build requires CMake 3.18 or newer, and the `src` build configures the project as C++20.
+SNode.C is a modern C++ framework. The build system expects CMake and a C++20-capable compiler. The top-level build requires CMake 3.18 or newer, and the `src` build configures the project as C++20.
 
 The build’s minimum accepted versions are GCC 12.2 and Clang 13.0. These configuration checks are not a promise that every newer compiler builds the framework. This edition’s hosted CI verifies GCC 13.3.0 and Clang 18.1.3. Clang 21 currently fails the framework build under `-Werror`, with `-Wnrvo` in `src/tools/snodec-control/src/ConfigActions.cpp:296`; that compatibility issue is a framework follow-up.
 
@@ -108,9 +106,7 @@ Optional libraries unlock additional framework areas:
 sudo apt install libbluetooth-dev libmagic-dev libmariadb-dev libasio-dev
 ```
 
-`libbluetooth-dev` is relevant for Bluetooth RFCOMM and Bluetooth L2CAP. `libmagic-dev` is relevant where file-type or content-type detection is used.
-
-`libmariadb-dev` is relevant for MariaDB support. `libasio-dev` is optional (Chapter 1 comparison lab).
+`libbluetooth-dev` is relevant for Bluetooth RFCOMM and Bluetooth L2CAP. `libmagic-dev` is relevant where file-type or content-type detection is used. `libmariadb-dev` is relevant for MariaDB support. `libasio-dev` is optional (Chapter 1 comparison lab).
 
 Additional developer tools are useful later, especially during maintenance and review:
 

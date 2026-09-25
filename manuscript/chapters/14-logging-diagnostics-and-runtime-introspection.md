@@ -129,7 +129,7 @@ void MeasurementContext::onConnected() {
 }
 ```
 
-`MeasurementContext` stands for the application’s derived context. `log()` contributes application-origin meaning; `frameworkLog()` supplies framework-origin context diagnostics. Their return type is lower-level, not `snode::log::Logger`: do not mix level enums or error-method names. Use the facade for its `event(...)`, `systemError(...)` or `Level`; use the inherited helper for ordinary context-scoped severity calls. Some protocol-specific helpers are private, so use only documented public or inherited surfaces.
+`MeasurementContext` stands for the application’s derived context. `log()` contributes application-origin meaning; `frameworkLog()` supplies framework-origin context diagnostics. The inherited helpers return a lower-level type rather than `snode::log::Logger`. Its level enums and error-method names are not interchangeable with those of the facade. Use the facade when calling `event(...)` or `systemError(...)`, or when supplying its `Level` enum. Use the inherited helper for ordinary context-scoped severity calls. Some protocol-specific helpers are private, so use only documented public or inherited surfaces.
 
 ::: {.snodec-rule title="Diagnostic responsibility rule"}
 Log from the boundary that owns the meaning, and preserve the identity that the boundary already knows.
@@ -222,15 +222,15 @@ A normal SNode.C application exposes this policy through its existing root confi
 
 The MQTT instance still needs endpoint configuration; logging options do not supply it.
 
-The scoped options are `--log-origin-level`, `--log-boundary-level`, `--log-component-level`, and `--log-instance-level`. Their values use `name=level` pairs; lists can contain comma-separated pairs. Named levels are suitable for these scoped pairs. Use numeric global `--log-level` values (`0` off, `1` critical, `2` error, `3` warn, `4` info, `5` debug, `6` trace). Startup can convert the global value before named-level normalization; numeric spelling avoids that ordering issue.
+The scoped options are `--log-origin-level`, `--log-boundary-level`, `--log-component-level`, and `--log-instance-level`. Their values use `name=level` pairs. A list can contain several pairs separated by commas. Named levels are suitable for these scoped pairs. Use numeric global `--log-level` values (`0` off, `1` critical, `2` error, `3` warn, `4` info, `5` debug, `6` trace). Startup can convert the global value before named-level normalization; numeric spelling avoids that ordering issue.
 
-Use the narrowest scope; global trace can obscure relevant records and change timing.
+Use the narrowest scope that answers the diagnostic question. Global trace can obscure relevant records and change timing.
 
-Standalone logger programs can call `configure(Settings)` for thresholds, output format, color, quiet mode, files and semantic overrides. A normal SNode.C service instead gets its policy through `core::SNodeC::init(...)` and runtime bootstrap. Do not overlay an unrelated `configure(Settings)` and expect merging: it initializes and freezes its own policy, not a live per-record adjustment.
+Standalone logger programs can call `configure(Settings)` for thresholds, output format, color, quiet mode, files and semantic overrides. A normal SNode.C service instead gets its policy through `core::SNodeC::init(...)` and runtime bootstrap. Do not overlay an unrelated `configure(Settings)` call and expect its settings to merge with runtime policy. That call initializes and freezes its own policy. It does not adjust policy separately for each live record.
 
-Normal services defer records while configuration is being assembled. Successful startup emits those pending records and starts one logging worker; a failed bootstrap discards them. Cleanup also starts delivery if the runtime was initialized without entering `start()`. Once the worker runs, returning from a log call means the record was submitted, not that its output is already visible. Wait for the record or for orderly process completion when checking a log; do not infer delivery from an unrelated callback finishing.
+Normal services defer records while configuration is being assembled. Successful startup emits those pending records and starts one logging worker. A failed bootstrap discards the pending records. Cleanup also starts delivery if the runtime was initialized without entering `start()`. Once the worker runs, returning from a log call means the record was submitted, not that its output is already visible. When checking a log, wait for the record or for orderly process completion. An unrelated callback can finish while the log record is still pending.
 
-Runtime `reconfigure()` from Chapter 13 also preserves bootstrap logging. Parsed `log-level` or `log-format` changes need not affect emitted records; use a controlled restart to change deployment logging. Create long-lived facade loggers after policy establishment because they capture an effective threshold. Framework-owned scopes manage their own lifecycle and generation-aware caches; application code should not manage those generations.
+Runtime `reconfigure()` from Chapter 13 also preserves bootstrap logging. Parsed `log-level` or `log-format` changes need not affect emitted records. Use a controlled restart to change deployment logging. Create long-lived facade loggers after policy establishment because they capture an effective threshold. Framework-owned scopes manage their own lifecycle and generation-aware caches. Application code should leave those generations to the framework.
 
 ### A complete public-API example
 
@@ -290,7 +290,7 @@ log.hexDump(snode::log::Level::Trace, "Received payload", payload);
 
 This fragment uses `<string_view>` beside the public logging header and an already constructed logger. The resulting record retains that logger's scope. Its message contains the label, total byte count, and sixteen-byte rows with offsets, hexadecimal bytes, and a printable-ASCII column. Empty input produces a zero-byte heading without a data row. The operation does not truncate a large payload or adapt it to the terminal width.
 
-The scope and observed bytes remain the same across plain file/JSON output and policy-colored terminal output. MQTT and WebSocket use the shared dump operation through their internal scopes. The renderer belongs to the logging library; the utility library retains its dependency on that library. Applications need not assemble a second colored dump. Enabled large dumps copy the bytes before returning and need a confidentiality decision. After asynchronous logging starts, the logging worker formats and writes them; copying and queue submission still cost time on the caller. A full queue can block submission.
+The scope and observed bytes remain the same across plain file/JSON output and policy-colored terminal output. MQTT and WebSocket use the shared dump operation through their internal scopes. The renderer belongs to the logging library, and the utility library depends on it. Applications need not assemble a second colored dump. An enabled large dump copies the bytes before returning. Decide whether those bytes are appropriate to disclose in diagnostics. After asynchronous logging starts, the logging worker formats and writes the dump. Copying and queue submission still take time on the caller. A full queue can block submission.
 
 \index{logging!disabled paths}
 \index{logging!sensitive data}

@@ -298,7 +298,7 @@ An operator still chooses runtime settings for each deployment. Compiled policy 
 \index{SNODEC_ENABLE_ASAN@\texttt{SNODEC\_ENABLE\_ASAN}}
 \index{installed-consumer tests}
 
-The top-level build now distinguishes framework tests from demonstration applications.
+The top-level build distinguishes framework tests from demonstration applications.
 
 `SNODEC_BUILD_TESTS` defaults to `OFF`; enabling it registers the CTest suite below `tests/`. `SNODEC_BUILD_APPS` defaults to `ON` and controls `src/apps`. Neither switch should be inferred from the presence of an executable left in an old build directory.
 

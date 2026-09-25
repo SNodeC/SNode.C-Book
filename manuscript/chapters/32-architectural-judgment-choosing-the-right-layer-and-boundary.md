@@ -234,7 +234,7 @@ Keep meaning visible until the layer, role, or operational surface that owns it 
 
 Do not push meaning downward merely because a lower callback sees an event first. Do not push it upward merely because a global object can reach everything. Place the concern where its lifetime, audience, failure consequence, and diagnostic needs are all visible.
 
-The current flow API provides another concrete boundary test. Two explicit connect calls create flows with independent cancellation while still sharing one endpoint configuration. If the application needs different destinations, credentials, or operational names, create separate instances. If it needs two attempts governed by the same endpoint policy, retain the two flow handles. The right distinction is the ownership of policy, not the number of C++ variables in the calling function.
+The flow API makes this closing principle concrete: keep endpoint policy with its owner while controlling each activation separately. It provides another boundary test. Two explicit connect calls create flows with independent cancellation while still sharing one endpoint configuration. If the application needs different destinations, credentials, or operational names, create separate instances. If it needs two attempts governed by the same endpoint policy, retain the two flow handles. The right distinction is the ownership of policy, not the number of C++ variables in the calling function.
 
 The epilogue gathers the principles behind these decisions. Appendix A then applies the same judgment to framework extension, following a public type inward while keeping responsibility, lifetime and operational consequences explicit.
 

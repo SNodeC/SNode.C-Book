@@ -27,7 +27,7 @@ Keep Chapter 4's runtime model beside this configuration story. The named instan
 \index{configuration!command line}
 \index{configuration!file}
 
-`echoserver.local.port` starts at the C++ default 8080, takes 18091 from the selected file, and becomes 18092 when the command line overrides that file. These inputs feed one option in the hierarchy. More generally, C++ supplies defaults, files persist deployment choices, and command lines supply invocation-specific overrides and inspection actions. The handle exposes the configuration object directly.
+Three inputs can select the port. For `echoserver.local.port`, C++ supplies 8080, the selected file supplies 18091, and a command-line override selects 18092. These inputs feed one option in the hierarchy. More generally, C++ supplies defaults, files persist deployment choices, and command lines supply invocation-specific overrides and inspection actions. The handle exposes the configuration object directly.
 
 For an IPv4 server, a minimal example may look like:
 
@@ -110,7 +110,7 @@ The current per-call flow model makes the configuration boundary particularly im
 
 ### Named instances as configuration addresses
 
-The key `echoserver.local.port` addresses the named instance created by the entry point; its 18091 file value belongs to that listener. The executable name alone would not identify which listener to configure in an application with several inputs.
+An operator needs to identify the listener before changing its port. The key `echoserver.local.port` addresses the named instance created by the entry point; its 18091 file value belongs to that listener. The executable name alone would not identify which listener to configure in an application with several inputs.
 
 \index{named instances}
 \index{configuration addresses}
@@ -204,7 +204,7 @@ The following section locates these choices in the hierarchy. The echo experimen
 
 ### Application and instance configuration {#application-and-instance-configuration-in-detail}
 
-For our running value, `echoserver.local.port = 18092` belongs to the named listener’s local endpoint. A process-wide logging option belongs elsewhere in the tree. Keeping those scopes explicit lets an operator change diagnostics without confusing them with where the server listens.
+Scope tells the operator what a setting can change. Our running value, `echoserver.local.port = 18092`, belongs to the named listener’s local endpoint. A process-wide logging option belongs elsewhere in the tree. Keeping those scopes explicit lets an operator change diagnostics without confusing them with where the server listens.
 
 \index{application configuration}
 \index{instance configuration}
@@ -269,7 +269,7 @@ Treat such a rename as an application-interface change, even when the C++ progra
 
 ### Section configuration: scoped responsibilities
 
-For `echoserver`, 18092 belongs in `local.port`: it selects where this server listens. The `local` section describes the server’s own endpoint; placing that value in a client’s `remote` section would instead select its destination. Section names preserve which endpoint the operator intends to change.
+Read the section name before the value: `echoserver` listens at the endpoint selected by `local.port`, here 18092. The `local` section describes the server’s own endpoint; placing that value in a client’s `remote` section would instead select its destination. Section names preserve which endpoint the operator intends to change.
 
 \index{section configuration}
 \index{local section}
@@ -390,7 +390,7 @@ On the command line, the hierarchy becomes a path:
 echoserver echoserver local --port 8080
 ```
 
-This traverses the `echoserver` instance’s `local` section to set its `port`. Help follows the same path:
+This traverses the `echoserver` instance’s `local` section to set its `port`. Revisit the earlier help walk to inspect that same path at each level:
 
 ```sh
 echoserver --help
@@ -443,7 +443,7 @@ The operation reparses the existing root hierarchy using the original arguments 
 
 A successful reparse is therefore only one step in a live configuration change. The application still decides whether to end a flow, let a connection drain, construct a replacement endpoint handle, or defer the new setting until a later activation. A deployment file alone cannot specify the correct lifetime transition. When configuration must change atomically, validating a replacement before a controlled process restart can be clearer than editing the live tree.
 
-In a configuration file, the same hierarchy becomes a dotted key:
+Revisit the earlier dotted-key file example after the command-line and reparse steps. In a configuration file, the same hierarchy becomes a dotted key:
 
 ```ini
 echoserver.local.port = 18091
@@ -478,7 +478,7 @@ The experiment observes startup parsing. To study a runtime reparse, use an appl
 \index{progressive disclosure}
 \index{parameterless activation}
 
-The required-value walk above explains why these calls can omit addresses:
+Return to the parameterless activation calls from the required-value walk above. The inspection experiment explains why these same calls can omit addresses:
 
 ```cpp
 echoServer.listen(onStatus);
@@ -527,7 +527,7 @@ Files primarily describe durable choices. A CLI invocation can both override tho
 
 ### Structured discovery and snodec-control
 
-Help located `echoserver.local.port`; structured discovery lets a tool locate that same option and inspect its metadata. A preview of 18092 still needs target validation and a successful listen before it demonstrates a running endpoint.
+A tool needs a navigable description of the option. Structured discovery locates `echoserver.local.port` and exposes its metadata, just as help located it for the operator. A preview of 18092 still needs target validation and a successful listen before it demonstrates a running endpoint.
 
 \index{snodec-control@\texttt{snodec-control}}
 \index{configuration!comment metadata}
@@ -555,7 +555,7 @@ The last command is a preview, not a connection attempt. Use the discovered opti
 
 An optional Curses interface is available with `--ui` when built with that support. The noninteractive operations remain useful without it. The tool's own build/test choices are separate from the framework test switch; its README documents `SNODEC_CONTROL_BUILD_TUI` and `SNODEC_CONTROL_BUILD_TESTS`.
 
-The root configuration now exposes semantic logging format and overrides by origin, boundary, component, and instance. A named communication instance also carries its connection resource policy, and HTTP/WebSocket instances add their protocol-specific limits.
+The root configuration exposes semantic logging format and overrides by origin, boundary, component, and instance. A named communication instance also carries its connection resource policy, and HTTP/WebSocket instances add their protocol-specific limits.
 
 Logging options belong at application scope; connection and protocol limits belong to their named instances.
 

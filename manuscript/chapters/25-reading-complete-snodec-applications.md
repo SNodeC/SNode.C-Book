@@ -268,7 +268,7 @@ These views should not be collapsed. An in-tree application can use the reposito
 
 A useful route is to read an application's entry point, inspect its include and link surfaces, and then locate the test boundary that would catch a regression in the behavior being studied. For a stream application, that may be a payload-reconstruction or disconnect-lifecycle test. For an HTTP application, it may be a parser, middleware, or installed-module check. Chapter 29 develops that test taxonomy in detail.
 
-The repository also contains design notes under `docs/` and operational tooling under `src/tools/`. Those are useful companions to source reading, but a historical migration report should not override the current header or implementation. The current public logging entry point is `<Log.h>`; the source excerpts in this chapter use that surface rather than a removed macro interface.
+The repository also contains design notes under `docs/` and operational tooling under `src/tools/`. Those are useful companions to source reading, but a historical migration report should not override the current header or implementation. The public logging entry point is `<Log.h>`. The source excerpts in this chapter use that facade; replacing it with a separate macro interface would obscure the public API being taught.
 
 \index{application reading workflow}
 \index{composition depth}

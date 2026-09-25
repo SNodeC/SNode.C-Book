@@ -50,7 +50,7 @@ Use these names consistently across code, configuration, logs and operation. Whe
 
 Administration, broker integration, local control and streaming observation need distinct policies even when they share a process.
 
-Packaging is an operational decision. Neither one binary nor many services is automatically better; compare the required lifetimes, permissions and failure domains.
+Chapter 23 compared protocol boundaries within an IoT application. Here that comparison extends to executable and deployment boundaries. Packaging is an operational decision. Neither one binary nor many services is automatically better; compare the required lifetimes, permissions and failure domains.
 
 | Choose one executable when... | Choose several executables when... |
 |---|---|
@@ -103,7 +103,7 @@ Apply Chapter 24 by naming the state owner, its readers and writers, its observe
 \index{diagnostics}
 \index{failure behavior}
 
-Configuration, diagnostics and failure behavior expose how the roles operate together.
+Return to Chapter 23’s placement of protocol responsibilities. At system scale, configuration, diagnostics and failure behavior also expose how independently operated roles work together.
 
 Chapter 13 introduced named instances and structured configuration. At system scale, those ideas become a role map. The following pseudo-configuration shows how names can make role boundaries visible; syntax is not the point.
 
@@ -334,7 +334,7 @@ Use `SNodeC/mqttsuite` master HEAD to follow one selected publication. Start at 
 
 For the bridge, identify source selection, destination selection, topic-prefix behavior, and loop policy before attempting a two-broker experiment. Its configured loop-prevention value is passed to MQTT CONNECT; Chapter 21 explains why the private protocol-level extension must not be assumed interoperable with every broker.
 
-For the store, identify the raw insert and each matching projection insert, then locate their success and error callbacks. `MariaDbStorage::store` submits the raw insert and calls `storeProjections` without waiting for that insert’s success callback; submission order is not proof of a committed raw row. Write down what observation would establish each outcome. A database row, a projection row, and broker delivery are three separate facts.
+For the store, identify the raw insert and each matching projection insert, then locate their success and error callbacks. `MariaDbStorage::store` submits the raw insert and calls `storeProjections` without waiting for that insert’s success callback; the raw insert can still fail after projection submission. Write down what observation would establish each outcome. A database row, a projection row, and broker delivery are three separate facts.
 
 A bounded deployment exercise can use a unique topic prefix and a fixed sequence of ten publications, with an independent subscriber and database query as observers. Stop one destination and predict which other observations should continue. Running that exercise requires configured broker and database services.
 

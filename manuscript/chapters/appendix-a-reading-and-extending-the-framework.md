@@ -304,7 +304,7 @@ Examples name the event and consequence:
 | `live-events` | Observer disconnected; output no longer connected |
 | `measurement-store` | Database unavailable; entering degraded mode |
 
-The semantic logger now carries the origin, boundary, component, and optional runtime identity explicitly. A new application feature should use the public `<Log.h>` facade or an appropriate inherited context helper instead of rebuilding that identity inside every English message. Framework-owned helpers may be private; their names do not make them extension APIs.
+The semantic logger carries the origin, boundary, component, and optional runtime identity explicitly. A new application feature should use the public `<Log.h>` facade or an appropriate inherited context helper instead of rebuilding that identity inside every English message. Framework-owned helpers may be private; their names do not make them extension APIs.
 
 Keep the event claim as precise as the control path. Queue admission is not delivery, a connection attempt is not an established session, and a context switch is not necessarily a peer disconnect. Chapter 14 explains how those distinctions survive text and JSON output. An extension should preserve them when it adds its own diagnostics.
 
@@ -338,7 +338,7 @@ Before editing, name the changed concern, its owner and scope, the layer it must
 
 Use the questions as an exercise on the Chapter 31 parser: suppose the local producer needs its own sample number retained alongside the gateway sequence. Identify the domain field, CSV and JSON representation changes, accepted-state behavior, and observer assertions before editing. Then compare this with adding a second input network family. The first changes the shared application contract; the second can preserve it. A useful answer names both the files that must change and the existing behavior that the tests must continue to protect.
 
-For a flow-related extension, preserve the current invariant explicitly: one public activation call creates one controller, automatic recovery stays within that controller, and termination does not restart it. The shared endpoint configuration and connection identity allocation remain shared across its flows. Test cancellation of one flow beside a surviving sibling, and distinguish termination from final controller destruction. The current `InetPerCallFlowTest` is the relevant composed regression boundary; an old singleton-controller sketch would be the wrong foundation for this extension.
+For a flow-related extension, preserve the current invariant explicitly: one public activation call creates one controller, automatic recovery stays within that controller, and termination does not restart it. The shared endpoint configuration and connection identity allocation remain shared across its flows. Test cancellation of one flow beside a surviving sibling, and distinguish termination from final controller destruction. `InetPerCallFlowTest` exercises this composed regression boundary. A singleton controller shared by explicit activations would violate the independent-flow invariant and is the wrong foundation for this extension.
 
 ::: {.snodec-remember title="What to remember"}
 - Read SNode.C as a set of layers and recurring roles, not as a flat pile of source files.

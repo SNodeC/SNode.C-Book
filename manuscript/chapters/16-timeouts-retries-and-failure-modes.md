@@ -260,7 +260,7 @@ Diagnose the phase and its policy together. The flow controller owns activation-
 
 Timeouts bound waiting in time. Queue policy bounds how much pending output one connection can retain while the peer is slower than the producer.
 
-SNode.C now exposes that policy in the instance's existing `connection` section:
+SNode.C exposes that policy in the instance's `connection` section:
 
 | Option | Meaning |
 |---|---|

@@ -111,9 +111,7 @@ It should not blindly drain input and postpone all meaning indefinitely.
 
 The return value matters. It contributes to the framework's accounting of input processed by the context. In the line example below, bytes copied into the context's receive buffer count as consumed from the connection even when they do not yet form a complete command. This counter therefore does not count successfully interpreted messages. A protocol that needs a completed-command count must define that observation separately.
 
-The base context interface also requires explicit handling for signals and read/write errors.
-
-This does not mean every example must build an elaborate signal or error policy. It does mean the context author should not pretend those events do not exist.
+The base context interface also requires explicit handling for signals and read/write errors. This does not mean every example must build an elaborate signal or error policy. It does mean the context author should not pretend those events do not exist.
 
 A small teaching example may keep these hooks minimal. A real protocol may use them to close a connection, record diagnostics, reject invalid state, or translate lower-level problems into protocol-level decisions.
 
@@ -367,7 +365,7 @@ If those questions are hard to answer, the context may be too implicit, too stat
 
 ### Explicit queue admission without a second transport
 
-The stream context now exposes `trySendToPeer(...)` in addition to the existing void send surface. Its `QueueResult` reports whether the whole input was queued, would exceed the configured connection limit, encountered a closed writer, or arrived during write shutdown.
+The stream context exposes both `trySendToPeer(...)` and the void `sendToPeer(...)` surface. Its `QueueResult` reports whether the whole input was queued, would exceed the configured connection limit, encountered a closed writer, or arrived during write shutdown.
 
 This adds a decision point for protocol code without transferring queue mechanics into the protocol. A context can choose to defer or reject an application operation when admission fails. It should not report success for bytes that were not accepted, nor build an unbounded shadow queue that defeats the connection's limit.
 

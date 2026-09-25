@@ -108,7 +108,7 @@ and the corresponding client types.
 
 The selected namespace and component change the endpoint semantics and platform requirements.
 
-The endpoint identity changes with the network family.
+The endpoint identity changes with the network family. Revisit Chapter 5’s identity table here to identify what changes when the protocol moves:
 
 | Network family | Endpoint identity |
 |---|---|
@@ -141,7 +141,9 @@ The complete Chapter 3 listing supplies these snippets, repeated here to show th
 The protocol behavior lives in one context type:
 
 ```cpp
-EchoSocketContext::EchoSocketContext(SocketConnection* socketConnection, Role role)
+EchoSocketContext::EchoSocketContext(
+    core::socket::stream::SocketConnection *socketConnection, Role role)
+    : core::socket::stream::SocketContext(socketConnection), role(role) {}
 ```
 
 The server/client selector is stored in the context.
@@ -157,13 +159,16 @@ if (role == Role::CLIENT) {
 When data arrives, the context reads a chunk, sends the same bytes back, and reports the processed amount:
 
 ```cpp
-const std::size_t chunklen = readFromPeer(chunk, 4096);
+char chunk[4096];
 
-if (chunklen > 0) {
-    sendToPeer(chunk, chunklen);
+const std::size_t chunkLen = readFromPeer(chunk, sizeof(chunk));
+
+if (chunkLen > 0) {
+    log().debug() << "Data to reflect: " << std::string(chunk, chunkLen);
+    sendToPeer(chunk, chunkLen);
 }
 
-return chunklen;
+return chunkLen;
 ```
 
 The factories then create side-specific contexts:

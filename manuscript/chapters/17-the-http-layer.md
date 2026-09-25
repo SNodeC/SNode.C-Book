@@ -266,7 +266,7 @@ EventSource keeps the HTTP response open for event-stream records. Chapter 19 de
 \index{ParserLimits@\texttt{ParserLimits}}
 \index{HttpServerPolicy@\texttt{HttpServerPolicy}}
 
-HTTP parsing now receives a shared `ParserLimits` snapshot from configuration. Both server request parsing and ordinary client response parsing use the nested `http.parser` policy.
+HTTP parsing receives a shared `ParserLimits` snapshot from configuration. Both server request parsing and ordinary client response parsing use the nested `http.parser` policy.
 
 The options bound start-line bytes, header-line bytes, the complete header section, header-field count, and decoded body bytes. The default header-line limit remains `8192`; the other maximums default to `0`, meaning unlimited. These compatibility defaults should not be confused with a deployment-specific resource budget.
 

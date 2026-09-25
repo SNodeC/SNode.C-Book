@@ -409,13 +409,9 @@ Persistence changes failure thinking. A system may be partially healthy:
 
 A database failure is not always an application failure. It may mean stop accepting certain operations, keep reading but stop writing, buffer with limits, drop non-critical values, show degraded status, retry later, or fail fast for administrative operations.
 
-The MariaDB API exposes state and errors. The application must decide the policy.
+The MariaDB API exposes state and errors. The application must decide the policy. Chapter 16’s vocabulary still applies: timeout, retry, shutdown, failure state, and degraded behavior must be decided at the boundary that owns the failing work.
 
-Chapter 16’s vocabulary still applies: timeout, retry, shutdown, failure state, and degraded behavior must be decided at the boundary that owns the failing work.
-
-When incoming protocol activity is faster than database completion, pending command sequences accumulate. Event integration keeps other callbacks runnable; it does not bound that queue for the application.
-
-This is a system-design problem. The application needs a policy.
+When incoming protocol activity is faster than database completion, pending command sequences accumulate. Event integration keeps other callbacks runnable; it does not bound that queue for the application. This is a system-design problem. The application needs a policy.
 
 | Policy | Meaning |
 |---|---|

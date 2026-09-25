@@ -349,7 +349,7 @@ namespace minigateway {
 #endif // MINIGATEWAY_MEASUREMENT_JSON_CODEC_H
 ```
 
-The declarations give every JSON-facing participant one representation contract. They do not accept state or assign its order; the implementation below must first turn valid fields into a value before an input can ask the model to accept it.
+Every JSON-facing participant uses the representation contract declared here. Acceptance and ordering remain outside the codec. Read its implementation next to see valid fields become a value that an input can submit to the model.
 
 \Needspace{5\baselineskip}
 
@@ -573,7 +573,7 @@ namespace minigateway {
 #endif // MINIGATEWAY_CONFIG_SECTIONS_H
 ```
 
-These declarations expose the MQTT settings that deployment may vary while leaving the model contract fixed. The implementation below registers defaults and getters that the protocol and startup code can consume when they configure and initiate the broker connection.
+Deployment can vary these declared MQTT settings without changing the model contract. Their defaults and getters belong in the following implementation so that protocol and startup code can consume them when configuring and initiating the broker connection.
 
 \Needspace{5\baselineskip}
 
@@ -719,7 +719,7 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-Successful activation and failures receive comparable diagnostics through these state cases. Reporting leaves failed-endpoint repair and measurement validation to their owners. We can now read the web implementation, whose routes retain the application-level decisions behind those reports.
+The state cases give successful activation and failure comparable diagnostics. Reporting neither repairs failed endpoints nor validates measurements; those tasks remain with their owners. The web implementation follows because its routes retain the application-level decisions behind the reports.
 
 **The web and SSE role**
 
@@ -1071,7 +1071,7 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-Incoming MQTT data passes through the codec before acceptance, while outgoing data represents the model’s accepted measurement. Session handling remains here rather than in the model; the factory below supplies a fresh protocol object when a connection needs one.
+The codec validates incoming MQTT data before acceptance; outgoing data represents the measurement the model has accepted. Session handling belongs to this protocol object and stays outside the model. A connection needs a fresh object, which explains the factory that follows.
 
 **Constructing MQTT contexts**
 
@@ -1164,7 +1164,7 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-The factory now joins one connection, its MQTT context and the application protocol object with the existing model reference. That reference still needs a valid lifetime; the next startup wrapper selects and activates the client without becoming another model owner.
+The factory joins one connection, its MQTT context and the application protocol object with the existing model reference. The model must outlive that reference. Client selection and activation are separate responsibilities, handled by the startup wrapper that follows without creating another model owner.
 
 **Starting the MQTT client**
 
@@ -1260,7 +1260,7 @@ namespace minigateway {
 } // namespace minigateway
 ```
 
-Startup now supplies endpoint defaults, MQTT options and state reporting before registering connection work. Registration is not broker acceptance; `main()` follows by constructing the model once and keeping it available while the runtime advances both communication paths.
+Endpoint defaults, MQTT options and state reporting are in place before startup registers connection work. Broker acceptance still requires its own protocol result. The remaining lifetime question belongs to `main()`: it constructs the model once and keeps it available while the runtime advances both communication paths.
 
 ### Assembly and observable behavior
 

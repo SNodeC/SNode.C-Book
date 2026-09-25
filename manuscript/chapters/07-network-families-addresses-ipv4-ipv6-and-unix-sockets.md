@@ -51,7 +51,7 @@ This is one reason address semantics deserve careful treatment. A value such as 
 \index{endpoint identity}
 \index{network family}
 
-The concrete address families are:
+Chapter 5 introduced the family-to-identity comparison. Here the same identities locate the concrete address classes:
 
 | Family | Class | Endpoint identity |
 |---|---|---|
@@ -445,7 +445,7 @@ The factory and context still describe a stream protocol. The new responsibility
 \index{net::un::SocketAddress@\texttt{net::un::SocketAddress}}
 \index{path identity}
 
-The Unix-domain address class is:
+Return to the Unix-domain address class introduced under “Concrete address types and their fields”:
 
 ```cpp
 net::un::SocketAddress
@@ -461,7 +461,7 @@ net::un::SocketAddress address("/tmp/my-service.sock");
 
 The path is the name through which local processes identify the communication endpoint. In practice, it acts as a rendezvous name inside the local operating-system environment: one side creates or binds that endpoint identity, and the other side uses the same identity to reach the service.
 
-Default construction is meaningful in the Unix-domain address model.
+Recall the empty default from “Concrete address types and their fields”. Default construction is meaningful in the Unix-domain address model.
 
 The default address has not yet been given a concrete service path. Do not infer from the word *wildcard* that an empty Unix-domain path listens on every pathname in the way an IP wildcard covers local interfaces. The pathname examples in this chapter require an explicit rendezvous name.
 
@@ -521,7 +521,7 @@ The client-side convenience overloads are also path-centered:
 | `connect(sunPath, ...)` | `Remote::setSunPath(sunPath)` |
 | `connect(sunPath, bindSunPath, ...)` | `Remote::setSunPath(sunPath)` + `Local::setSunPath(bindSunPath)` |
 
-This keeps the local/remote distinction visible. The remote path is the service endpoint the client wants to reach.
+These pathname overloads apply the local/remote distinction introduced with the address fields earlier in this chapter. This keeps the local/remote distinction visible. The remote path is the service endpoint the client wants to reach.
 
 The optional local path describes the client's own local endpoint identity. Most simple clients do not need to spell this out, but the overload exists because the model still distinguishes the peer being contacted from the local endpoint used for the connection.
 

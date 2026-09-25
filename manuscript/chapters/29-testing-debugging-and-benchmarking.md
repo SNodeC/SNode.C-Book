@@ -122,7 +122,7 @@ Despite their `RawWire` names, `HttpRequestFormatterRawWireTest` and `HttpRespon
 
 Inspect peer-received bytes in HTTP component tests, separately from diagnostic presentation (Chapters 14 and 17). Malformed, boundary-sized and fragmented parser inputs must distinguish accepted, rejected and pending data; a small complete-input example cannot establish that contract.
 
-The core unit tests now include explicit checks for context lifetime, listener and connection-attempt lifetime, endpoint counters, stream shutdown, TLS result classification and helper ownership, and bounded writer policy.
+The core unit tests include explicit checks for context lifetime, listener and connection-attempt lifetime, endpoint counters, stream shutdown, TLS result classification and helper ownership, and bounded writer policy.
 
 For example, `SocketWriterResourcePolicyTest` protects the queue-admission surface discussed in Chapter 16. `StreamFrameworkShutdownTest` and `TLSFrameworkShutdownTest` have scenario registrations that exercise distinct shutdown situations. One executable name is therefore not a count of one conceptual case.
 

@@ -4,9 +4,7 @@
 
 \index{layered architecture}
 
-The word layered can be used lazily. In SNode.C, it is meant operationally.
-
-Network families, stream transport, TLS or legacy connection handling, protocol layers, application roles, configuration, diagnostics, build targets, packages, and deployment shape all have their own responsibilities.
+The word layered can be used lazily. In SNode.C, it is meant operationally. Network families, stream transport, TLS or legacy connection handling, protocol layers, application roles, configuration, diagnostics, build targets, packages, and deployment shape all have their own responsibilities.
 
 The important lesson is not that every layer must be visible to every programmer at every moment. The lesson is that the architecture remains understandable because the layers have not been erased prematurely.
 
@@ -33,9 +31,7 @@ That question is useful before writing code, while debugging code, while designi
 
 The book deliberately distinguishes system-design roles, server/client handles, instances, activation flows, connections, contexts, factories, middleware, subprotocols, and application services.
 
-When the vocabulary is clear, a system can be discussed by developers, operators, teachers, and students using the same names.
-
-An instance name connects configuration, logs, diagnostics, and operational discussion.
+When the vocabulary is clear, a system can be discussed by developers, operators, teachers, and students using the same names. An instance name connects configuration, logs, diagnostics, and operational discussion.
 
 One distinction becomes especially useful when an application grows: the endpoint owns shared configuration, while each explicit activation has its own flow controller. Stopping a flow, closing a connection, detaching a context, and releasing an instance are different events. The architecture becomes easier to operate when the code and its diagnostics preserve those differences.
 
@@ -44,27 +40,21 @@ One distinction becomes especially useful when an application grows: the endpoin
 
 The book started with simple communication and gradually moved upward: custom stream protocols, HTTP, Express-like routing, SSE, WebSocket, MQTT, MQTT-over-WebSocket, and multi-protocol IoT systems.
 
-The recurring lesson is that bytes become useful only when a layer gives them meaning.
-
-Therefore, protocol code is where communication becomes part of an application, not accidental glue.
+The recurring lesson is that bytes become useful only when a layer gives them meaning. Therefore, protocol code is where communication becomes part of an application, not accidental glue.
 
 ### Architecture on real machines {.unnumbered}
 
 \index{build architecture}
 \index{deployment architecture}
 
-A network framework does not end at the source tree.
+A network framework does not end at the source tree. The public include path says which C++ abstraction the source file selects. The build target says what the application links. The exported package says what external consumers can depend on. The install component says what files need to exist. The package dependency says what the target system must provide. The runtime path says where loaded modules and services can be found. The configuration file says what role shape is deployed.
 
-The public include path says which C++ abstraction the source file selects. The build target says what the application links. The exported package says what external consumers can depend on. The install component says what files need to exist. The package dependency says what the target system must provide. The runtime path says where loaded modules and services can be found. The configuration file says what role shape is deployed.
-
-For that reason, this book treated CMake, packaging, deployment, testing, and debugging as architectural surfaces rather than as afterthoughts.
-
-A system that is clear only in the source tree is not yet fully clear.
+For that reason, this book treated CMake, packaging, deployment, testing, and debugging as architectural surfaces rather than as afterthoughts. A system that is clear only in the source tree is not yet fully clear.
 
 \index{MiniGateway}
 \index{guided project}
 
-MiniGateway was small. It did not try to become a product. It showed how the pieces can be assembled while preserving the vocabulary of the book. The final design chapters then named the judgment behind that assembly: choose the boundary that honestly owns the concern, and extend the system where that responsibility remains visible.
+MiniGateway was small. It did not try to become a product. It showed how the pieces can be assembled while preserving the vocabulary of the book. The final design chapter then named the judgment behind that assembly: choose the boundary that honestly owns the concern, and extend the system where that responsibility remains visible.
 
 A real application may use different network families, different protocols, more roles, stronger persistence, stronger authentication, different deployment targets, or a larger ecosystem such as MQTTSuite. The architectural questions remain the same.
 
@@ -88,9 +78,7 @@ Seen this way, SNode.C is less a library of shortcuts than a vocabulary for laye
 
 ### Where to go next {.unnumbered}
 
-A reader who finishes this book should know how SNode.C public headers, servers, clients, contexts, HTTP, WebSocket, MQTT, configuration, and CMake components fit together.
-
-The reader should know how to think with them.
+A reader who finishes this book should know how SNode.C public headers, servers, clients, contexts, HTTP, WebSocket, MQTT, configuration, and CMake components fit together. The reader should know how to think with them.
 
 Useful next steps are:
 

@@ -83,26 +83,16 @@ There are also two different end observations. `setOnFlowTerminated(...)` report
 \index{SocketServer@\texttt{SocketServer}}
 \index{listen()@\texttt{listen()}}
 
-Calling `listen(...)` should be understood as registering listening intent.
+Calling `listen(...)` should be understood as registering listening intent. The call does not mean that all listening and accepting work happens immediately on the caller's stack. It enters the flow-controller path and lets the runtime advance the work.
 
-The call does not mean that all listening and accepting work happens immediately on the caller's stack. It enters the flow-controller path and lets the runtime advance the work.
-
-Retry logic, status reporting, accept-event observation, and context creation all belong to the managed runtime story.
-
-When the server-side instance succeeds in listening, peers can be accepted.
-
-Each accepted peer becomes a concrete `SocketConnection`.
-
-That connection represents one peer relationship under the instance of the server, not the server itself.
+Retry logic, status reporting, accept-event observation, and context creation all belong to the managed runtime story. When the server-side instance succeeds in listening, peers can be accepted. Each accepted peer becomes a concrete `SocketConnection`. That connection represents one peer relationship under the instance of the server, not the server itself.
 
 Connection callbacks receive a `SocketConnection*` and can inspect addresses, metrics, timing, and instance configuration. Context callbacks instead implement the protocol. The callback section below distinguishes the stages in detail.
 
 \index{SocketClient@\texttt{SocketClient}}
 \index{connect()@\texttt{connect()}}
 
-Calling `connect(...)` registers connection intent.
-
-The remote endpoint comes from the address semantics described in Chapter 7. The runtime then advances the actual connection attempt through the selected lower layer.
+Calling `connect(...)` registers connection intent. The remote endpoint comes from the address semantics described in Chapter 7. The runtime then advances the actual connection attempt through the selected lower layer.
 
 A client-side instance may produce one connection, no connection, or several connections over time if retry or reconnect behavior is configured. That is why the instance must not be confused with a single successful connection.
 
@@ -250,22 +240,14 @@ SocketAddress
 core::socket::State
 ```
 
-The address identifies the relevant endpoint.
-
-The state describes the listen/connect attempt outcome.
+The address identifies the relevant endpoint. The state describes the listen/connect attempt outcome.
 
 This is different from a connection lifecycle callback. A status callback may tell us whether listening or connecting succeeded, failed, was disabled, or should not be retried. It does not by itself represent protocol behavior.
 
 \index{core::socket::State@\texttt{core::socket::State}}
 \index{socket state}
 
-`core::socket::State` is richer than a Boolean.
-
-Its principal values include:
-
-`OK`, `DISABLED`, `ERROR`, `FATAL`, `NO_RETRY`.
-
-It also carries explanatory information through functions such as `what()` and `where()`.
+`core::socket::State` is richer than a Boolean. Its principal values include: `OK`, `DISABLED`, `ERROR`, `FATAL`, `NO_RETRY`. It also carries explanatory information through functions such as `what()` and `where()`.
 
 `NO_RETRY` is especially revealing. It shows that the state object can carry more than “success” or “failure.” It can also express control information that affects retry behavior. That fits the broader theme of the chapter: retry is activation-flow recovery behavior, not protocol-context behavior.
 
