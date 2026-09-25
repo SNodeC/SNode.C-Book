@@ -2501,3 +2501,21 @@ branch for the next SNode.C release, as expressly scoped by Follow-up 14.
 chapter counts, commit mapping, local/hosted logs and freeze gate. Commit and
 push this final evidence without merging, then end the manuscript pass. No
 further broad refinement is authorized; publisher-submission freeze now applies.
+
+
+### Follow-up 15 — author reopens the manuscript for one refinement pass
+
+Authority: `pedagogical-smoothing-2026-09-23/FOLLOWUP-15.md`, including E1–E3.
+Main was fast-forwarded with --ff-only from ccbe53b to 8328dfc and pushed.
+Work proceeds on main, one commit for each A–D and one evidence commit.
+Default-branch HEAD replaces all earlier commit/tag pin and framework-digest
+freeze rules: SNodeC/snode.c master, SNodeC/mqttsuite master, SNodeC/OpenWRT
+main, and SNodeC/SNode.C-Book main. Observed SHAs are evidence only.
+The author tree remains read-only; its HEAD and porcelain status must remain
+unchanged, ignoring porting/. External HEAD movement requires affected checks
+to run again. Preserve teaching content, voice and structure, with only the
+explicitly authorized code corrections/formatting. Verify each finding before
+editing; record skipped/refuted findings. A covers source identity and external
+anchors; B technical corrections; C production/toolchain, widths, lab channel,
+index and apparatus; D linked copy-edit. Keep Ch32's paragraph in place.
+The publisher freeze resumes only after the requested local and hosted gates.

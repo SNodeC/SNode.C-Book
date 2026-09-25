@@ -25,6 +25,16 @@ def baseline() -> dict[str, str]:
     return values
 
 
+def content_drift(framework, manifest):
+    names = subprocess.check_output(
+        ["git", "-C", str(framework), "ls-files", "--cached", "--others", "--exclude-standard", "-z"],
+        text=True).split("\0")
+    actual = {name: hashlib.sha256((framework / name).read_bytes()).hexdigest()
+              for name in sorted(set(filter(None, names))) if (framework / name).is_file()}
+    return [name for name in sorted(set(actual) | set(manifest["files"]))
+            if actual.get(name) != manifest["files"].get(name)]
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--framework", type=pathlib.Path,
@@ -32,34 +42,33 @@ def main() -> int:
     args = parser.parse_args()
     errors: list[str] = []
     values = baseline()
-    sha = values.get("SNODEC_COMMIT", "")
     version = values.get("SNODEC_VERSION", "")
     manifest = json.loads((ROOT / values["SNODEC_WORKTREE_MANIFEST"]).read_text())
     patch = ROOT / values["SNODEC_WORKTREE_PATCH"]
-    if manifest["base_commit"] != sha or manifest["project_version"] != version:
+    if manifest["project_version"] != version:
         errors.append("Working-tree manifest differs from the baseline declaration")
     if hashlib.sha256(patch.read_bytes()).hexdigest() != manifest["patch_sha256"]:
         errors.append("Captured framework patch differs from its recorded digest")
     recorded_tree = "".join(f"{digest}  {name}\n" for name, digest in sorted(manifest["files"].items()))
     if hashlib.sha256(recorded_tree.encode()).hexdigest() != manifest["tree_sha256"]:
         errors.append("Framework file manifest differs from its recorded tree digest")
-    if not re.fullmatch(r"[0-9a-f]{40}", sha):
-        errors.append("Framework reconstruction base is not a full commit SHA")
-    if values.get("SNODEC_REF") != sha:
-        errors.append("Checkout ref differs from the reconstruction base commit")
+    if values.get("SNODEC_REF") != "master" or "SNODEC_COMMIT" in values:
+        errors.append("Framework source must use master HEAD, not a commit/tag target")
     if version != "2.0.0":
         errors.append("This migration's declared project version must be 2.0.0")
     for name in ["README.md", "source-baseline/SOURCE-VERSION.md",
                  "source-baseline/book-source-baseline.md",
                  "manuscript/frontmatter/preface.md", "review/proposal/book-proposal-package.md"]:
         text = (ROOT / name).read_text()
-        if sha not in text or version not in text:
-            errors.append(f"Missing current source pin/version in {name}")
+        if version not in text or "manifest" not in text.lower():
+            errors.append(f"Missing edition manifest/version in {name}")
     chapters = [ROOT / name for name in (ROOT / "manuscript/book-files.txt").read_text().splitlines()
                 if re.match(r"manuscript/chapters/(?:\d\d-|appendix-)", name)]
     claims = json.loads((ROOT / "review/verification/source-claims.json").read_text())
     if claims["framework_manifest"] != values["SNODEC_WORKTREE_MANIFEST"]:
         errors.append("Chapter evidence does not reference the authoritative source manifest")
+    if claims["reviewed_tree_sha256"] != manifest["tree_sha256"]:
+        errors.append("Chapter evidence was reviewed against a different content manifest")
     records = claims["chapters"]
     if [ROOT / record["manuscript"] for record in records] != chapters:
         errors.append("Chapter evidence must cover each ordered chapter and appendix exactly once")
@@ -73,7 +82,8 @@ def main() -> int:
             if anchor["path"] not in manifest["files"]:
                 errors.append(f"Source anchor is outside the recorded tree: {anchor['path']}")
             elif args.framework:
-                lines = (args.framework / anchor["path"]).read_text().splitlines()
+                source = args.framework / anchor["path"]
+                lines = source.read_text().splitlines() if source.is_file() else []
                 line = anchor["line"]
                 if not 1 <= line <= len(lines) or anchor["needle"] not in lines[line - 1]:
                     errors.append(f"Source anchor differs: {anchor['path']}:{line}")
@@ -113,19 +123,13 @@ def main() -> int:
         cmake = (args.framework / "CMakeLists.txt").read_text()
         if not re.search(r"\bVERSION\s+" + re.escape(version) + r"\b", cmake):
             errors.append("Framework CMake project version differs from the declared version")
-        names = subprocess.check_output(
-            ["git", "-C", str(args.framework), "ls-files", "--cached", "--others", "--exclude-standard", "-z"],
-            text=True).split("\0")
-        actual = {name: hashlib.sha256((args.framework / name).read_bytes()).hexdigest()
-                  for name in sorted(set(filter(None, names))) if (args.framework / name).is_file()}
-        for name in sorted(set(actual) | set(manifest["files"])):
-            if actual.get(name) != manifest["files"].get(name):
-                errors.append(f"Framework source content differs: {name}")
+        for name in content_drift(args.framework, manifest):
+            errors.append(f"master has drifted from the edition manifest: {name}")
     if errors:
         print("\n".join("ERROR: " + error for error in errors), file=sys.stderr)
         return 1
     print(f"Source alignment passed: {len(records)} chapter/appendix evidence records, {count} exact complete listings; "
-          f"SNode.C {version}, base {sha}, working-tree digest {manifest['tree_sha256']}")
+          f"SNode.C {version}, master content manifest {manifest['tree_sha256']}")
     return 0
 
 

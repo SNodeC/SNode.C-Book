@@ -1,0 +1,19 @@
+{
+  "SNodeC/snode.c": {
+    "branch": "master",
+    "head": "07ca9a2936ee72582df7d159cb06666fe23e30f8"
+  },
+  "SNodeC/mqttsuite": {
+    "branch": "master",
+    "head": "5fef5c3036928dfa40ad4f124bb237cc9c3202bb"
+  },
+  "SNodeC/OpenWRT": {
+    "branch": "main",
+    "head": "5bef8cca5982838a7191a148633c1058f154e5eb"
+  },
+  "SNodeC/SNode.C-Book": {
+    "branch": "main",
+    "head": "8328dfcd796dcf9b1b65246d5ef020192d857458",
+    "before_fast_forward": "ccbe53b35dc0013c252e31335aa2aae69cf2659e"
+  }
+}

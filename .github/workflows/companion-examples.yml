@@ -42,7 +42,7 @@ jobs:
           echo "repository=$SNODEC_REPOSITORY_ID" >> "$GITHUB_OUTPUT"
           echo "ref=$SNODEC_REF" >> "$GITHUB_OUTPUT"
 
-      - name: Check out pinned SNode.C
+      - name: Check out SNode.C master HEAD
         uses: actions/checkout@v4
         with:
           repository: ${{ steps.baseline.outputs.repository }}
@@ -58,14 +58,16 @@ jobs:
             nlohmann-json3-dev mariadb-server mariadb-client \
             ${{ matrix.packages }}
 
-      - name: Verify the pinned source tree recorded by the book
+      - name: Verify master HEAD against the edition manifest
         shell: bash
         run: |
           source source-baseline/book-source-baseline.env
+          echo "Observed SNode.C master HEAD: $(git -C external/snode.c rev-parse HEAD)"
           if [[ -s "$GITHUB_WORKSPACE/$SNODEC_WORKTREE_PATCH" ]]; then
             git -C external/snode.c apply "$GITHUB_WORKSPACE/$SNODEC_WORKTREE_PATCH"
           fi
           python3 ci/check-source-alignment.py --framework external/snode.c
+          python3 ci/check-external-anchors.py
 
       - name: Build SNode.C and companion examples
         id: build

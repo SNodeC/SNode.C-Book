@@ -58,7 +58,7 @@ The book is intentionally focused on SNode.C. The references below give stable b
 - The SNode.C repository is the authoritative source for framework development beyond the version discussed in this book. This edition covers the SNode.C 2.0.0 public commit recorded in `source-baseline/SOURCE-VERSION.md` and its content manifest. A framework source reference establishes implementation behavior; a protocol standard establishes the external contract, and the two should be read together.
 - The companion source trees under `companion/examples/` are the authoritative sources for the book's compact examples, MiniGateway, and MiniGateway Extended. Public review answers, lab commands, expected observations, and design discussions are in `companion/exercises/`, in the directory for each numbered chapter and `appendix-a/`. The shared README describes prerequisites and equipped labs. Try each exercise before consulting its solution; a local observation does not certify a deployment.
 
-The online tool manuals follow their current releases. Compare their option descriptions with the versions installed for an exercise. Chapter 28 records the inspected OpenWrt feed revision separately because a feed recipe, an SDK and the framework source have independent version histories.
+The online tool manuals follow their current releases. Compare their option descriptions with the versions installed for an exercise. Chapter 28 explains how to inspect the OpenWrt feed at main HEAD separately because a feed recipe, an SDK and the framework source have independent version histories.
 
 For the Bluetooth preparation in Chapter 9, consult the BlueZ project's
 [`bluetoothctl` manual](https://github.com/bluez/bluez/blob/master/doc/bluetoothctl.rst),

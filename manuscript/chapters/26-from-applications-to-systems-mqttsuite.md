@@ -330,11 +330,11 @@ Focused event-driven tools and explicit roles fit constrained deployments, but d
 
 ### Trace one publication through two tools
 
-Use the suite source to follow one selected publication. Start at `mqttbridge/lib/Mqtt.cpp`: the received publish is handed to the configured bridge’s publication path. Compare that with `mqttstore/lib/Mqtt.cpp` and `mqttstore/lib/MariaDbStorage.cpp`, where the same protocol event becomes a storage decision.
+Use `SNodeC/mqttsuite` master HEAD to follow one selected publication. Start at `mqttbridge/lib/Mqtt.cpp`: the received publish is handed to the configured bridge’s publication path. Compare that with `mqttstore/lib/Mqtt.cpp` and `mqttstore/lib/MariaDbStorage.cpp`, where the same protocol event becomes a storage decision.
 
 For the bridge, identify source selection, destination selection, topic-prefix behavior, and loop policy before attempting a two-broker experiment. Its configured loop-prevention value is passed to MQTT CONNECT; Chapter 21 explains why the private protocol-level extension must not be assumed interoperable with every broker.
 
-For the store, identify the raw insert and each matching projection insert, then locate their success and error callbacks. Write down what observation would establish each outcome. A database row, a projection row, and broker delivery are three separate facts.
+For the store, identify the raw insert and each matching projection insert, then locate their success and error callbacks. `MariaDbStorage::store` submits the raw insert and calls `storeProjections` without waiting for that insert’s success callback; submission order is not proof of a committed raw row. Write down what observation would establish each outcome. A database row, a projection row, and broker delivery are three separate facts.
 
 A bounded deployment exercise can use a unique topic prefix and a fixed sequence of ten publications, with an independent subscriber and database query as observers. Stop one destination and predict which other observations should continue. Running that exercise requires configured broker and database services.
 

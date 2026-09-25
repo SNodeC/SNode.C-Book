@@ -252,9 +252,9 @@ A `procd` service declares the command, configuration, user/group, restart polic
 
 ### A worked OpenWrt path: verify the package before the device
 
-The first practical step is to identify the recipe's source, not to start cross-compiling. The separately maintained [SNode.C OpenWrt feed](https://github.com/SNodeC/OpenWRT) is useful packaging source, but its `net/snode.c/Makefile` at commit `c9378fe95f7c015752c748fc4ab012b585d294d1` still declares `PKG_VERSION:=1.0.1` and downloads the framework's `OpenWRT` branch. It does not select this book's current 2.0 source. Its module list also contains the old `net-un-phy` component. Installing that recipe unchanged would answer a different compatibility question.
+The first practical step is to inspect the recipe at the [SNode.C OpenWrt feed’s main HEAD](https://github.com/SNodeC/OpenWRT/tree/main), before cross-compiling. In `net/snode.c/Makefile`, check `PKG_VERSION`, compare `PKG_SOURCE_VERSION` with the framework’s `master` HEAD, inspect the logger download and its hash, and compare the module list with current CMake targets. A package version alone does not establish that the selected source matches the book’s manifest.
 
-This gives the walkthrough a real prerequisite: a recipe port for the selected 2.0 contents and the exact target SDK. The steps below explain the build and deployment rehearsal once that prerequisite is satisfied. They are not evidence that the old feed already builds 2.0.
+The recipe already describes the 2.0 package layout, supplies a checked spdlog download and lists the valid `net-un-phy` component. Source selection still needs attention: the recipe selects a tag rather than `master`. Verify these properties again at HEAD before using an SDK; the steps below rehearse a build and deployment, not a claim that a particular device has passed them.
 
 On a disposable target or test image, record the release, target and available space before choosing its matching SDK:
 
@@ -275,17 +275,17 @@ Add the SNode.C recipe through a local feed under your control. Review the follo
 
 | Recipe surface | Required evidence for the current source |
 |---|---|
-| Source selection | The prepared source matches the setup verified in Chapter 2 |
-| Version and library names | Package version, SONAME major and installed filenames match the 2.0 build |
-| Component graph | Selected module recipes follow current targets; obsolete targets are removed rather than satisfied by old libraries |
-| Logger dependency | The current spdlog build dependency is supplied reproducibly by the SDK recipe; an undeclared configure-time download is not a package dependency policy |
-| Optional features | TLS, Bluetooth, database support and applications are selected deliberately rather than through the feed's broad `full` or `apps` package |
+| Source selection | The feed currently selects a framework tag rather than `master`; compare its prepared contents with the Chapter 2 manifest and use reviewed master contents for this rehearsal |
+| Version and library names | The recipe declares 2.0 and derives the SONAME major; verify the staged filenames from the SDK build |
+| Component graph | Met by the inspected recipe: the module graph includes the valid `net-un-phy` target; recheck selected modules against current CMake targets |
+| Logger dependency | Met by the inspected recipe: a hashed spdlog download supplies FetchContent with networking disabled; verify the download in the SDK build |
+| Optional features | The recipe exposes feature selections; choose TLS, Bluetooth, database support and applications deliberately, then verify the staged result |
 | Consumer application | The book echo consumer is cross-compiled against the staged target installation and installed as `/usr/bin/echoserver` |
 | Runtime ownership | The configured management group and configuration directories exist on the target |
 
 Use the framework source prepared in Chapter 2 for the SDK package. Compare the prepared files with that input before accepting the build. Do not point the consumer’s `snodec_DIR` at the desktop installation: that would mix host and target artifacts.
 
-After the ported recipe and echo package are selected, expand the SDK configuration and build the framework recipe with verbose output:
+After the reviewed recipe and echo package are selected, expand the SDK configuration and build the framework recipe with verbose output:
 
 ```sh
 make defconfig

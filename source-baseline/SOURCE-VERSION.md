@@ -1,41 +1,49 @@
 # Target SNode.C Source Version
 
-This edition targets SNode.C project version **2.0.0** at public commit
-`07ca9a2936ee72582df7d159cb06666fe23e30f8`. The version is the CMake project version,
-not a claim that a matching release tag exists.
+This edition describes SNode.C project version **2.0.0**. Use `SNodeC/snode.c`
+`master` HEAD, then compare its content with the edition manifest. The version
+is the CMake project version, not a checkout tag.
 
-- Repository: `SNodeC/snode.c`
-- Source authority: the pinned public commit, checked against the clean author tree
-- Exact tree digest: `2face99fc58fb1ec5374c35d88e6fcd9c7a7d56b52ea44cb00e49eb4825b9a2b`
-- Exact file contents: `framework-working-tree.json` (1,448 files)
+- Repository: `SNodeC/snode.c`, default branch `master`
+- Edition content: `framework-working-tree.json` (1,448 files)
 - Baseline recorded: `2026-09-23`
+- Observed commit provenance exists only in the content manifest.
 - `framework-working-tree.patch` is empty; its digest remains checked.
 
 ## Reader checkout
 
 Set `SNODEC_BOOK_SOURCE` to the absolute directory containing the book source
-package. Check out the public commit; no patch is needed.
+package. Clone default-branch HEAD; no patch is needed.
 
 ```sh
-git clone https://github.com/SNodeC/snode.c.git
+git clone --branch master https://github.com/SNodeC/snode.c.git
 cd snode.c
-git checkout --detach 07ca9a2936ee72582df7d159cb06666fe23e30f8
 git rev-parse HEAD
 python3 "$SNODEC_BOOK_SOURCE/ci/check-source-alignment.py" --framework "$PWD"
 ```
 
-`git rev-parse HEAD` must print the pin above. The checker verifies the recorded
-file contents. Follow Chapter 2 for build requirements; rebuild applications and
-dynamically loaded extensions against the 2.0 public headers and libraries.
+The printed HEAD is evidence of what you inspected, not a checkout target.
+The checker compares file contents and source anchors with the edition manifest.
+If it reports “master has drifted from the edition manifest”, the named files
+have changed, appeared or disappeared. Update the book from its `main` HEAD and
+repeat the check against a fresh framework `master` clone. If drift remains,
+report the named files to the book maintainers and pause the affected examples
+until claims, manifest and tests have been reviewed together. Do not bypass the
+check or select an older commit to conceal drift.
+
+Follow Chapter 2 for build requirements. Keep source, build and install locations
+separate; rebuild applications and dynamically loaded extensions against the
+verified public headers and libraries.
 
 ## One checkout authority
 
-`book-source-baseline.env` is the machine-readable authority. The companion
-workflow reads its repository and ref and verifies source contents before building.
-`source-baseline-check` checks the declarations, chapter evidence and marked
-companion listings; compilation and runtime tests provide separate evidence.
+`book-source-baseline.env` declares the repository, default branch and manifest.
+The companion workflow checks out that branch, logs the observed HEAD and verifies
+contents before building. `source-baseline-check` checks declarations, chapter
+evidence and complete companion listings; `--framework` also checks the supplied
+clone's source contents and anchors. Compilation and runtime tests are separate.
 
-The manifest records the original author-tree location for provenance, but
-verification does not require that location. Update declarations, reader claims
-and verification evidence together when changing the pin. Historical review
-records retain their original source identities.
+The manifest preserves earlier provenance; it does not direct a checkout.
+Historical review records retain their original observations. MQTTSuite uses
+`SNodeC/mqttsuite` master and the feed uses `SNodeC/OpenWRT` main; the external
+anchor checker verifies their named source paths and symbols separately.

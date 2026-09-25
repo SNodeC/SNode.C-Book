@@ -47,7 +47,7 @@ companion/examples/MiniGateway-Extended
 
 ## Target SNode.C source version
 
-This package targets SNode.C **2.0.0** at public commit `07ca9a2936ee72582df7d159cb06666fe23e30f8`. Readers check out that commit without a patch. The file manifest records the exact source contents; CI reads `source-baseline/book-source-baseline.env` and verifies them before building. See `source-baseline/SOURCE-VERSION.md` for the checkout instructions.
+This package targets SNode.C **2.0.0** using framework `master` HEAD. Readers compare that checkout with the edition manifest; no patch is required. The file manifest records the exact source contents; CI reads `source-baseline/book-source-baseline.env` and verifies them before building. See `source-baseline/SOURCE-VERSION.md` for the checkout instructions.
 
 The current proposal-readiness work and executed checks are documented in [the phase report](review/proposal-readiness-2026-09-22/REPORT.md). Structural migration is Phase 5a; Part-by-Part condensation and remaining teaching apparatus follow in separate sessions. The proposal dossier retains its Phase 3 pagination until the authorized Phase 6 refresh.
 

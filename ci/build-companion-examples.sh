@@ -15,6 +15,7 @@ mkdir -p "$LOG_DIR"
 python3 ci/check-source-alignment.py
 
 if [[ -n "${SNODEC_SOURCE_DIR:-}" ]]; then
+  echo "Observed SNode.C master HEAD: $(git -C "$SNODEC_SOURCE_DIR" rev-parse HEAD)"
   python3 ci/check-source-alignment.py --framework "$SNODEC_SOURCE_DIR"
   cmake -S "$SNODEC_SOURCE_DIR" -B "$SNODEC_BUILD_DIR" -G "$GENERATOR" \
     -DCMAKE_BUILD_TYPE=Debug \

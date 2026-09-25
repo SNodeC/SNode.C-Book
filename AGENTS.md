@@ -2,6 +2,12 @@
 
 ## Active work plan
 
+Follow-up 15 is the current author instruction, recorded in
+`review/pedagogical-smoothing-2026-09-23/FOLLOWUP-15.md`. It overrides the
+older pin/freeze instructions below: work on main using default-branch HEADs,
+keep the author framework tree unchanged, verify before editing, and preserve
+all teaching content. Read its scope and the latest work-plan entry first.
+
 The active scope is **Author scope revision — pedagogical smoothing, 2026-09-23**
 in `review/EDITORIAL-WORK-PLAN.md`, governed by the installed specification
 `review/pedagogical-smoothing-2026-09-23/PROMPT.md`, as amended by
