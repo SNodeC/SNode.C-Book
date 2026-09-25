@@ -29,7 +29,6 @@ header-includes:
   - |
     ```{=latex}
     \providecommand{\passthrough}[1]{#1}
-    \clearcaptionsetup[skip]{table}
     \usepackage{xcolor}
     \usepackage{makeidx}
     \makeindex

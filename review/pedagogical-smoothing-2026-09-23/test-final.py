@@ -22,6 +22,15 @@ class FinalGuards(unittest.TestCase):
         allow = HERE.relative_to(ROOT)/'terminology-allowlist.md'
         (self.root/allow).parent.mkdir(parents=True)
         shutil.copy2(ROOT/allow, self.root/allow)
+        for name in ('source-baseline/book-source-baseline.env',
+                     'source-baseline/SOURCE-VERSION.md',
+                     'companion/exercises/ch10/protocol.py',
+                     '.github/workflows/book-package.yml',
+                     'production/cmake/SNodeCBookTools.cmake',
+                     'ci/check-listing-width.py'):
+            target = self.root/name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(ROOT/name, target)
 
     def chapter(self, n):
         return next((self.root/'manuscript/chapters').glob(f'{n:02}-*'))
@@ -33,6 +42,28 @@ class FinalGuards(unittest.TestCase):
 
     def fails(self, message):
         self.assertTrue(any(message in e for e in final.check(self.root)))
+
+    def test_checkout_tag_is_rejected(self):
+        p = self.chapter(2)
+        p.write_text(p.read_text() + '\ngit checkout release-example\n')
+        self.fails('non-HEAD repository target')
+
+    def test_fenced_width_is_checked_but_prose_is_not(self):
+        p = self.chapter(2)
+        p.write_text(p.read_text() + '\n' + 'word '*40 + '\n')
+        self.assertEqual(final.check(self.root), [])
+        p.write_text(p.read_text() + '\n```text\n' + 'x'*91 + '\n```\n')
+        self.fails('columns exceeds 90')
+
+    def test_index_run_duplicate_is_rejected(self):
+        p = self.chapter(2)
+        p.write_text(p.read_text() + '\n\\index{fixture}\n\\index{another}\n\\index{fixture}\n')
+        self.fails('duplicate adjacent index')
+
+    def test_removed_compatibility_step_is_rejected(self):
+        p = self.root/'.github/workflows/book-package.yml'
+        self.replace(p, 'run: python3 ci/check-publication-tools.py', 'run: true')
+        self.fails('parsed Pandoc build-version guard')
 
     def test_current_manuscript_including_wrapped_pointers_passes(self):
         self.assertEqual(final.check(self.root), [])

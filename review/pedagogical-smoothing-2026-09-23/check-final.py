@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Follow-ups 13–14 regression guards over the authoritative Markdown inputs.
+"""Follow-ups 13–15 regression guards over the authoritative Markdown inputs.
 
 These checks protect the specified corrections, not a prose style template.
 Fenced code is preserved; fenced Divs are parsed independently of code fences.
@@ -151,12 +151,91 @@ def check(root):
     need(has(echo, r'Chapter\s+3', r'complete', r'listing', r'repeat|again', r'transfer'),
          'Ch12: link the repeated snippets to the complete listing')
     paragraphs = re.split(r'\n\s*\n', ch(18))
-    framework = next((t for t in paragraphs if 'InetExpressMiddlewareMountOrderTest.cpp' in t), '')
+    framework_index = next((i for i, t in enumerate(paragraphs)
+                            if 'InetExpressMiddlewareMountOrderTest.cpp' in t), None)
+    framework = ('\n\n'.join(paragraphs[max(0, framework_index-1):framework_index+1])
+                 if framework_index is not None else '')
     need(has(framework, r'trace', r'above|earlier', r'/outside', r'404', r'count.*visit|visit.*count'),
          'Ch18: connect framework observations to the earlier trace')
     distinction = next((t for t in re.split(r'\n\s*\n', ch(29)) if 'Throughput asks' in t), '')
     need(has(distinction, r'single run|experiment', r'general|beyond'),
          'Ch29: mark the move from one run to general distinctions')
+
+    # FU15: repository identities are moving branch heads; tool release pins
+    # and observed provenance are independent of repository checkout targets.
+    covered = [p for folder in ('manuscript', 'companion', 'ci', '.github')
+               for p in (root/folder).rglob('*')
+               if p.is_file() and '__pycache__' not in p.parts]
+    covered += list((root/'source-baseline').glob('*.env'))
+    covered += [root/'source-baseline/SOURCE-VERSION.md']
+    for path in covered:
+        try:
+            text = path.read_text()
+        except UnicodeDecodeError:
+            continue
+        for number, line in enumerate(text.splitlines(), 1):
+            # Literal shell reader/build instructions. Permit only HEAD or a
+            # default branch, never a release tag, detached SHA or older ref.
+            for match in re.finditer(r'\bgit\s+(?:-C\s+\S+\s+)?(checkout|switch|fetch|clone)\s+([^`\n;]+)', line):
+                command, args = match.groups()
+                args = args.split(' && ', 1)[0]
+                target = None
+                branch = re.search(r'--branch(?:=|\s+)([^\s]+)', args)
+                if command == 'clone' and branch:
+                    target = branch[1]
+                elif command in ('checkout', 'switch'):
+                    target = next((x for x in args.split() if not x.startswith('-')), None)
+                elif command == 'fetch':
+                    positions = [x for x in args.split() if not x.startswith('-')]
+                    if len(positions) > 1:
+                        target = positions[-1]
+                if target:
+                    target = target.strip('"\'.,')
+                    need(target in ('master', 'main', 'HEAD', 'origin/master', 'origin/main'),
+                         f'{path.relative_to(root)}:{number}: non-HEAD repository target {target}')
+            need(not re.match(r'\s*ref:\s*(?:[0-9a-f]{7,40}|refs/tags/\S+|v?\d+\.\S+)\s*$', line),
+                 f'{path.relative_to(root)}:{number}: pinned repository workflow ref')
+    baseline = (root/'source-baseline/book-source-baseline.env').read_text()
+    need(re.search(r'^SNODEC_REF=master$', baseline, re.M) and
+         not re.search(r'^SNODEC_COMMIT=', baseline, re.M), 'baseline must target master HEAD')
+    need('Clang 13.0 or newer' not in ch(2), 'compiler minimum is not a newer-version guarantee')
+    installs = re.findall(r'```sh\n(.*?)\n```', ch(2), re.S)
+    need(any('apt install' in block and 'libasio-dev' in block for block in installs),
+         'Ch2: optional Asio comparison dependency missing')
+    quit_lab = (root/'companion/exercises/ch10/protocol.py').read_text()
+    need(r'QUIT\nPING\n' in quit_lab and "== b''" in quit_lab,
+         'Ch10: coalesced QUIT/PING closure regression missing')
+    for n in (25, 27):
+        consumers = [block for block in re.findall(r'```cmake\n(.*?)\n```', ch(n), re.S)
+                     if 'my-ipv4-legacy-webapp' in block or 'target_link_libraries(myapp' in block]
+        need(bool(consumers) and all('snodec::http-server-express-legacy-in' in block for block in consumers),
+             f'Ch{n}: installed Express consumer must use the composed component')
+    for path, text in texts.items():
+        need(not re.search(r'\bnow\s+(?:exposes|receives|distinguishes|includes?|carries)\b', text, re.I),
+             path+': release-notes phrasing')
+        need(not re.search(r'\\index\{(?:instance!|Unix-domain sockets(?:!|\}))', text),
+             path+': split index heading')
+        # Repeated entries in separate discussions are useful. Reject only a
+        # repeated directive in one uninterrupted index run (blank lines allowed).
+        seen = set()
+        for line in text.splitlines():
+            directives = re.findall(r'\\index\{(.+)\}', line)
+            if directives:
+                for key in directives:
+                    need(key not in seen, path+': duplicate adjacent index entry '+key)
+                    seen.add(key)
+            elif line.strip():
+                seen.clear()
+    width_spec = importlib.util.spec_from_file_location('width', root/'ci/check-listing-width.py')
+    width = importlib.util.module_from_spec(width_spec)
+    width_spec.loader.exec_module(width)
+    errors.extend(width.violations(root))
+    publication = (root/'.github/workflows/book-package.yml').read_text()
+    need('run: python3 ci/check-publication-tools.py' in publication,
+         'publication workflow must run the parsed Pandoc build-version guard')
+    local_tools = (root/'production/cmake/SNodeCBookTools.cmake').read_text()
+    need('check-publication-tools.py' in local_tools,
+         'local CMake path must share the publication version guard')
     return errors
 
 

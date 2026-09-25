@@ -35,8 +35,6 @@ header-includes:
   - |
     ```{=latex}
     \providecommand{\passthrough}[1]{#1}
-    % Tables are uncaptioned; remove Pandoc's unused caption-spacing override.
-    \clearcaptionsetup[skip]{table}
     \usepackage{tocloft,parskip}
     \usepackage{makeidx}
     \makeindex

@@ -246,7 +246,9 @@ ctest --test-dir "$SNODEC_BUILD" --output-on-failure \
 
 Here `SNODEC_BUILD` is a configured and built framework test tree, as established in Chapter 29. These tests require local socket access. Their source files live in `tests/component/express`.
 
-The framework counterpart checks the trace followed above, adding the `/outside` 404 case and counted handler visits. Read the companion `dispatch.cpp` mount-order path first; `InetExpressMiddlewareMountOrderTest.cpp` is its optional framework counterpart. Application middleware records `app-before` and calls `next()`. Router middleware appends `router-before` and calls `next()`. The router’s `/status` handler appends `handler`; the router is mounted at `/api`.
+The framework counterpart checks the trace followed above, adding the `/outside` 404 case and counted handler visits. Read the companion `dispatch.cpp` mount-order path first.
+
+`InetExpressMiddlewareMountOrderTest.cpp` is its optional framework counterpart. Application middleware records `app-before` and calls `next()`. Router middleware appends `router-before` and calls `next()`. The router’s `/status` handler appends `handler`; the router is mounted at `/api`.
 
 - `GET /api/status`: expect status 200; the response header and body contain `app-before,router-before,handler`.
 - `GET /outside`: expect status 404; application middleware runs, but the mounted router and its handler do not.

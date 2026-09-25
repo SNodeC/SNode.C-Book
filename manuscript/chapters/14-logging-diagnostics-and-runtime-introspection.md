@@ -324,6 +324,8 @@ Counters need the same care. Cumulative queued bytes differ from pending queue l
 
 The effective configuration is the companion artifact for this reading. Record the selected endpoint, limits, retry policy, and log policy along with the observed sequence. A short event history plus the exact configuration is usually a better bug report than an unbounded payload dump.
 
+\SNodeCNextSectionMark{Part V checkpoint}
+
 ### Part V checkpoint — make the instance reproducible and diagnosable
 
 Use the public lab to repeat the echo precedence experiment with an unused loopback port. Run that endpoint first at global `Error`, then with component `echo=info` and instance `echoserver=debug` overrides. Both runs must echo the same bytes; only the scoped run reveals the listening and context records. Reject port 70000 and locate `--port` through local help. Keep the selected configuration with the short event history. These startup observations do not test runtime reconfiguration.

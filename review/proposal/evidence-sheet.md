@@ -23,7 +23,7 @@ The reported Hartbeespoort Dam application connects water-quality sensors and GP
 
 ## Evidence in the supplied book package
 
-- **Manuscript:** 32 numbered chapters in 11 Parts, Appendix A, closing essay and reference material; **111,070 whitespace tokens**, of which 103,194 are prose and 7,876 occur in fences; **328 pages in the rebuilt reading PDF; publisher pagination pending**.
+- **Manuscript:** 32 numbered chapters in 11 Parts, Appendix A, closing essay and reference material; **111,739 whitespace tokens**, of which 103,818 are prose and 7,921 occur in fences; **330 pages in the rebuilt reading PDF; publisher pagination pending**.
 - **Teaching apparatus:** 99 objectives and 165 mapped exercises across 32 chapters and Appendix A. Each has two review questions, two labs and one design problem, public solutions, and a recap of at most five bullets. All 11 Parts have runnable checkpoints; the epilogue is a closing essay.
 - **Samples:** Chapters **1, 3, 19, 30 and 32**, using the same teaching pattern. The completed revision adds explanations and worked traces where each sample needs them. The sample guide identifies the skill and observable outcome each demonstrates.
 - **Build/run evidence:** the companion examples and lab dependencies compiled, including the standalone Asio comparison, and **66/66 local lab cases passed on 23 September 2026 against public 07ca9a29**. The fresh framework build passed 185/185 tests, and all teaching, behavior and lifetime smoke suites passed. The manuscript, proposal and sample PDFs build; complete printed listings match their companion sources.

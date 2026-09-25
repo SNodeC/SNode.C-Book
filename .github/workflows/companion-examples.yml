@@ -32,7 +32,7 @@ jobs:
       - name: Check out book repository
         uses: actions/checkout@v4
 
-      - name: Read authoritative source pin
+      - name: Read authoritative source branch
         id: baseline
         shell: bash
         run: |
