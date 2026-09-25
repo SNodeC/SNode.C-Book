@@ -86,7 +86,7 @@ Manual chapter numbers are not part of chapter headings. LaTeX/Pandoc numbers pa
 
 ## Build
 
-Install Python 3.9 or newer, Pandoc, `pandoc-crossref`, and a XeLaTeX-capable TeX distribution. The manuscript is built through CMake:
+Install Python 3.9 or newer and a XeLaTeX-capable TeX distribution. On Linux x86-64, CMake downloads the compatible Pandoc/crossref pair into the build directory on first configuration, verifies the archive hashes, and reuses it afterwards. The manuscript is built through CMake:
 
 ```bash
 cmake -S . -B build
@@ -178,6 +178,10 @@ a complete TLS, HTTP, MQTT, Bluetooth, or database reference
 ```
 
 Publication builds use Pandoc **3.9.0.2** and pandoc-crossref **v0.3.24a**
-(the latter reports Pandoc3.9.0.2 as its build/ABI version). Install that pair
-or point CMake's `PANDOC` and `PANDOC_CROSSREF_FILTER` at those binaries.
-The shared compatibility guard checks the active executables before building.
+(the latter reports Pandoc 3.9.0.2 as its build/ABI version). Terminal, Qt Creator
+and CI builds use the same CMake setup; system installations are untouched.
+The first default configuration needs network access. For an offline first build
+or another host platform, install that pair and set CMake's `PANDOC` and
+`PANDOC_CROSSREF_FILTER` to their absolute executable paths. Explicit paths are
+preserved and checked by the same compatibility guard. Examples-only builds
+with `SNODEC_BOOK_BUILD_PDFS=OFF` do not download or check publication tools.

@@ -231,8 +231,9 @@ def check(root):
     width_spec.loader.exec_module(width)
     errors.extend(width.violations(root))
     publication = (root/'.github/workflows/book-package.yml').read_text()
-    need('run: python3 ci/check-publication-tools.py' in publication,
-         'publication workflow must run the parsed Pandoc build-version guard')
+    need('name: Verify Pandoc and crossref ABI compatibility' in publication
+         and 'run: cmake -S . -B build/ci-book -G Ninja' in publication,
+         'publication workflow must configure the shared guarded CMake tool setup')
     local_tools = (root/'production/cmake/SNodeCBookTools.cmake').read_text()
     need('check-publication-tools.py' in local_tools,
          'local CMake path must share the publication version guard')

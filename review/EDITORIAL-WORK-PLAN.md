@@ -2596,3 +2596,37 @@ The historical local Clang failure remains recorded; it is closed by the approve
 fix and fresh local/hosted evidence. FOLLOWUP-15-REPORT.md and approval-* files
 in followup-15-evidence record the final results. No approved closure item remains
 open. The manuscript is frozen again; do not start broad refinement.
+
+### Production defect — fresh Qt Creator publication tools, 2026-09-25
+
+Author instruction: “Fix yourself and commit!” after Qt Creator selected system
+Pandoc 3.11 with crossref built against Pandoc 3.9.0.2. The earlier successful
+local publication build depended on a cache override, whereas CI installed the
+pair explicitly. This did not establish a working fresh IDE configuration.
+
+Restore one tool-selection authority: SNodeCBookTools.cmake provisions the fixed,
+hash-verified Linux x86-64 pair inside each build directory, replacing the CI-only
+installer. Bare defaults from existing IDE caches migrate to those executables;
+explicit paths remain authoritative and undergo the unchanged parsed ABI guard.
+The workflow's named compatibility step runs this same CMake configuration.
+No system tool installation, manuscript, companion implementation, assertion or
+timeout changes. First default configuration needs network access; offline first
+builds and other host platforms require explicit compatible executable paths.
+
+Fresh CMake configuration and the author's existing Desktop_GCC-Debug directory
+both pass; the latter keeps PDF and companion options ON and registers 66 labs.
+Four configuration regression tests cover fresh/default selection despite an
+incompatible PATH, cached bare defaults, offline reconfiguration, explicit
+compatible/mismatching overrides, and disabled PDF targets. Version parser tests
+pass 3/3; final guards 21/21; chapter references, source alignment and hygiene pass.
+The full package passes both builds from a fresh directory: 330-page book,
+9-page proposal, 61-page sample, no unresolved references, and 461 unique package
+entries. The author framework HEAD remains 07ca9a2936ee72582df7d159cb06666fe23e30f8
+with empty porcelain status. No framework file was modified.
+
+Production/configuration accounting: CMake +21/−7, workflow +2/−16, net zero.
+The centralized setup removes the separate workflow installation policy; the
+compatibility check is retained. Configuration regression tests add 70 lines;
+editorial guard/fixture updates are validation support. Local execution logs are
+build/qtcreator-configure.log, build/publication-tools-configure.log and
+build/publication-tools-package.log. No hosted run is claimed for this correction.

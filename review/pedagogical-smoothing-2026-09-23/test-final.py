@@ -62,8 +62,8 @@ class FinalGuards(unittest.TestCase):
 
     def test_removed_compatibility_step_is_rejected(self):
         p = self.root/'.github/workflows/book-package.yml'
-        self.replace(p, 'run: python3 ci/check-publication-tools.py', 'run: true')
-        self.fails('parsed Pandoc build-version guard')
+        self.replace(p, 'run: cmake -S . -B build/ci-book -G Ninja', 'run: true')
+        self.fails('shared guarded CMake tool setup')
 
     def test_current_manuscript_including_wrapped_pointers_passes(self):
         self.assertEqual(final.check(self.root), [])
