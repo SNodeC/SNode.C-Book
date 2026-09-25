@@ -1,0 +1,331 @@
+2026-09-25T09:54:15.4586908Z Chapter references passed: 32 chapters + Appendix A, 56 stable topics, 321 current references, 374 old-reference dispositions.
+2026-09-25T09:54:15.5435809Z Source alignment passed: 33 chapter/appendix evidence records, 37 exact complete listings; SNode.C 2.0.0, master content manifest 2face99fc58fb1ec5374c35d88e6fcd9c7a7d56b52ea44cb00e49eb4825b9a2b
+2026-09-25T09:54:35.5291896Z [36;1mecho "Observed SNode.C master HEAD: $(git -C external/snode.c rev-parse HEAD)"[0m
+2026-09-25T09:54:35.5457189Z Observed SNode.C master HEAD: 07ca9a2936ee72582df7d159cb06666fe23e30f8
+2026-09-25T09:54:35.6940043Z Source alignment passed: 33 chapter/appendix evidence records, 37 exact complete listings; SNode.C 2.0.0, master content manifest 2face99fc58fb1ec5374c35d88e6fcd9c7a7d56b52ea44cb00e49eb4825b9a2b
+2026-09-25T09:54:36.1440379Z Observed SNodeC/mqttsuite master HEAD: 5fef5c3036928dfa40ad4f124bb237cc9c3202bb
+2026-09-25T09:54:36.4132245Z Observed SNodeC/OpenWRT main HEAD: 5bef8cca5982838a7191a148633c1058f154e5eb
+2026-09-25T09:54:36.4232132Z External anchors passed; source existence only, not execution.
+2026-09-25T09:54:36.5310419Z Source alignment passed: 33 chapter/appendix evidence records, 37 exact complete listings; SNode.C 2.0.0, master content manifest 2face99fc58fb1ec5374c35d88e6fcd9c7a7d56b52ea44cb00e49eb4825b9a2b
+2026-09-25T09:54:36.5387745Z Observed SNode.C master HEAD: 07ca9a2936ee72582df7d159cb06666fe23e30f8
+2026-09-25T09:54:36.6944284Z Source alignment passed: 33 chapter/appendix evidence records, 37 exact complete listings; SNode.C 2.0.0, master content manifest 2face99fc58fb1ec5374c35d88e6fcd9c7a7d56b52ea44cb00e49eb4825b9a2b
+2026-09-25T09:54:37.4158833Z -- The C compiler identification is GNU 13.3.0
+2026-09-25T09:54:37.5771816Z -- The CXX compiler identification is GNU 13.3.0
+2026-09-25T10:02:49.0200661Z [563/970] Building CXX object tests/unit/core/CMakeFiles/SNodeCInitFreeSmokeTest.dir/SNodeCInitFreeSmokeTest.cpp.o
+2026-09-25T10:03:11.1965626Z [574/970] Building CXX object tests/unit/core/CMakeFiles/EndpointLifetimeCountersTest.dir/EndpointLifetimeCountersTest.cpp.o
+2026-09-25T10:06:34.9474312Z [694/970] Building CXX object tests/component/express/CMakeFiles/Inet6ExpressTransportSmokeTest.dir/Inet6ExpressTransportSmokeTest.cpp.o
+2026-09-25T10:06:38.0396911Z [695/970] Building CXX object tests/component/express/CMakeFiles/UnixExpressTransportSmokeTest.dir/UnixExpressTransportSmokeTest.cpp.o
+2026-09-25T10:08:12.1344422Z [803/970] Linking CXX executable tests/unit/core/SNodeCInitFreeSmokeTest
+2026-09-25T10:08:12.9924037Z [815/970] Linking CXX executable tests/unit/core/EndpointLifetimeCountersTest
+2026-09-25T10:08:20.8957841Z [935/970] Linking CXX executable tests/component/express/Inet6ExpressTransportSmokeTest
+2026-09-25T10:08:21.0493899Z [936/970] Linking CXX executable tests/component/express/UnixExpressTransportSmokeTest
+2026-09-25T10:08:32.9397883Z   1/185 Test   #1: StagedInstalledConsumerTest ................................   Passed    8.22 sec
+2026-09-25T10:08:32.9924334Z         Start   2: SNodeCInitFreeSmokeTest
+2026-09-25T10:08:33.0014575Z   2/185 Test   #2: SNodeCInitFreeSmokeTest ....................................   Passed    0.01 sec
+2026-09-25T10:08:33.0732275Z   3/185 Test   #3: SNodeCAsyncLogDrainTest ....................................   Passed    0.07 sec
+2026-09-25T10:08:33.0761458Z   4/185 Test   #4: TLSResultClassificationTest ................................   Passed    0.00 sec
+2026-09-25T10:08:33.0969833Z   5/185 Test   #5: TLSIoFatalPathTest .........................................   Passed    0.02 sec
+2026-09-25T10:08:33.1093208Z   6/185 Test   #6: TLSLifecycleHelperOwnershipTest ............................   Passed    0.01 sec
+2026-09-25T10:08:33.7573618Z   7/185 Test   #7: TLSTransportStateMachineTest ...............................   Passed    0.65 sec
+2026-09-25T10:08:33.7635036Z   8/185 Test   #8: TLSLifecycleAbiSourceCompatibilityTest .....................   Passed    0.01 sec
+2026-09-25T10:08:33.7731452Z   9/185 Test   #9: StreamFrameworkShutdown_plain_requested_empty ..............   Passed    0.01 sec
+2026-09-25T10:08:33.7944693Z  10/185 Test  #10: StreamFrameworkShutdown_plain_requested_queued .............   Passed    0.02 sec
+2026-09-25T10:08:33.8050573Z  11/185 Test  #11: StreamFrameworkShutdown_plain_signal_false_veto ............   Passed    0.01 sec
+2026-09-25T10:08:33.8130211Z  12/185 Test  #12: StreamFrameworkShutdown_plain_no_observer ..................   Passed    0.01 sec
+2026-09-25T10:08:33.8730454Z  13/185 Test  #13: StreamFrameworkShutdown_plain_noncooperating_timeout .......   Passed    0.06 sec
+2026-09-25T10:08:33.8829282Z  14/185 Test  #14: StreamFrameworkShutdown_reentrant_context_cleanup ..........   Passed    0.01 sec
+2026-09-25T10:08:33.8923424Z  15/185 Test  #15: StreamFrameworkShutdown_active_detach_context_visibility ...   Passed    0.01 sec
+2026-09-25T10:08:33.9043308Z  16/185 Test  #16: StreamFrameworkShutdown_destruction_logging_order ..........   Passed    0.01 sec
+2026-09-25T10:08:33.9104546Z  17/185 Test  #17: SocketContextLifecycleTest .................................   Passed    0.01 sec
+2026-09-25T10:08:33.9212282Z  18/185 Test  #18: SocketWriterResourcePolicyTest .............................   Passed    0.01 sec
+2026-09-25T10:08:33.9272842Z  19/185 Test  #19: ListenerLifecycleTest ......................................   Passed    0.01 sec
+2026-09-25T10:08:33.9273948Z         Start  20: EndpointLifetimeCountersTest
+2026-09-25T10:08:34.0877094Z  20/185 Test  #20: EndpointLifetimeCountersTest ...............................   Passed    0.16 sec
+2026-09-25T10:08:34.1411025Z  21/185 Test  #21: ConnectionAttemptLifecycleTest .............................   Passed    0.05 sec
+2026-09-25T10:08:34.1485103Z  22/185 Test  #22: TlsOpenSslLoggingTest ......................................   Passed    0.01 sec
+2026-09-25T10:08:34.1605365Z  23/185 Test  #23: TLSFrameworkShutdown_active_helper_requested ...............   Passed    0.01 sec
+2026-09-25T10:08:34.1724509Z  24/185 Test  #24: TLSFrameworkShutdown_active_helper_no_observer .............   Passed    0.01 sec
+2026-09-25T10:08:34.1843849Z  25/185 Test  #25: TLSFrameworkShutdown_active_helper_signal ..................   Passed    0.01 sec
+2026-09-25T10:08:34.1955281Z  26/185 Test  #26: TLSFrameworkShutdown_active_helper_forced ..................   Passed    0.01 sec
+2026-09-25T10:08:34.2068472Z  27/185 Test  #27: TLSFrameworkShutdown_publisher_mutation_same_list ..........   Passed    0.01 sec
+2026-09-25T10:08:34.2190445Z  28/185 Test  #28: TLSFrameworkShutdown_publisher_mutation_cross_publisher ....   Passed    0.01 sec
+2026-09-25T10:08:34.2336875Z  29/185 Test  #29: TLSFrameworkShutdown_signal_false_tls ......................   Passed    0.01 sec
+2026-09-25T10:08:36.2490245Z  30/185 Test  #30: TLSFrameworkShutdown_outer_timeout_long ....................   Passed    2.01 sec
+2026-09-25T10:08:38.2644132Z  31/185 Test  #31: TLSFrameworkShutdown_outer_timeout_multiple ................   Passed    2.01 sec
+2026-09-25T10:08:38.2701254Z  32/185 Test  #32: InetSocketAddressTest ......................................   Passed    0.01 sec
+2026-09-25T10:08:38.2754743Z  33/185 Test  #33: InetSocketAddressNativeTest ................................   Passed    0.01 sec
+2026-09-25T10:08:38.2806361Z  34/185 Test  #34: Inet6SocketAddressTest .....................................   Passed    0.00 sec
+2026-09-25T10:08:38.2856832Z  35/185 Test  #35: Inet6SocketAddressNativeTest ...............................   Passed    0.00 sec
+2026-09-25T10:08:38.2905127Z  36/185 Test  #36: UnixSocketAddressTest ......................................   Passed    0.00 sec
+2026-09-25T10:08:38.2954960Z  37/185 Test  #37: UnixSocketAddressInitTest ..................................   Passed    0.00 sec
+2026-09-25T10:08:38.3008028Z  38/185 Test  #38: InetSocketAddressInvalidInputTest ..........................   Passed    0.01 sec
+2026-09-25T10:08:38.3059714Z  39/185 Test  #39: Inet6SocketAddressInvalidInputTest .........................   Passed    0.00 sec
+2026-09-25T10:08:38.3106585Z  40/185 Test  #40: UnixSocketAddressPathLengthTest ............................   Passed    0.00 sec
+2026-09-25T10:08:38.3150542Z  41/185 Test  #41: UnixPeerCredentialsTest ....................................   Passed    0.00 sec
+2026-09-25T10:08:38.3205535Z  42/185 Test  #42: SocketAddressFormattingTest ................................   Passed    0.01 sec
+2026-09-25T10:08:38.3318233Z  43/185 Test  #43: HttpMessageParserTest ......................................   Passed    0.01 sec
+2026-09-25T10:08:38.3418832Z  44/185 Test  #44: HttpPolicyConfigTest .......................................   Passed    0.01 sec
+2026-09-25T10:08:38.3483284Z  45/185 Test  #45: HttpRequestFormatterRawWireTest ............................   Passed    0.01 sec
+2026-09-25T10:08:38.3544046Z  46/185 Test  #46: HttpResponseFormatterRawWireTest ...........................   Passed    0.01 sec
+2026-09-25T10:08:38.3603626Z  47/185 Test  #47: HttpMessagePresentationTest ................................   Passed    0.01 sec
+2026-09-25T10:08:38.3661184Z  48/185 Test  #48: HttpMessageHeaderCasingTest ................................   Passed    0.01 sec
+2026-09-25T10:08:38.3732067Z  49/185 Test  #49: HttpMessageTargetQueryEdgeTest .............................   Passed    0.01 sec
+2026-09-25T10:08:38.3809152Z  50/185 Test  #50: HttpServerUpgradeMissingRequestTest ........................   Passed    0.01 sec
+2026-09-25T10:08:38.3934371Z  51/185 Test  #51: HttpStreamingSourceFailureTest .............................   Passed    0.01 sec
+2026-09-25T10:08:38.3988627Z  52/185 Test  #52: WebSocketReceiverValidationTest ............................   Passed    0.01 sec
+2026-09-25T10:08:38.4066135Z  53/185 Test  #53: WebSocketLimitCloseFrameTest ...............................   Passed    0.01 sec
+2026-09-25T10:08:38.4085760Z  54/185 Test  #54: PublicLogApiTest ...........................................   Passed    0.00 sec
+2026-09-25T10:08:38.4115448Z  55/185 Test  #55: SemanticLoggerFormattingTest ...............................   Passed    0.00 sec
+2026-09-25T10:08:38.4136855Z  56/185 Test  #56: LogScopeOwnerTest ..........................................   Passed    0.00 sec
+2026-09-25T10:08:38.4193762Z  57/185 Test  #57: SemanticLoggerScopeTest ....................................   Passed    0.01 sec
+2026-09-25T10:08:38.4254245Z  58/185 Test  #58: SemanticLoggerBackendTest ..................................   Passed    0.01 sec
+2026-09-25T10:08:38.4309800Z  59/185 Test  #59: SemanticLoggerFilteringTest ................................   Passed    0.01 sec
+2026-09-25T10:08:38.4362112Z  60/185 Test  #60: SemanticLoggerDisabledPathTest .............................   Passed    0.00 sec
+2026-09-25T10:08:38.4404423Z  61/185 Test  #61: SemanticLoggerCacheTest ....................................   Passed    0.00 sec
+2026-09-25T10:08:38.4438641Z  62/185 Test  #62: SemanticEndToEndOutputTest .................................   Passed    0.00 sec
+2026-09-25T10:08:38.4492682Z  63/185 Test  #63: SemanticTerminalColorRoutingTest ...........................   Passed    0.01 sec
+2026-09-25T10:08:38.4534181Z  64/185 Test  #64: SemanticCliIntegrationTest .................................   Passed    0.00 sec
+2026-09-25T10:08:38.4599768Z  65/185 Test  #65: Mqtt311PacketValidationTest ................................   Passed    0.01 sec
+2026-09-25T10:08:38.4704645Z  66/185 Test  #66: MqttLifecycleTest ..........................................   Passed    0.01 sec
+2026-09-25T10:08:38.4767021Z  67/185 Test  #67: ConfigFormatterCommentMetadataTest .........................   Passed    0.01 sec
+2026-09-25T10:08:38.4824255Z  68/185 Test  #68: ConfigRequirementStateTest .................................   Passed    0.01 sec
+2026-09-25T10:08:38.4885909Z  69/185 Test  #69: HexDumpPresentationTest ....................................   Passed    0.01 sec
+2026-09-25T10:08:38.4964389Z  70/185 Test  #70: SingleshotTimerTest ........................................   Passed    0.01 sec
+2026-09-25T10:08:38.5057650Z  71/185 Test  #71: IntervalTimerStopableTest ..................................   Passed    0.01 sec
+2026-09-25T10:08:38.5133863Z  72/185 Test  #72: SNodeCStopFromCallbackTest .................................   Passed    0.01 sec
+2026-09-25T10:08:38.5300548Z  73/185 Test  #73: SNodeCReconfigureTest ......................................   Passed    0.02 sec
+2026-09-25T10:08:38.5383933Z  74/185 Test  #74: TimerCancelBeforeFireTest ..................................   Passed    0.01 sec
+2026-09-25T10:08:38.5462095Z  75/185 Test  #75: IntervalTimerCancelFromCallbackTest ........................   Passed    0.01 sec
+2026-09-25T10:08:38.5549456Z  76/185 Test  #76: PipeBoundedQueueTest .......................................   Passed    0.01 sec
+2026-09-25T10:08:38.5596957Z  77/185 Test  #77: PipeOwnershipTest ..........................................   Passed    0.00 sec
+2026-09-25T10:08:38.5677192Z  78/185 Test  #78: PipeImmediateCloseTest .....................................   Passed    0.01 sec
+2026-09-25T10:08:38.5761915Z  79/185 Test  #79: PipeSinkFairnessTest .......................................   Passed    0.01 sec
+2026-09-25T10:08:38.6337976Z  80/185 Test  #80: PipeTimeoutTest ............................................   Passed    0.06 sec
+2026-09-25T10:08:38.6431440Z  81/185 Test  #81: DescriptorRegistrationFailureTest ..........................   Passed    0.01 sec
+2026-09-25T10:08:38.6516152Z  82/185 Test  #82: FileReaderTest .............................................   Passed    0.01 sec
+2026-09-25T10:08:38.6596467Z  83/185 Test  #83: ShutdownReceiverNotification_requested .....................   Passed    0.01 sec
+2026-09-25T10:08:38.6675269Z  84/185 Test  #84: ShutdownReceiverNotification_signal ........................   Passed    0.01 sec
+2026-09-25T10:08:38.7748858Z  85/185 Test  #85: ShutdownReceiverNotification_signal-wait ...................   Passed    0.11 sec
+2026-09-25T10:08:38.7934981Z  86/185 Test  #86: InetLegacyServerClientCompositionTest ......................   Passed    0.02 sec
+2026-09-25T10:08:38.8123389Z  87/185 Test  #87: Inet6LegacyServerClientCompositionTest .....................   Passed    0.02 sec
+2026-09-25T10:08:38.8288082Z  88/185 Test  #88: UnixLegacyServerClientCompositionTest ......................   Passed    0.02 sec
+2026-09-25T10:08:38.8499612Z  89/185 Test  #89: InetLegacyServerMultipleClientsCompositionTest .............   Passed    0.02 sec
+2026-09-25T10:08:38.8706809Z  90/185 Test  #90: Inet6LegacyServerMultipleClientsCompositionTest ............   Passed    0.02 sec
+2026-09-25T10:08:38.8891141Z  91/185 Test  #91: UnixLegacyServerMultipleClientsCompositionTest .............   Passed    0.02 sec
+2026-09-25T10:08:38.9063352Z  92/185 Test  #92: InetLegacyServerClientMultiMessagePayloadExchangeTest ......   Passed    0.02 sec
+2026-09-25T10:08:38.9239900Z  93/185 Test  #93: Inet6LegacyServerClientMultiMessagePayloadExchangeTest .....   Passed    0.02 sec
+2026-09-25T10:08:38.9403981Z  94/185 Test  #94: UnixLegacyServerClientMultiMessagePayloadExchangeTest ......   Passed    0.02 sec
+2026-09-25T10:08:38.9612885Z  95/185 Test  #95: InetLegacyServerMultipleClientsPayloadExchangeTest .........   Passed    0.02 sec
+2026-09-25T10:08:38.9830538Z  96/185 Test  #96: Inet6LegacyServerMultipleClientsPayloadExchangeTest ........   Passed    0.02 sec
+2026-09-25T10:08:39.0027203Z  97/185 Test  #97: UnixLegacyServerMultipleClientsPayloadExchangeTest .........   Passed    0.02 sec
+2026-09-25T10:08:39.0198348Z  98/185 Test  #98: UnixLegacyServerClientPayloadExchangeTest ..................   Passed    0.02 sec
+2026-09-25T10:08:39.0369622Z  99/185 Test  #99: UnixLegacyServerClientDisconnectLifecycleTest ..............   Passed    0.02 sec
+2026-09-25T10:08:39.0503973Z 100/185 Test #100: UnixLegacyClientConnectFailureTest .........................   Passed    0.01 sec
+2026-09-25T10:08:39.0693631Z 101/185 Test #101: InetLegacyServerClientPayloadExchangeTest ..................   Passed    0.02 sec
+2026-09-25T10:08:39.0968334Z 102/185 Test #102: InetLegacyServerClientDisconnectLifecycleTest ..............   Passed    0.03 sec
+2026-09-25T10:08:39.1138551Z 103/185 Test #103: InetLegacyClientConnectFailureTest .........................   Passed    0.02 sec
+2026-09-25T10:08:39.1328555Z 104/185 Test #104: Inet6LegacyServerClientPayloadExchangeTest .................   Passed    0.02 sec
+2026-09-25T10:08:39.1514669Z 105/185 Test #105: Inet6LegacyServerClientDisconnectLifecycleTest .............   Passed    0.02 sec
+2026-09-25T10:08:39.1660898Z 106/185 Test #106: Inet6LegacyClientConnectFailureTest ........................   Passed    0.01 sec
+2026-09-25T10:08:39.1803916Z 107/185 Test #107: InetLegacyServerEffectiveListenAddressTest .................   Passed    0.01 sec
+2026-09-25T10:08:39.1858306Z 108/185 Test #108: InetPhysicalServerEffectiveBindAddressTest .................   Passed    0.01 sec
+2026-09-25T10:08:39.1927786Z 109/185 Test #109: UnixPhysicalSocketPathSafetyTest ...........................   Passed    0.01 sec
+2026-09-25T10:08:39.2130055Z 110/185 Test #110: InetLegacyServerClientLargePayloadExchangeTest .............   Passed    0.02 sec
+2026-09-25T10:08:39.2374478Z 111/185 Test #111: InetLegacyServerClientFramedPayloadExchangeTest ............   Passed    0.02 sec
+2026-09-25T10:08:39.2621969Z 112/185 Test #112: Inet6LegacyServerClientFramedPayloadExchangeTest ...........   Passed    0.02 sec
+2026-09-25T10:08:39.2854811Z 113/185 Test #113: UnixLegacyServerClientFramedPayloadExchangeTest ............   Passed    0.02 sec
+2026-09-25T10:08:39.3069056Z 114/185 Test #114: Inet6LegacyServerClientLargePayloadExchangeTest ............   Passed    0.02 sec
+2026-09-25T10:08:39.3268366Z 115/185 Test #115: UnixLegacyServerClientLargePayloadExchangeTest .............   Passed    0.02 sec
+2026-09-25T10:08:39.3461609Z 116/185 Test #116: InetLegacyServerControlledCloseLifecycleTest ...............   Passed    0.02 sec
+2026-09-25T10:08:39.3653582Z 117/185 Test #117: Inet6LegacyServerControlledCloseLifecycleTest ..............   Passed    0.02 sec
+2026-09-25T10:08:39.3840851Z 118/185 Test #118: UnixLegacyServerControlledCloseLifecycleTest ...............   Passed    0.02 sec
+2026-09-25T10:08:39.4060154Z 119/185 Test #119: InetLegacyServerMultipleClientsDisconnectLifecycleTest .....   Passed    0.02 sec
+2026-09-25T10:08:39.4281972Z 120/185 Test #120: Inet6LegacyServerMultipleClientsDisconnectLifecycleTest ....   Passed    0.02 sec
+2026-09-25T10:08:39.4481785Z 121/185 Test #121: UnixLegacyServerMultipleClientsDisconnectLifecycleTest .....   Passed    0.02 sec
+2026-09-25T10:08:39.4738111Z 122/185 Test #122: InetPerCallFlowTest ........................................   Passed    0.03 sec
+2026-09-25T10:08:39.5072897Z 123/185 Test #123: InetHttpServerClientGetRoundTripTest .......................   Passed    0.03 sec
+2026-09-25T10:08:39.5296601Z 124/185 Test #124: InetHttpClientParserLimitTest ..............................   Passed    0.02 sec
+2026-09-25T10:08:39.5536585Z 125/185 Test #125: InetHttpServerRequestPolicyTest ............................   Passed    0.02 sec
+2026-09-25T10:08:39.5784901Z 126/185 Test #126: InetHttpServerPipeliningPolicyTest .........................   Passed    0.02 sec
+2026-09-25T10:08:39.6041376Z 127/185 Test #127: Inet6HttpServerClientGetRoundTripTest ......................   Passed    0.03 sec
+2026-09-25T10:08:39.6272539Z 128/185 Test #128: UnixHttpServerClientGetRoundTripTest .......................   Passed    0.02 sec
+2026-09-25T10:08:39.6517108Z 129/185 Test #129: InetHttpServerClientPostBodyRoundTripTest ..................   Passed    0.02 sec
+2026-09-25T10:08:39.6767431Z 130/185 Test #130: Inet6HttpServerClientPostBodyRoundTripTest .................   Passed    0.02 sec
+2026-09-25T10:08:39.7007751Z 131/185 Test #131: UnixHttpServerClientPostBodyRoundTripTest ..................   Passed    0.02 sec
+2026-09-25T10:08:39.7259409Z 132/185 Test #132: InetHttpServerClientStatusVariantTest ......................   Passed    0.02 sec
+2026-09-25T10:08:39.7508538Z 133/185 Test #133: Inet6HttpServerClientStatusVariantTest .....................   Passed    0.02 sec
+2026-09-25T10:08:39.7739481Z 134/185 Test #134: UnixHttpServerClientStatusVariantTest ......................   Passed    0.02 sec
+2026-09-25T10:08:39.7989868Z 135/185 Test #135: InetHttpServerClientRepeatedRequestTest ....................   Passed    0.02 sec
+2026-09-25T10:08:39.8230739Z 136/185 Test #136: InetHttpServerClientDisconnectLifecycleTest ................   Passed    0.02 sec
+2026-09-25T10:08:39.8542947Z 137/185 Test #137: InetHttpClientPrematureServerCloseTest .....................   Passed    0.03 sec
+2026-09-25T10:08:39.8831749Z 138/185 Test #138: InetHttpServerClientLargeResponseBodyTest ..................   Passed    0.03 sec
+2026-09-25T10:08:39.9120607Z 139/185 Test #139: InetHttpServerClientLargeRequestBodyTest ...................   Passed    0.03 sec
+2026-09-25T10:08:39.9370971Z 140/185 Test #140: InetHttpServerClientHeaderHeavyRequestTest .................   Passed    0.02 sec
+2026-09-25T10:08:39.9617346Z 141/185 Test #141: InetHttpServerClientHeaderHeavyResponseTest ................   Passed    0.02 sec
+2026-09-25T10:08:39.9801837Z 142/185 Test #142: InetHttpClientConnectFailureTest ...........................   Passed    0.02 sec
+2026-09-25T10:08:40.0057307Z 143/185 Test #143: InetHttpServerClientChunkedResponseTest ....................   Passed    0.03 sec
+2026-09-25T10:08:40.0311472Z 144/185 Test #144: InetHttpServerClientPipeliningTest .........................   Passed    0.03 sec
+2026-09-25T10:08:40.0626620Z 145/185 Test #145: InetHttpServerMalformedRequestBehaviorTest .................   Passed    0.03 sec
+2026-09-25T10:08:40.0867444Z 146/185 Test #146: InetHttpClientMalformedResponseBehaviorTest ................   Passed    0.02 sec
+2026-09-25T10:08:40.1088784Z 147/185 Test #147: InetHttpServerClientChunkedRequestTest .....................   Passed    0.02 sec
+2026-09-25T10:08:40.1574547Z 148/185 Test #148: InetExpressRoutingMiddlewareTest ...........................   Passed    0.05 sec
+2026-09-25T10:08:40.1814455Z 149/185 Test #149: InetExpressHttpParserLimitTest .............................   Passed    0.02 sec
+2026-09-25T10:08:40.1815411Z         Start 150: Inet6ExpressTransportSmokeTest
+2026-09-25T10:08:40.2064631Z 150/185 Test #150: Inet6ExpressTransportSmokeTest .............................   Passed    0.02 sec
+2026-09-25T10:08:40.2065631Z         Start 151: UnixExpressTransportSmokeTest
+2026-09-25T10:08:40.2296532Z 151/185 Test #151: UnixExpressTransportSmokeTest ..............................   Passed    0.02 sec
+2026-09-25T10:08:40.2547244Z 152/185 Test #152: InetExpressMiddlewareShortCircuitTest ......................   Passed    0.02 sec
+2026-09-25T10:08:40.2839989Z 153/185 Test #153: InetExpressRoutingEdgeBasicsTest ...........................   Passed    0.03 sec
+2026-09-25T10:08:40.3145921Z 154/185 Test #154: InetExpressMountedRouterBasicsTest .........................   Passed    0.03 sec
+2026-09-25T10:08:40.3445293Z 155/185 Test #155: InetExpressNestedRouterBasicsTest ..........................   Passed    0.03 sec
+2026-09-25T10:08:40.3752874Z 156/185 Test #156: InetExpressRouteParameterRegexTest .........................   Passed    0.03 sec
+2026-09-25T10:08:40.4058744Z 157/185 Test #157: InetExpressMiddlewareMountOrderTest ........................   Passed    0.03 sec
+2026-09-25T10:08:40.4373005Z 158/185 Test #158: InetExpressQueryMountInteractionTest .......................   Passed    0.03 sec
+2026-09-25T10:08:40.4662045Z 159/185 Test #159: InetExpressFallbackNotFoundTest ............................   Passed    0.03 sec
+2026-09-25T10:08:40.4929511Z 160/185 Test #160: InetWebSocketServerClientTextEchoTest ......................   Passed    0.03 sec
+2026-09-25T10:08:40.5203323Z 161/185 Test #161: Inet6WebSocketServerClientTextEchoTest .....................   Passed    0.03 sec
+2026-09-25T10:08:40.5460123Z 162/185 Test #162: UnixWebSocketServerClientTextEchoTest ......................   Passed    0.03 sec
+2026-09-25T10:08:40.5738600Z 163/185 Test #163: InetWebSocketServerClientMultiTextMessageTest ..............   Passed    0.03 sec
+2026-09-25T10:08:40.6006387Z 164/185 Test #164: InetWebSocketServerClientBinaryEchoTest ....................   Passed    0.03 sec
+2026-09-25T10:08:40.6442650Z 165/185 Test #165: InetWebSocketServerClientCloseHandshakeTest ................   Passed    0.04 sec
+2026-09-25T10:08:40.6716266Z 166/185 Test #166: InetWebSocketServerClientPingPongTest ......................   Passed    0.03 sec
+2026-09-25T10:08:40.6984170Z 167/185 Test #167: InetWebSocketServerInitiatedCloseTest ......................   Passed    0.03 sec
+2026-09-25T10:08:40.7373843Z 168/185 Test #168: InetWebSocketUnexpectedCloseLifecycleTest ..................   Passed    0.04 sec
+2026-09-25T10:08:40.7645050Z 169/185 Test #169: InetWebSocketLargeTextMessageTest ..........................   Passed    0.03 sec
+2026-09-25T10:08:40.7902162Z 170/185 Test #170: InetWebSocketLargeBinaryMessageTest ........................   Passed    0.03 sec
+2026-09-25T10:08:40.8148878Z 171/185 Test #171: InetSseEventSourceBasicEventTest ...........................   Passed    0.02 sec
+2026-09-25T10:08:40.8401337Z 172/185 Test #172: InetSseEventSourceMultiEventSequenceTest ...................   Passed    0.02 sec
+2026-09-25T10:08:40.8636999Z 173/185 Test #173: InetSseEventSourceMultiLineDataTest ........................   Passed    0.02 sec
+2026-09-25T10:08:40.8876506Z 174/185 Test #174: InetSseEventSourceCommentIgnoredTest .......................   Passed    0.02 sec
+2026-09-25T10:08:40.9119750Z 175/185 Test #175: InetSseEventSourceDefaultMessageEventTest ..................   Passed    0.02 sec
+2026-09-25T10:08:40.9455881Z 176/185 Test #176: InetSseEventSourceClientCloseAfterEventTest ................   Passed    0.03 sec
+2026-09-25T10:08:40.9705757Z 177/185 Test #177: InetSseEventSourceRetryFieldTest ...........................   Passed    0.02 sec
+2026-09-25T10:08:44.0157493Z 178/185 Test #178: InetSseEventSourceReconnectLifecycleTest ...................   Passed    3.04 sec
+2026-09-25T10:08:44.0716990Z 179/185 Test #179: InetSseEventSourceDestructionLifecycleTest .................   Passed    0.06 sec
+2026-09-25T10:08:44.4683003Z 180/185 Test #180: ParameterlessSemanticLoggerPolicyTest ......................   Passed    0.40 sec
+2026-09-25T10:08:44.4764945Z 181/185 Test #181: LoggingApiSurfacePolicyTest ................................   Passed    0.01 sec
+2026-09-25T10:08:44.4786511Z 182/185 Test #182: EpollDescriptorPublisherPolicyTest .........................   Passed    0.00 sec
+2026-09-25T10:08:44.4807455Z 183/185 Test #183: EventLoopSyscallDisciplinePolicyTest .......................   Passed    0.00 sec
+2026-09-25T10:08:44.9201504Z 184/185 Test #184: SensitiveLoggingPolicyTest .................................   Passed    0.44 sec
+2026-09-25T10:08:44.9222611Z 185/185 Test #185: CiWorkflowPathsPolicyTest ..................................   Passed    0.00 sec
+2026-09-25T10:08:44.9227361Z 100% tests passed, 0 tests failed out of 185
+2026-09-25T10:08:44.9266880Z smoke                 =   0.01 sec*proc (1 test)
+2026-09-25T10:08:45.7579945Z -- The CXX compiler identification is GNU 13.3.0
+2026-09-25T10:08:51.6409612Z 1/4 Test #1: echo.config-surface ..............   Passed    0.06 sec
+2026-09-25T10:08:51.7357182Z 2/4 Test #2: echo.server-external-peer ........   Passed    0.09 sec
+2026-09-25T10:08:51.7902758Z 3/4 Test #3: echo.client-external-peer ........   Passed    0.05 sec
+2026-09-25T10:08:51.7903883Z     Start 4: echo.pair-smoke
+2026-09-25T10:08:52.1410603Z 4/4 Test #4: echo.pair-smoke ..................   Passed    0.35 sec
+2026-09-25T10:08:52.1413689Z 100% tests passed, 0 tests failed out of 4
+2026-09-25T10:08:52.1417607Z smoke            =   0.35 sec*proc (1 test)
+2026-09-25T10:08:52.1984719Z -- The CXX compiler identification is GNU 13.3.0
+2026-09-25T10:10:26.7528058Z Companion example build passed.
+2026-09-25T10:10:27.0073421Z  1/66 Test  #1: exercise-ch01 ...........................   Passed    0.22 sec
+2026-09-25T10:10:27.1495760Z  2/66 Test  #2: exercise-ch01-independent-peers .........   Passed    0.14 sec
+2026-09-25T10:10:33.0437652Z  3/66 Test  #3: exercise-ch02-consumer ..................   Passed    5.89 sec
+2026-09-25T10:10:38.9650291Z  4/66 Test  #4: exercise-ch02-component .................   Passed    5.92 sec
+2026-09-25T10:10:39.1149533Z  5/66 Test  #5: exercise-ch03 ...........................   Passed    0.15 sec
+2026-09-25T10:10:39.2374807Z  6/66 Test  #6: exercise-ch03-occupied-port .............   Passed    0.12 sec
+2026-09-25T10:10:39.2394661Z  7/66 Test  #7: exercise-ch04-model-instances ...........   Passed    0.00 sec
+2026-09-25T10:10:39.3357334Z  8/66 Test  #8: exercise-ch04-independent-peers .........   Passed    0.10 sec
+2026-09-25T10:10:39.4746256Z  9/66 Test  #9: exercise-ch05-layer-families ............   Passed    0.14 sec
+2026-09-25T10:10:45.3896014Z 10/66 Test #10: exercise-ch05-layer-component ...........   Passed    5.91 sec
+2026-09-25T10:10:45.3995564Z 11/66 Test #11: exercise-ch06-deferred-work .............   Passed    0.01 sec
+2026-09-25T10:10:45.4014396Z 12/66 Test #12: exercise-ch06-model-checkpoint ..........   Passed    0.00 sec
+2026-09-25T10:10:45.5406957Z 13/66 Test #13: exercise-ch07-ip-families ...............   Passed    0.14 sec
+2026-09-25T10:10:45.6357076Z 14/66 Test #14: exercise-ch07-unix-path .................   Passed    0.09 sec
+2026-09-25T10:10:45.7320947Z 15/66 Test #15: exercise-ch08-independent-peers .........   Passed    0.10 sec
+2026-09-25T10:10:45.8557600Z 16/66 Test #16: exercise-ch08-occupied-endpoint .........   Passed    0.12 sec
+2026-09-25T10:10:45.8615869Z 17/66 Test #17: exercise-ch09-selectors .................   Passed    0.01 sec
+2026-09-25T10:10:46.0014626Z 18/66 Test #18: exercise-ch09-part-checkpoint ...........   Passed    0.14 sec
+2026-09-25T10:10:46.2162716Z 19/66 Test #19: exercise-ch10-framing ...................   Passed    0.21 sec
+2026-09-25T10:10:46.5172907Z 20/66 Test #20: exercise-ch10-limits ....................   Passed    0.30 sec
+2026-09-25T10:10:46.7164794Z 21/66 Test #21: exercise-ch11-isolation .................   Passed    0.20 sec
+2026-09-25T10:10:46.8141691Z 22/66 Test #22: exercise-ch11-refusal ...................   Passed    0.10 sec
+2026-09-25T10:10:47.1834564Z 23/66 Test #23: exercise-ch12-part-checkpoint ...........   Passed    0.37 sec
+2026-09-25T10:10:47.2796714Z 24/66 Test #24: exercise-ch12-endpoint-failure ..........   Passed    0.10 sec
+2026-09-25T10:10:47.3982316Z 25/66 Test #25: exercise-ch13-precedence ................   Passed    0.12 sec
+2026-09-25T10:10:47.5217050Z 26/66 Test #26: exercise-ch13-discovery .................   Passed    0.12 sec
+2026-09-25T10:10:47.5848518Z 27/66 Test #27: exercise-ch14-records ...................   Passed    0.06 sec
+2026-09-25T10:10:47.8490729Z 28/66 Test #28: exercise-ch14-part-checkpoint ...........   Passed    0.26 sec
+2026-09-25T10:10:48.7240300Z 29/66 Test #29: exercise-ch15-trust-identity ............   Passed    0.87 sec
+2026-09-25T10:10:48.9794119Z 30/66 Test #30: exercise-ch15-secure-echo ...............   Passed    0.26 sec
+2026-09-25T10:10:49.3080435Z 31/66 Test #31: exercise-ch16-bounded-retry .............   Passed    0.33 sec
+2026-09-25T10:10:49.3081577Z       Start 32: exercise-ch16-part-checkpoint
+2026-09-25T10:10:50.8160593Z 32/66 Test #32: exercise-ch16-part-checkpoint ...........   Passed    1.51 sec
+2026-09-25T10:10:51.1140146Z 33/66 Test #33: exercise-ch17-framing ...................   Passed    0.30 sec
+2026-09-25T10:10:51.2134549Z 34/66 Test #34: exercise-ch17-limits ....................   Passed    0.10 sec
+2026-09-25T10:10:51.3127976Z 35/66 Test #35: exercise-ch18-order .....................   Passed    0.10 sec
+2026-09-25T10:10:51.4116082Z 36/66 Test #36: exercise-ch18-stop ......................   Passed    0.10 sec
+2026-09-25T10:10:51.5131752Z 37/66 Test #37: exercise-ch19 ...........................   Passed    0.10 sec
+2026-09-25T10:10:51.6134484Z 38/66 Test #38: exercise-ch19-observers .................   Passed    0.10 sec
+2026-09-25T10:10:51.7464594Z 39/66 Test #39: exercise-ch20-negotiation ...............   Passed    0.13 sec
+2026-09-25T10:10:52.0581478Z 40/66 Test #40: exercise-ch20-part-checkpoint ...........   Passed    0.31 sec
+2026-09-25T10:10:52.4006267Z 41/66 Test #41: exercise-ch21-wire ......................   Passed    0.34 sec
+2026-09-25T10:10:52.5884138Z 42/66 Test #42: exercise-ch21-delivery ..................   Passed    0.19 sec
+2026-09-25T10:10:52.7847372Z 43/66 Test #43: exercise-ch22-binary ....................   Passed    0.20 sec
+2026-09-25T10:10:52.8724621Z 44/66 Test #44: exercise-ch22-text ......................   Passed    0.09 sec
+2026-09-25T10:10:53.0203143Z 45/66 Test #45: exercise-ch23-unavailable-output ........   Passed    0.15 sec
+2026-09-25T10:10:53.3724520Z 46/66 Test #46: exercise-ch23-part-checkpoint ...........   Passed    0.35 sec
+2026-09-25T10:10:54.6808436Z 47/66 Test #47: exercise-ch24-durable ...................   Passed    1.31 sec
+2026-09-25T10:10:55.9642282Z 48/66 Test #48: exercise-ch24-error .....................   Passed    1.28 sec
+2026-09-25T10:10:56.2625907Z 49/66 Test #49: exercise-ch25-composition ...............   Passed    0.30 sec
+2026-09-25T10:11:02.2582738Z 50/66 Test #50: exercise-ch25-consumer-trace ............   Passed    6.00 sec
+2026-09-25T10:11:03.7211847Z 51/66 Test #51: exercise-ch26-part-checkpoint ...........   Passed    1.46 sec
+2026-09-25T10:11:03.9134059Z 52/66 Test #52: exercise-ch26-publication-trace .........   Passed    0.19 sec
+2026-09-25T10:11:09.8588576Z 53/66 Test #53: exercise-ch27-consumer ..................   Passed    5.95 sec
+2026-09-25T10:11:15.8241399Z 54/66 Test #54: exercise-ch27-component .................   Passed    5.96 sec
+2026-09-25T10:11:24.6459594Z 55/66 Test #55: exercise-ch28-lifecycle .................   Passed    8.82 sec
+2026-09-25T10:11:33.3525375Z 56/66 Test #56: exercise-ch28-configuration .............   Passed    8.71 sec
+2026-09-25T10:11:48.1783258Z 57/66 Test #57: exercise-ch29-diagnosis .................   Passed   14.83 sec
+2026-09-25T10:12:03.0101554Z 58/66 Test #58: exercise-ch29-checkpoint ................   Passed   14.83 sec
+2026-09-25T10:12:03.1581266Z 59/66 Test #59: exercise-ch30 ...........................   Passed    0.15 sec
+2026-09-25T10:12:03.1603607Z 60/66 Test #60: exercise-ch30-validation ................   Passed    0.00 sec
+2026-09-25T10:12:03.2743423Z 61/66 Test #61: exercise-ch31-framing ...................   Passed    0.11 sec
+2026-09-25T10:12:03.4372107Z 62/66 Test #62: exercise-ch31-mixed .....................   Passed    0.16 sec
+2026-09-25T10:12:03.4392973Z 63/66 Test #63: exercise-ch32 ...........................   Passed    0.00 sec
+2026-09-25T10:12:03.4409362Z 64/66 Test #64: exercise-ch32-model-instances ...........   Passed    0.00 sec
+2026-09-25T10:12:09.4366418Z 65/66 Test #65: exercise-appendix-a-source-consumer .....   Passed    6.00 sec
+2026-09-25T10:12:09.8057717Z 66/66 Test #66: exercise-appendix-a-carrier-extension ...   Passed    0.37 sec
+2026-09-25T10:12:09.8063233Z 100% tests passed, 0 tests failed out of 66
+2026-09-25T10:12:09.8228918Z ##[group]Run python3 ci/run-teaching-smoke-tests.py
+2026-09-25T10:12:09.8229655Z [36;1mpython3 ci/run-teaching-smoke-tests.py[0m
+2026-09-25T10:12:09.9900740Z PASS: four semantic records; component Debug overrides global Info; event and typed error; no invented peer
+2026-09-25T10:12:09.9901500Z PASS: Chapter 3 server reflects a controlled byte sequence
+2026-09-25T10:12:09.9902031Z PASS: Chapter 3 client initiates and reflects with a controlled peer
+2026-09-25T10:12:10.0140266Z ##[group]Run bash ci/run-behavior-smoke-tests.sh
+2026-09-25T10:12:10.0140666Z [36;1mbash ci/run-behavior-smoke-tests.sh[0m
+2026-09-25T10:12:11.9776642Z SSE-Server smoke endpoint: http://127.0.0.1:35523/events
+2026-09-25T10:12:11.9777264Z MiniGateway Extended smoke endpoint: http://127.0.0.1:40045
+2026-09-25T10:12:11.9778026Z MiniGateway Extended Unix socket: /tmp/snodec-book-smoke-10613.sock
+2026-09-25T10:12:11.9780758Z SSE-Server runtime smoke test passed.
+2026-09-25T10:12:11.9782733Z Starting minigateway-extended: /home/runner/work/SNode.C-Book/SNode.C-Book/build/ci-book-examples/companion/examples/MiniGateway-Extended/minigateway-extended web local --host 127.0.0.1 --port 40045 measurement-input local --sun-path /tmp/snodec-book-smoke-10613.sock mqtt-uplink remote --host 127.0.0.1 --port 1883
+2026-09-25T10:12:11.9784842Z MiniGateway Extended Unix-input runtime smoke test passed.
+2026-09-25T10:12:11.9795614Z Behavioral smoke tests passed.
+2026-09-25T10:12:12.0005364Z ##[group]Run python3 ci/run-example-lifetime-tests.py \
+2026-09-25T10:12:12.0005856Z [36;1mpython3 ci/run-example-lifetime-tests.py \[0m
+2026-09-25T10:12:12.0006699Z [36;1m  --work build/example-lifetime-checks \[0m
+2026-09-25T10:12:12.0007088Z [36;1m  | tee build/verification-logs/example-lifetime-checks.txt[0m
+2026-09-25T10:12:12.1620155Z -- The CXX compiler identification is GNU 13.3.0
+2026-09-25T10:12:12.3236540Z -- Build files have been written to: /home/runner/work/SNode.C-Book/SNode.C-Book/build/example-lifetime-checks/fixture-build
+2026-09-25T10:12:37.6453763Z Starting SSE-Server: /home/runner/work/SNode.C-Book/SNode.C-Book/build/example-lifetime-checks/fixture-build/SSE-Server/sse-server --log-level=3 legacy local --host=127.0.0.1 --port=55213
+2026-09-25T10:12:37.6455593Z PASS: SSE-Server idle FIN/RST churn wave 1, only the live observer retained
+2026-09-25T10:12:37.6526732Z PASS: SSE-Server idle FIN/RST churn wave 2, only the live observer retained
+2026-09-25T10:12:37.6600924Z PASS: SSE-Server idle FIN/RST churn wave 3, only the live observer retained
+2026-09-25T10:12:37.6617999Z PASS: SSE-Server surviving observer receives the next measurement; final idle cleanup releases all responses
+2026-09-25T10:12:37.8807305Z Starting MiniGateway: /home/runner/work/SNode.C-Book/SNode.C-Book/build/example-lifetime-checks/fixture-build/MiniGateway/minigateway --log-level=3 web local --host=127.0.0.1 --port=39781 mqtt-uplink --disabled
+2026-09-25T10:12:37.8809525Z PASS: MiniGateway idle FIN/RST churn wave 1, only the live observer retained
+2026-09-25T10:12:37.8897878Z PASS: MiniGateway idle FIN/RST churn wave 2, only the live observer retained
+2026-09-25T10:12:37.8990045Z PASS: MiniGateway idle FIN/RST churn wave 3, only the live observer retained
+2026-09-25T10:12:37.9010569Z PASS: MiniGateway surviving observer receives the next measurement; final idle cleanup releases all responses
+2026-09-25T10:12:38.1199918Z Starting MiniGateway-Extended: /home/runner/work/SNode.C-Book/SNode.C-Book/build/example-lifetime-checks/fixture-build/MiniGateway-Extended/minigateway-extended --log-level=3 web local --host=127.0.0.1 --port=43825 mqtt-uplink --disabled measurement-input --disabled
+2026-09-25T10:12:38.1202338Z PASS: MiniGateway-Extended idle FIN/RST churn wave 1, only the live observer retained
+2026-09-25T10:12:38.1289355Z PASS: MiniGateway-Extended idle FIN/RST churn wave 2, only the live observer retained
+2026-09-25T10:12:38.1379902Z PASS: MiniGateway-Extended idle FIN/RST churn wave 3, only the live observer retained
+2026-09-25T10:12:38.1399750Z PASS: MiniGateway-Extended surviving observer receives the next measurement; final idle cleanup releases all responses
+2026-09-25T10:12:38.3759866Z PASS: unchanged teaching client receives hello and closes
+2026-09-25T10:12:38.4608247Z PASS: WebSocket text/binary type, exact bytes, NUL/non-UTF8 binary, empty/sequential/fragmented messages, interleaved ping and close
+2026-09-25T10:12:38.4644360Z All selected example lifetime/echo checks passed.
+build/teaching-smoke-logs/
+build/behavior-smoke-logs/
+build/example-lifetime-checks/runtime-logs/

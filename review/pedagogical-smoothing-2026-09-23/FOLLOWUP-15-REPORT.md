@@ -1,6 +1,6 @@
 # Follow-up 15 — refinement and validation report
 
-**Scoped edits committed; the publisher gate is not fully closed.** The local Clang run has 65/66 labs because the unchanged Ch16 live-log parser read an incomplete JSON record. Bibliography completion also leaves backmatter at 812 tokens against the older 800-token cap; no unapproved exception or teaching cut has been made. Hosted results are recorded below. No further broad refinement follows this pass.
+**Follow-up 15 is closed; the manuscript is frozen for submission.** Both author-approved corrections are applied and fresh local and hosted GCC/Clang runs pass 66/66 labs. The Ch16 live-log reader now waits for newline-terminated records while rejecting malformed complete JSON. The author explicitly waived the backmatter cap by 12 tokens (812/800) for C6 bibliography metadata; the absolute 115,000-token ceiling is unchanged. No manuscript text was cut or changed in this closure pass. Earlier failures remain recorded below.
 
 Main was fast-forwarded with `--ff-only` from ccbe53b to 8328dfc and pushed before editing. Default-branch HEAD replaced old source pins. The author framework tree was read-only and unchanged. Every existing historical record remains; FOLLOWUP-15.md contains the verbatim instruction and clarifications.
 
@@ -13,8 +13,9 @@ Main was fast-forwarded with `--ff-only` from ccbe53b to 8328dfc and pushed befo
 | C | `14263b0` | Publication tools, formatting, identity channel, index and bibliography |
 | D | `09803e1` | Linked copy-edit, retained examples and local cadence |
 | C integration | `f6b47e0` | Actual PDF build/render findings, regression guards and refreshed proposal measurements |
+| Approved closure | `98f091d` | Ch16 complete-record boundary; explicit backmatter waiver and regression tests |
 
-An additional C integration commit was necessary after the first A–D push exposed the obsolete caption override and rendered layout defects. This departs from the requested four item commits; it preserves the already-pushed history and makes the corrective build change explicit. The final evidence commit contains this report and logs. The two outstanding author decisions are not treated as approvals. A concrete two-line Ch16 reader patch is saved as followup-15-evidence/ch16-proposed.patch but has not been applied; isolated tests show it defers incomplete records and still rejects complete malformed JSON.
+An additional C integration commit was necessary after the first A–D push exposed the obsolete caption override and rendered layout defects. This departs from the requested four item commits; it preserves the already-pushed history and makes the corrective build change explicit. The final evidence commit contains this report and logs. The author subsequently approved both outstanding decisions. The prepared Ch16 reader patch is applied with focused regression tests, and backmatter-cap-waiver.md records the narrowly authorized 812/800 exception. The checker reports the waiver explicitly, rejects an absent/invalid waiver, and still rejects 813 tokens.
 
 ## Observed default-branch HEADs
 
@@ -26,6 +27,8 @@ SHAs below are observations, never checkout/fetch targets. External heads did no
 | SNodeC/mqttsuite / master | `5fef5c3036928dfa40ad4f124bb237cc9c3202bb` | `5fef5c3036928dfa40ad4f124bb237cc9c3202bb` |
 | SNodeC/OpenWRT / main | `5bef8cca5982838a7191a148633c1058f154e5eb` | `5bef8cca5982838a7191a148633c1058f154e5eb` |
 | SNodeC/SNode.C-Book / main | `8328dfcd796dcf9b1b65246d5ef020192d857458` | `f6b47e02b7cff1969b6b6f1e382108f8502f57f0` |
+
+The approved closure pass began at book main b34468b and tested 98f091da1f46a32a756f0c83d06eaf8d9e192d2b. External HEADs remained identical to the table above. The author tree again matched at start and end. See followup-15-evidence/approval-heads.json and approval-author-tree-{start,end}.json. The final review-only commit records these results without changing tested inputs.
 
 Author tree start/end: HEAD 07ca9a2936ee72582df7d159cb06666fe23e30f8, empty porcelain status in both records. The comparison ignores only the porting/ entry and never reads or changes that directory. See `author-tree-followup-15-start.json` and `author-tree-followup-15-end.json`.
 
@@ -55,7 +58,7 @@ All item findings reproduced unless qualified below. Pre-edit and source-HEAD fi
 | C3 | Verified shared stdout race; identity uses stderr captured in a dedicated file while async logging stays on stdout. Assertions/timeouts unchanged.50 IP and 50 Unix runs per compiler pass. | `companion/exercises/ch07/family-server.cpp:15`; `companion/exercises/ch07/families.py:27`; `companion/exercises/lab_support.py:30` | C |
 | C4 | Verified both duplicate index directives and split headings; removed duplicates, normalized instances/Unix domain sockets. | `manuscript/chapters/13-configuring-applications-and-named-instances.md:211`; `manuscript/chapters/appendix-a-reading-and-extending-the-framework.md:165` | C |
 | C5 | Verified checkpoint heading, figure attributes and README prefix convention. Full README retained; existing short running-head facility keeps new heading clear of page number. | `manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md:327`; `manuscript/chapters/21-mqtt-support-in-snodec.md:21`; `companion/examples/MiniGateway/README.md:15` | C + C integration |
-| C6 | Verified all four book editions/publishers/years using their publisher catalogues; complete entries retained. Older backmatter cap remains a separate open budget item. | `manuscript/backmatter/further-reading.md:12`; `manuscript/backmatter/further-reading.md:21` | C |
+| C6 | Verified all four book editions/publishers/years using their publisher catalogues; complete entries retained. The author explicitly approved the 12-token backmatter exception; see backmatter-cap-waiver.md. | `manuscript/backmatter/further-reading.md:12`; `manuscript/backmatter/further-reading.md:21` | C |
 | D1 | Verified release-note wording; changed to present-tense API and invariant descriptions without removing the technical distinctions. | `manuscript/chapters/10-writing-socketcontext-classes-well.md:368`; `manuscript/chapters/25-reading-complete-snodec-applications.md:271`; `manuscript/chapters/appendix-a-reading-and-extending-the-framework.md:341` | D |
 | D2 | Verified compressed logging sentences; expanded scope/type, bootstrap, filtering, delivery and confidentiality explanations. | `manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md:132`; `manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md:231`; `manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md:293` | D |
 | D3 | Verified repeated passages; explicit links retain content, and Echo receive/constructor excerpts match Ch3 exactly apart from excerpt indentation. | `manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md:448`; `manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md:164`; `manuscript/chapters/13-configuring-applications-and-named-instances.md:446`; `manuscript/chapters/26-from-applications-to-systems-mqttsuite.md:53` | D |
@@ -73,22 +76,25 @@ Publisher catalogues used for C6: [Stroustrup](https://www.informit.com/store/c-
 | Editorial matrix | 37/37● in each dimension; 296●, 0◐, 0○. This does not override failing runtime/budget gates. |
 | Book package, local | PASS: 330-page book, 9-page proposal, 61-page sample; two builds, 459 unique package entries; no unresolved references; no overfull boxes in the main book. |
 | Publication pair | Pandoc 3.9.0.2 and pandoc-crossref release asset v0.3.24a (binary reports v0.3.24, built with Pandoc v3.9.0.2); TeX Live 2026. Shared parsed-version guard passes; mismatch/missing-version tests reject invalid pairs. |
-| GCC 13.3.0 local labs | PASS 66/66; framework 185/185, external consumer 4/4; all teaching/behavior/lifetime suites pass. |
-| Clang 18.1.3 local labs | FAIL 65/66: exercise-ch16-part-checkpoint raises JSONDecodeError in recovery.py:14 while the producer is still running. Framework 185/185, external consumer 4/4 and all subsequent smoke/lifetime checks pass. |
-| Hosted gates | **PASS:** book-package [36117637249](https://github.com/SNodeC/SNode.C-Book/actions/runs/36117637249), companion [36117636257](https://github.com/SNodeC/SNode.C-Book/actions/runs/36117636257); GCC and Clang 66/66, every job successful. The local failure remains open. |
+| GCC 13.3.0 local labs | PASS: fresh 66/66 after the approved fix (80.81 s). Prior full build also passed framework 185/185, external consumer 4/4 and all teaching/behavior/lifetime suites. |
+| Clang 18.1.3 local labs | PASS: fresh 66/66 after the approved fix (71.96 s). Original 65/66 failure is retained as historical evidence below. Prior framework 185/185, consumer 4/4 and smoke/lifetime checks passed. |
+| Hosted gates | **PASS at 98f091d:** book-package [36121014927](https://github.com/SNodeC/SNode.C-Book/actions/runs/36121014927), companion [36121014960](https://github.com/SNodeC/SNode.C-Book/actions/runs/36121014960); GCC 13.3.0 and Clang 18.1.3 each 66/66 labs, 185/185 framework tests and 4/4 consumer tests; all smoke/lifetime steps and every job successful. |
 | C3 repetitions | PASS: 50 IP-family and 50 Unix-path executions per compiler; 200/200 total. No assertion or timeout changed. |
 | SNode.C master alignment | PASS: 1,448 file content manifest, 33 chapter/appendix records, 37 exact listings, zero errors. Drift test verifies modified/missing/untracked file names. |
 | External anchors | PASS: fresh mqttsuite master/OpenWRT main clones; explicit path and symbol checks. This proves source existence, not service deployment. |
 | Author tree | PASS: observed HEAD and filtered porcelain status equal start; no author-tree writes. |
 | Chapter/global budgets | PASS: 111,739 tokens, all floors preserved; eight documented cap waivers within 5%; global ceiling 115,000. |
-| Backmatter budget | OPEN: 812 versus 800. The 12-token exception was requested because C6 requires the added bibliography details and NO CUTS preserves explanations. No answer is assumed; checker remains strict. |
-| Editorial checks | Polish 9/9 and final regression guards pass; smoothing 15/16 groups passes except the backmatter cap. Smoothing tests 3/4 pass, with the current-manuscript acceptance test reporting that same open cap. |
+| Backmatter budget | PASS WITH EXPLICIT AUTHOR WAIVER: 812/800, authorized solely for C6 bibliographic completion. The checker retains the historical 800 cap, validates the documented 812 maximum and rejects 813. Global ceiling remains 115,000. |
+| Editorial checks | Polish 9/9, final regression guards and smoothing 16/16 groups pass. Smoothing tests 5/5, including the narrow waiver boundary; Ch16 reader regression tests 2/2. |
 | Other checks | Chapter references 321/321; hygiene, metrics, source alignment and external anchors pass. Final-guard tests 21/21, polish 17/17, metrics 5/5, references 6/6, drift 1/1, publication-version 3/3. |
 
 ## Hosted runs
 
 | Run / tested book tip | Job | Version evidence | Conclusion |
 |---|---|---|---|
+| [36121014960](https://github.com/SNodeC/SNode.C-Book/actions/runs/36121014960) / `98f091d` | Companion examples (gcc) | GNU 13.3.0; labs 66/66 (Ch16 checkpoint 1.51 s), framework 185/185, consumer 4/4; smoke/lifetime pass | **success**, every job step passes |
+| Same run | Companion examples (clang) | Clang 18.1.3; labs 66/66 (Ch16 checkpoint 1.45 s), framework 185/185, consumer 4/4; smoke/lifetime pass | **success**, every job step passes |
+| [36121014927](https://github.com/SNodeC/SNode.C-Book/actions/runs/36121014927) / `98f091d` | build-book-package | Pandoc 3.9.0.2; crossref built with Pandoc v3.9.0.2; unchanged 330-page book | **success**, every job step passes |
 | [36116892429](https://github.com/SNodeC/SNode.C-Book/actions/runs/36116892429) / `09803e1` | build-book-package | Matched pair; obsolete caption override still present | **failure**, preserved as the pre-correction result |
 | [36116892333](https://github.com/SNodeC/SNode.C-Book/actions/runs/36116892333) / `09803e1` | Companion examples (gcc) | GNU 13.3.0; framework 185/185, consumer 4/4, labs 66/66; smoke/lifetime pass | **success** |
 | Same run | Companion examples (clang) | Clang 18.1.3; framework 185/185, consumer 4/4, labs 66/66; smoke/lifetime pass | **success** |
@@ -96,13 +102,13 @@ Publisher catalogues used for C6: [Stroustrup](https://www.informit.com/store/c-
 | [36117636257](https://github.com/SNodeC/SNode.C-Book/actions/runs/36117636257) / `f6b47e0` | Companion examples (gcc) | GNU 13.3.0; framework 185/185, consumer 4/4, labs 66/66; all smoke/lifetime steps pass | **success**, every job step passes |
 | Same run | Companion examples (clang) | Clang 18.1.3; framework 185/185, consumer 4/4, labs 66/66; all smoke/lifetime steps pass | **success**, every job step passes |
 
-The hosted Clang successes do not cancel the local failure: the Ch16 reader is unchanged. Full job/step conclusions and selected version/test log lines are preserved in followup-15-evidence. The final evidence commit changes only review records and checker fixture support; later automatically triggered evidence-push runs are distinct from these recorded production-tip runs.
+The earlier hosted Clang successes did not cancel the original local failure. The author approved the reader correction, and fresh local runs now pass all 66 labs on both compilers. Fresh hosted run 36121014960 validates the corrected commit separately: both jobs and every step succeeded, with 66/66 labs on each compiler. Full job/step conclusions and selected version/test log lines are preserved in followup-15-evidence; evidence-only pushes are distinguished from the tested implementation commit.
 
-## Validation limits and remaining issue
+## Validation limits and historical failure
 
 Local workflow commands ran in separate Ubuntu 24.04.4 workspaces with GNU 13.3.0 and Clang 18.1.3, separate builds/install prefixes/homes and private temporary directories. Bubblewrap mounted the fresh public master clone read-only; the author tree was not mounted. The host kernel is shared. The compiled inputs are identical between the C archive used locally and final production tip; later changes are prose, publication and checker records.
 
-The bare lab command was exactly `ctest --test-dir build/ci-book-examples --output-on-failure --no-tests=error`, with no caller LD_LIBRARY_PATH. GCC completed all workflow commands. Clang CTest returned 8 after running all 66 tests; the independent smoke/lifetime commands and C3 repetitions then ran separately and returned 0. No failure was hidden by a successful rerun. The Ch16 parser calls json.loads on every currently visible line beginning with `{`; its error is an unterminated string while the producer is live. This is evidence of a test-reader boundary problem, not a demonstrated framework defect. No unrelated parser fix, assertion change or timeout change was made.
+In the initial validation, the bare lab command was exactly `ctest --test-dir build/ci-book-examples --output-on-failure --no-tests=error`, with no caller LD_LIBRARY_PATH. GCC completed all workflow commands. Clang CTest returned 8 after running all 66 tests; the independent smoke/lifetime commands and C3 repetitions then ran separately and returned 0. No failure was hidden by a successful rerun. The original Ch16 parser called json.loads on every currently visible line beginning with `{`; its error was an unterminated string while the producer was live. This is evidence of a test-reader boundary problem, not a demonstrated framework defect. That failure is preserved in the original logs. After explicit author approval, recovery.py:13–16 now parses only the prefix through the last newline; malformed complete records still raise JSONDecodeError. No assertion, timeout or recovery policy changed. The same bare CTest command then ran all 66 labs successfully in both isolated compiler workspaces, with the committed reader copied identically into each workspace. The application binaries and framework installation were reused because neither changed. Focused tests import the actual reader and verify incomplete, complete-but-unterminated and malformed-complete records.
 
 Outside this repository: the OpenWRT main recipe selects the snode.c tag OpenWRT instead of master. The observed tag object is `8b8da56`, three commits behind observed master. Source history was read by deepening master, without checking out or fetching a tag/SHA target. Clang 21.1.8’s -Werror/-Wnrvo failure at src/tools/snodec-control/src/ConfigActions.cpp:296 remains a framework follow-up.
 
@@ -116,7 +122,7 @@ Rendered physical pages 135,165,271,276 and 293 confirm the repaired heading/inl
 
 ## Editorial matrix
 
-E=entry; D=depth; G=gradient; X=explicitness; T=theory–example; L=language; S=structure; C=continuity. Ratings retain the prior 37×8 completed editorial assessment. No rating changed from●, so there are no changed-status cells requiring a promotion rationale. Updated evidence below supports every affected row; all eight cells in a row share that row’s local evidence. Runtime and budget qualifications remain in the gate table.
+E=entry; D=depth; G=gradient; X=explicitness; T=theory–example; L=language; S=structure; C=continuity. Ratings retain the prior 37×8 completed editorial assessment. No rating changed from●, so there are no changed-status cells requiring a promotion rationale. Updated evidence below supports every affected row; all eight cells in a row share that row’s local evidence. Runtime results and the explicitly authorized budget waiver are recorded separately in the gate table.
 
 | Row | Issue | E | D | G | X | T | L | S | C | Current evidence |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -200,6 +206,8 @@ Fresh whitespace-token measurement includes markup and fences. Before is `8328df
 | Prose/markup | 103,194 | 103,818 | +624 |  |
 | Fenced tokens | 7,876 | 7,921 | +45 |  |
 
+The approval pass leaves every manuscript file byte-for-byte unchanged from b34468b; its fresh measurement is still 111,739 tokens, including backmatter 812. The 812/800 author waiver is explicit and does not raise the global ceiling.
+
 Net growth is 0.602%. Current extent is 4,401 above must 107,338, 599 below wish 112,338, and 3,261 below the ceiling. No floor was waived. Small negative chapter deltas come from formatting and the requested wording/component corrections; no teaching passage was removed.
 
 ## Implementation accounting
@@ -214,8 +222,8 @@ Net growth is 0.602%. Current extent is 4,401 above must 107,338, 599 below wish
 | Workflow configuration | 10 | 5 | +5 |
 | Editorial regression checks/tests | 115 | 2 | +113 |
 
-No framework code changed. Functional companion growth is the explicitly requested B1 closure result (+5 net C++ lines). C2 adds physical lines only to reflow the same source tokens. C3 changes the test observation channel and adds no application state. CI additions are the explicitly requested external-anchor, listing-width and publication-version guards; the shared ABI parser replaces reliance on incompatible binaries rather than adding a second authority. Full per-file additions/deletions are in implementation-numstat.txt.
+No framework code changed. Functional companion growth is the explicitly requested B1 closure result (+5 net C++ lines). C2 adds physical lines only to reflow the same source tokens. C3 changes the test observation channel and adds no application state. CI additions are the explicitly requested external-anchor, listing-width and publication-version guards; the shared ABI parser replaces reliance on incompatible binaries rather than adding a second authority. Full per-file additions/deletions for the original pass are in implementation-numstat.txt. Approved closure commit 98f091d adds no production application code: the test harness changes +3/−1 lines (net +2), its regression test adds 39 lines, and editorial checker/test support changes +37/−2 (net +35). Review prose and waiver records are accounted separately; no manuscript line changed.
 
-No OpenWrt device deployment, MQTTSuite service deployment or new Clang 21 build is claimed. The manuscript is frozen again against broad refinement; the unresolved Ch16 test-reader failure and bibliography-cap decision are disclosed for the author.
+No OpenWrt device deployment, MQTTSuite service deployment or new Clang 21 build is claimed. The manuscript is frozen again against broad refinement; the approved Ch16 fix and bibliography waiver close those two previously disclosed items. The fresh hosted gate passes; no approved closure item remains open.
 
 The local CMake cache also selects the downloaded matching Pandoc executable explicitly. A final invocation of ci/build-book-package.sh with the normal shell PATH passes; local use does not depend on retaining the temporary PATH override.

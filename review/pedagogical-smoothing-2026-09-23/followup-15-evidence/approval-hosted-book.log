@@ -1,0 +1,179 @@
+2026-09-25T09:54:13.6483251Z ##[command]/usr/bin/docker --config /home/runner/work/_temp/.docker_1dc65df2-d03e-4e7f-854b-eff4c62a9d07 login ghcr.io -u VolkerChristian --password-stdin
+2026-09-25T09:55:57.4309870Z [36;1m# Match the Pandoc ABI reported by the fixed crossref binary.[0m
+2026-09-25T09:55:57.4310857Z [36;1m  https://github.com/jgm/pandoc/releases/download/3.9.0.2/pandoc-3.9.0.2-1-amd64.deb \[0m
+2026-09-25T09:55:57.4311402Z [36;1m  -o /tmp/pandoc.deb[0m
+2026-09-25T09:55:57.4311738Z [36;1mdpkg -i /tmp/pandoc.deb[0m
+2026-09-25T09:55:57.4312498Z [36;1m# Keep the pandoc-crossref version used by the verified local build.[0m
+2026-09-25T09:55:57.4313960Z [36;1m  https://github.com/lierdakil/pandoc-crossref/releases/download/v0.3.24a/pandoc-crossref-Linux-X64.tar.xz \[0m
+2026-09-25T09:55:57.4314598Z [36;1m  | tar -xJ -C /usr/local/bin pandoc-crossref[0m
+2026-09-25T09:55:57.4315367Z [36;1mpandoc --version[0m
+2026-09-25T09:55:57.4315769Z [36;1mpandoc-crossref --version[0m
+2026-09-25T09:55:59.6702504Z   manpages manpages-dev procps psmisc rpcsvc-proto
+2026-09-25T09:55:59.8774570Z   linux-sysctl-defaults manpages manpages-dev ninja-build procps psmisc
+2026-09-25T09:56:00.0047650Z Get:7 http://deb.debian.org/debian trixie/main amd64 manpages all 6.9.1-1 [1393 kB]
+2026-09-25T09:56:00.4784744Z Get:53 http://deb.debian.org/debian trixie/main amd64 manpages-dev all 6.9.1-1 [2122 kB]
+2026-09-25T09:56:02.3469417Z Selecting previously unselected package manpages.
+2026-09-25T09:56:02.3480928Z Preparing to unpack .../03-manpages_6.9.1-1_all.deb ...
+2026-09-25T09:56:02.3489225Z Unpacking manpages (6.9.1-1) ...
+2026-09-25T09:56:05.8751519Z Selecting previously unselected package manpages-dev.
+2026-09-25T09:56:05.8768730Z Preparing to unpack .../49-manpages-dev_6.9.1-1_all.deb ...
+2026-09-25T09:56:05.8776526Z Unpacking manpages-dev (6.9.1-1) ...
+2026-09-25T09:56:06.0412316Z Setting up manpages (6.9.1-1) ...
+2026-09-25T09:56:06.1478463Z Setting up manpages-dev (6.9.1-1) ...
+2026-09-25T09:56:06.6127812Z Selecting previously unselected package pandoc.
+2026-09-25T09:56:06.6221868Z Preparing to unpack /tmp/pandoc.deb ...
+2026-09-25T09:56:06.6229778Z Unpacking pandoc (3.9.0.2-1) ...
+2026-09-25T09:56:07.1659151Z Setting up pandoc (3.9.0.2-1) ...
+2026-09-25T09:56:07.8141353Z pandoc 3.9.0.2
+2026-09-25T09:56:07.8143140Z User data directory: /github/home/.local/share/pandoc
+2026-09-25T09:56:07.8144880Z Copyright (C) 2006-2025 John MacFarlane. Web:  https://pandoc.org
+2026-09-25T09:56:07.8170462Z pandoc-crossref v0.3.24 git commit UNKNOWN (UNKNOWN) built with Pandoc v3.9.0.2, pandoc-types v1.23.1.1 and GHC 9.8.4
+2026-09-25T09:56:07.9061219Z Publication tool compatibility passed: Pandoc 3.9.0.2; crossref built with Pandoc 3.9.0.2
+2026-09-25T09:56:08.0795327Z Chapter references passed: 32 chapters + Appendix A, 56 stable topics, 321 current references, 374 old-reference dispositions.
+2026-09-25T09:56:08.6299473Z Source alignment passed: 33 chapter/appendix evidence records, 37 exact complete listings; SNode.C 2.0.0, master content manifest 2face99fc58fb1ec5374c35d88e6fcd9c7a7d56b52ea44cb00e49eb4825b9a2b
+2026-09-25T09:56:08.6343451Z Source hygiene checks passed.
+2026-09-25T09:56:08.7195045Z PASS: printed code fits 90 columns
+2026-09-25T09:56:08.7646133Z Publication tool compatibility passed: Pandoc 3.9.0.2; crossref built with Pandoc 3.9.0.2
+2026-09-25T09:56:16.4661201Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:16.4662805Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:16.4696842Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/figures/fig-02-r
+2026-09-25T09:56:16.4826849Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:16.4828665Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:16.4866245Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/figures/fig-06-w
+2026-09-25T09:56:16.5132572Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:16.5134037Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:16.5164845Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/figures/fig-01-l
+2026-09-25T09:56:16.6712841Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:16.6714379Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:16.6754114Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/figures/fig-04-l
+2026-09-25T09:56:16.8084403Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:16.8086148Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:16.8118669Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/figures/fig-05-s
+2026-09-25T09:56:16.8887714Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:16.8889092Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:16.8920206Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/figures/fig-03-e
+2026-09-25T09:56:17.7751741Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:17.7752636Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:17.7774683Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/figures/fig-09-a
+2026-09-25T09:56:18.0408203Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:18.0409108Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:18.0460730Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/figures/fig-08-i
+2026-09-25T09:56:18.1158447Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:18.1159528Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:18.1183227Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/figures/fig-10-m
+2026-09-25T09:56:18.2919313Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:18.2920472Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:18.2944882Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/figures/fig-11-b
+2026-09-25T09:56:18.3447922Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:18.3448844Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:18.3470619Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/figures/fig-07-n
+2026-09-25T09:56:18.5685577Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:18.5686569Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:18.5741786Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/figures/fig-12-m
+2026-09-25T09:56:19.2323289Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:19.2324265Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:19.2348277Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/figures/fig-13-c
+2026-09-25T09:56:19.5573432Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:19.5574690Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:19.5631172Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/figures/fig-15-t
+2026-09-25T09:56:19.5810200Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:19.5811357Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:19.5857648Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/figures/fig-14-l
+2026-09-25T09:56:20.1369794Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:20.1370673Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:20.1391082Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/figures/fig-17-p
+2026-09-25T09:56:20.2327269Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:20.2328428Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:20.2348631Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/figures/fig-18-t
+2026-09-25T09:56:20.3291583Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:20.3292741Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:20.3319262Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/figures/fig-16-r
+2026-09-25T09:56:20.4610182Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:20.4611457Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:20.4643536Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/figures/fig-19-m
+2026-09-25T09:56:21.0510504Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/figures/contact-
+2026-09-25T09:56:21.0511148Z sheet/figures-contact-sheet.pdf (2 pages).
+2026-09-25T09:56:26.2976067Z [21/25] cd /__w/SNode.C-Book/SNode.C-Book && /usr/bin/cmake -E make_directory /__w/SNode.C-Book/SNode.C-Book/build/ci-book && /usr/bin/cmake -E make_directory /__w/SNode.C-Book/SNode.C-Book/dist/pdf && pandoc --metadata-file /__w/SNode.C-Book/SNode.C-Book/production/metadata/proposal-metadata.yaml /__w/SNode.C-Book/SNode.C-Book/review/proposal/book-proposal-package.md /__w/SNode.C-Book/SNode.C-Book/review/proposal/evidence-sheet.md --lua-filter /__w/SNode.C-Book/SNode.C-Book/production/filters/snodec-listings.lua --lua-filter /__w/SNode.C-Book/SNode.C-Book/production/filters/snodec-callouts.lua --filter pandoc-crossref --syntax-highlighting=idiomatic --from markdown+raw_tex+fenced_code_attributes --top-level-division=section --standalone --resource-path /__w/SNode.C-Book/SNode.C-Book:/__w/SNode.C-Book/SNode.C-Book/assets -o /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-package.tex && xelatex -interaction=nonstopmode -halt-on-error -output-directory /__w/SNode.C-Book/SNode.C-Book/build/ci-book /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-package.tex && /usr/bin/cmake -E chdir /__w/SNode.C-Book/SNode.C-Book/build/ci-book makeindex book-proposal-package.idx && xelatex -interaction=nonstopmode -halt-on-error -output-directory /__w/SNode.C-Book/SNode.C-Book/build/ci-book /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-package.tex && xelatex -interaction=nonstopmode -halt-on-error -output-directory /__w/SNode.C-Book/SNode.C-Book/build/ci-book /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-package.tex && /usr/bin/cmake -E copy_if_different /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-package.pdf /__w/SNode.C-Book/SNode.C-Book/dist/pdf/book-proposal-package.pdf
+2026-09-25T09:56:26.3031426Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:26.3032006Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:26.3080898Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-pa
+2026-09-25T09:56:26.3081228Z ckage.pdf (9 pages).
+2026-09-25T09:56:26.3133428Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:26.3134012Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:26.3180673Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-pa
+2026-09-25T09:56:26.3180999Z ckage.pdf (9 pages).
+2026-09-25T09:56:26.3231225Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:26.3231801Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:26.3278210Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-pa
+2026-09-25T09:56:26.3278542Z ckage.pdf (9 pages).
+2026-09-25T09:56:32.4236599Z [22/25] cd /__w/SNode.C-Book/SNode.C-Book && /usr/bin/cmake -E make_directory /__w/SNode.C-Book/SNode.C-Book/build/ci-book && /usr/bin/cmake -E make_directory /__w/SNode.C-Book/SNode.C-Book/dist/pdf && pandoc --metadata-file /__w/SNode.C-Book/SNode.C-Book/production/metadata/proposal-metadata.yaml /__w/SNode.C-Book/SNode.C-Book/review/proposal/book-proposal-package.md /__w/SNode.C-Book/SNode.C-Book/review/proposal/evidence-sheet.md /__w/SNode.C-Book/SNode.C-Book/review/proposal/sample-chapters.md /__w/SNode.C-Book/SNode.C-Book/manuscript/chapters/01-why-snodec-exists.md /__w/SNode.C-Book/SNode.C-Book/manuscript/chapters/03-your-first-working-program-the-echo-pair.md /__w/SNode.C-Book/SNode.C-Book/manuscript/chapters/19-server-sent-events-and-real-time-http.md /__w/SNode.C-Book/SNode.C-Book/manuscript/chapters/30-building-minigateway.md /__w/SNode.C-Book/SNode.C-Book/manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md --lua-filter /__w/SNode.C-Book/SNode.C-Book/production/filters/snodec-listings.lua --lua-filter /__w/SNode.C-Book/SNode.C-Book/production/filters/snodec-callouts.lua --filter pandoc-crossref --syntax-highlighting=idiomatic --from markdown+raw_tex+fenced_code_attributes --top-level-division=section --standalone --resource-path /__w/SNode.C-Book/SNode.C-Book:/__w/SNode.C-Book/SNode.C-Book/assets -o /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-sample-package.tex && xelatex -interaction=nonstopmode -halt-on-error -output-directory /__w/SNode.C-Book/SNode.C-Book/build/ci-book /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-sample-package.tex && /usr/bin/cmake -E chdir /__w/SNode.C-Book/SNode.C-Book/build/ci-book makeindex book-proposal-sample-package.idx && xelatex -interaction=nonstopmode -halt-on-error -output-directory /__w/SNode.C-Book/SNode.C-Book/build/ci-book /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-sample-package.tex && xelatex -interaction=nonstopmode -halt-on-error -output-directory /__w/SNode.C-Book/SNode.C-Book/build/ci-book /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-sample-package.tex && /usr/bin/cmake -E copy_if_different /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-sample-package.pdf /__w/SNode.C-Book/SNode.C-Book/dist/pdf/book-proposal-sample-package.pdf
+2026-09-25T09:56:32.4333580Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:32.4334519Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:32.4487223Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-sa
+2026-09-25T09:56:32.4487728Z mple-package.pdf (61 pages).
+2026-09-25T09:56:32.4490725Z Output written in book-proposal-sample-package.ind.
+2026-09-25T09:56:32.4542956Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:32.4543527Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:32.4607246Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-sa
+2026-09-25T09:56:32.4607933Z mple-package.pdf (61 pages).
+2026-09-25T09:56:32.4663132Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:32.4663718Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:32.4712551Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-sa
+2026-09-25T09:56:32.4712923Z mple-package.pdf (61 pages).
+2026-09-25T09:56:59.3384250Z [23/25] cd /__w/SNode.C-Book/SNode.C-Book && /usr/bin/cmake -E make_directory /__w/SNode.C-Book/SNode.C-Book/build/ci-book && /usr/bin/cmake -E make_directory /__w/SNode.C-Book/SNode.C-Book/dist/pdf && pandoc --metadata-file /__w/SNode.C-Book/SNode.C-Book/production/metadata/metadata.yaml manuscript/frontmatter/frontmatter.md manuscript/frontmatter/preface.md manuscript/frontmatter/how-to-read-this-book.md manuscript/frontmatter/conventions.md manuscript/frontmatter/author-note.md manuscript/frontmatter/acknowledgements.md manuscript/frontmatter/mainmatter.md manuscript/parts/part-01-getting-oriented.md manuscript/chapters/01-why-snodec-exists.md manuscript/chapters/02-preparing-your-environment.md manuscript/chapters/03-your-first-working-program-the-echo-pair.md manuscript/parts/part-02-the-snodec-architecture.md manuscript/chapters/04-the-snodec-runtime-mental-model.md manuscript/chapters/05-layers-in-practice.md manuscript/chapters/06-core-runtime-and-event-processing.md manuscript/parts/part-03-networking-foundations-in-snodec.md manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md manuscript/chapters/08-servers-clients-and-connections.md manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md manuscript/parts/part-04-from-raw-connections-to-application-protocols.md manuscript/chapters/10-writing-socketcontext-classes-well.md manuscript/chapters/11-writing-socketcontextfactory-classes-well.md manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md manuscript/parts/part-05-configuration-and-operational-behavior.md manuscript/chapters/13-configuring-applications-and-named-instances.md manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md manuscript/parts/part-06-secure-and-robust-communication.md manuscript/chapters/15-tls-across-the-framework.md manuscript/chapters/16-timeouts-retries-and-failure-modes.md manuscript/parts/part-07-web-protocols-and-web-applications.md manuscript/chapters/17-the-http-layer.md manuscript/chapters/18-the-express-like-framework.md manuscript/chapters/19-server-sent-events-and-real-time-http.md manuscript/chapters/20-websocket-and-protocol-upgrade.md manuscript/parts/part-08-iot-and-message-oriented-systems.md manuscript/chapters/21-mqtt-support-in-snodec.md manuscript/chapters/22-mqtt-over-websocket.md manuscript/chapters/23-designing-iot-systems-with-multiple-protocols.md manuscript/parts/part-09-persistence-and-full-systems.md manuscript/chapters/24-database-support-and-application-state.md manuscript/chapters/25-reading-complete-snodec-applications.md manuscript/chapters/26-from-applications-to-systems-mqttsuite.md manuscript/parts/part-10-building-porting-and-maintaining.md manuscript/chapters/27-cmake-components-and-linking-strategy.md manuscript/chapters/28-deployment-on-linux-and-openwrt.md manuscript/chapters/29-testing-debugging-and-benchmarking.md manuscript/parts/part-11-building-and-evaluating-minigateway.md manuscript/chapters/30-building-minigateway.md manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md manuscript/parts/part-13-epilogue.md manuscript/chapters/epilogue.md manuscript/chapters/appendix-a-reading-and-extending-the-framework.md manuscript/backmatter/backmatter.md manuscript/backmatter/further-reading.md manuscript/backmatter/index.md --lua-filter /__w/SNode.C-Book/SNode.C-Book/production/filters/snodec-listings.lua --lua-filter /__w/SNode.C-Book/SNode.C-Book/production/filters/snodec-callouts.lua --filter pandoc-crossref --syntax-highlighting=idiomatic --from markdown+raw_tex+fenced_code_attributes --top-level-division=part --standalone --resource-path /__w/SNode.C-Book/SNode.C-Book:/__w/SNode.C-Book/SNode.C-Book/assets -o /__w/SNode.C-Book/SNode.C-Book/build/ci-book/snodec-book.tex && xelatex -interaction=nonstopmode -halt-on-error -output-directory /__w/SNode.C-Book/SNode.C-Book/build/ci-book /__w/SNode.C-Book/SNode.C-Book/build/ci-book/snodec-book.tex && /usr/bin/cmake -E chdir /__w/SNode.C-Book/SNode.C-Book/build/ci-book makeindex snodec-book.idx && xelatex -interaction=nonstopmode -halt-on-error -output-directory /__w/SNode.C-Book/SNode.C-Book/build/ci-book /__w/SNode.C-Book/SNode.C-Book/build/ci-book/snodec-book.tex && xelatex -interaction=nonstopmode -halt-on-error -output-directory /__w/SNode.C-Book/SNode.C-Book/build/ci-book /__w/SNode.C-Book/SNode.C-Book/build/ci-book/snodec-book.tex && /usr/bin/cmake -E copy_if_different /__w/SNode.C-Book/SNode.C-Book/build/ci-book/snodec-book.pdf /__w/SNode.C-Book/SNode.C-Book/dist/pdf/snodec-book.pdf
+2026-09-25T09:56:59.3457372Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:59.3458087Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:59.3563362Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/snodec-book.pdf 
+2026-09-25T09:56:59.3563707Z (317 pages).
+2026-09-25T09:56:59.3566244Z Output written in snodec-book.ind.
+2026-09-25T09:56:59.3618129Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:59.3618899Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:59.3683793Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/snodec-book.pdf 
+2026-09-25T09:56:59.3684207Z (330 pages).
+2026-09-25T09:56:59.3737735Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:56:59.3738312Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:56:59.3769791Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/snodec-book.pdf 
+2026-09-25T09:56:59.3769867Z (330 pages).
+2026-09-25T09:57:06.6307260Z [1/5] cd /__w/SNode.C-Book/SNode.C-Book && /usr/bin/cmake -E make_directory /__w/SNode.C-Book/SNode.C-Book/build/ci-book && /usr/bin/cmake -E make_directory /__w/SNode.C-Book/SNode.C-Book/dist/pdf && pandoc --metadata-file /__w/SNode.C-Book/SNode.C-Book/production/metadata/proposal-metadata.yaml /__w/SNode.C-Book/SNode.C-Book/review/proposal/book-proposal-package.md /__w/SNode.C-Book/SNode.C-Book/review/proposal/evidence-sheet.md --lua-filter /__w/SNode.C-Book/SNode.C-Book/production/filters/snodec-listings.lua --lua-filter /__w/SNode.C-Book/SNode.C-Book/production/filters/snodec-callouts.lua --filter pandoc-crossref --syntax-highlighting=idiomatic --from markdown+raw_tex+fenced_code_attributes --top-level-division=section --standalone --resource-path /__w/SNode.C-Book/SNode.C-Book:/__w/SNode.C-Book/SNode.C-Book/assets -o /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-package.tex && xelatex -interaction=nonstopmode -halt-on-error -output-directory /__w/SNode.C-Book/SNode.C-Book/build/ci-book /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-package.tex && /usr/bin/cmake -E chdir /__w/SNode.C-Book/SNode.C-Book/build/ci-book makeindex book-proposal-package.idx && xelatex -interaction=nonstopmode -halt-on-error -output-directory /__w/SNode.C-Book/SNode.C-Book/build/ci-book /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-package.tex && xelatex -interaction=nonstopmode -halt-on-error -output-directory /__w/SNode.C-Book/SNode.C-Book/build/ci-book /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-package.tex && /usr/bin/cmake -E copy_if_different /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-package.pdf /__w/SNode.C-Book/SNode.C-Book/dist/pdf/book-proposal-package.pdf
+2026-09-25T09:57:06.6415202Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:57:06.6416377Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:57:06.6506876Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-pa
+2026-09-25T09:57:06.6507617Z ckage.pdf (9 pages).
+2026-09-25T09:57:06.6607629Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:57:06.6608779Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:57:06.6696660Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-pa
+2026-09-25T09:57:06.6697283Z ckage.pdf (9 pages).
+2026-09-25T09:57:06.6795969Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:57:06.6797176Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:57:06.6898478Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-pa
+2026-09-25T09:57:06.6899065Z ckage.pdf (9 pages).
+2026-09-25T09:57:12.2924383Z [2/5] cd /__w/SNode.C-Book/SNode.C-Book && /usr/bin/cmake -E make_directory /__w/SNode.C-Book/SNode.C-Book/build/ci-book && /usr/bin/cmake -E make_directory /__w/SNode.C-Book/SNode.C-Book/dist/pdf && pandoc --metadata-file /__w/SNode.C-Book/SNode.C-Book/production/metadata/proposal-metadata.yaml /__w/SNode.C-Book/SNode.C-Book/review/proposal/book-proposal-package.md /__w/SNode.C-Book/SNode.C-Book/review/proposal/evidence-sheet.md /__w/SNode.C-Book/SNode.C-Book/review/proposal/sample-chapters.md /__w/SNode.C-Book/SNode.C-Book/manuscript/chapters/01-why-snodec-exists.md /__w/SNode.C-Book/SNode.C-Book/manuscript/chapters/03-your-first-working-program-the-echo-pair.md /__w/SNode.C-Book/SNode.C-Book/manuscript/chapters/19-server-sent-events-and-real-time-http.md /__w/SNode.C-Book/SNode.C-Book/manuscript/chapters/30-building-minigateway.md /__w/SNode.C-Book/SNode.C-Book/manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md --lua-filter /__w/SNode.C-Book/SNode.C-Book/production/filters/snodec-listings.lua --lua-filter /__w/SNode.C-Book/SNode.C-Book/production/filters/snodec-callouts.lua --filter pandoc-crossref --syntax-highlighting=idiomatic --from markdown+raw_tex+fenced_code_attributes --top-level-division=section --standalone --resource-path /__w/SNode.C-Book/SNode.C-Book:/__w/SNode.C-Book/SNode.C-Book/assets -o /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-sample-package.tex && xelatex -interaction=nonstopmode -halt-on-error -output-directory /__w/SNode.C-Book/SNode.C-Book/build/ci-book /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-sample-package.tex && /usr/bin/cmake -E chdir /__w/SNode.C-Book/SNode.C-Book/build/ci-book makeindex book-proposal-sample-package.idx && xelatex -interaction=nonstopmode -halt-on-error -output-directory /__w/SNode.C-Book/SNode.C-Book/build/ci-book /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-sample-package.tex && xelatex -interaction=nonstopmode -halt-on-error -output-directory /__w/SNode.C-Book/SNode.C-Book/build/ci-book /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-sample-package.tex && /usr/bin/cmake -E copy_if_different /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-sample-package.pdf /__w/SNode.C-Book/SNode.C-Book/dist/pdf/book-proposal-sample-package.pdf
+2026-09-25T09:57:12.2982655Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:57:12.2983257Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:57:12.3033005Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-sa
+2026-09-25T09:57:12.3033344Z mple-package.pdf (61 pages).
+2026-09-25T09:57:12.3036039Z Output written in book-proposal-sample-package.ind.
+2026-09-25T09:57:12.3087614Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:57:12.3088201Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:57:12.3165821Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-sa
+2026-09-25T09:57:12.3166205Z mple-package.pdf (61 pages).
+2026-09-25T09:57:12.3224330Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:57:12.3225037Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:57:12.3282862Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/book-proposal-sa
+2026-09-25T09:57:12.3283482Z mple-package.pdf (61 pages).
+2026-09-25T09:57:38.8101625Z [3/5] cd /__w/SNode.C-Book/SNode.C-Book && /usr/bin/cmake -E make_directory /__w/SNode.C-Book/SNode.C-Book/build/ci-book && /usr/bin/cmake -E make_directory /__w/SNode.C-Book/SNode.C-Book/dist/pdf && pandoc --metadata-file /__w/SNode.C-Book/SNode.C-Book/production/metadata/metadata.yaml manuscript/frontmatter/frontmatter.md manuscript/frontmatter/preface.md manuscript/frontmatter/how-to-read-this-book.md manuscript/frontmatter/conventions.md manuscript/frontmatter/author-note.md manuscript/frontmatter/acknowledgements.md manuscript/frontmatter/mainmatter.md manuscript/parts/part-01-getting-oriented.md manuscript/chapters/01-why-snodec-exists.md manuscript/chapters/02-preparing-your-environment.md manuscript/chapters/03-your-first-working-program-the-echo-pair.md manuscript/parts/part-02-the-snodec-architecture.md manuscript/chapters/04-the-snodec-runtime-mental-model.md manuscript/chapters/05-layers-in-practice.md manuscript/chapters/06-core-runtime-and-event-processing.md manuscript/parts/part-03-networking-foundations-in-snodec.md manuscript/chapters/07-network-families-addresses-ipv4-ipv6-and-unix-sockets.md manuscript/chapters/08-servers-clients-and-connections.md manuscript/chapters/09-bluetooth-in-snodec-rfcomm-and-l2cap.md manuscript/parts/part-04-from-raw-connections-to-application-protocols.md manuscript/chapters/10-writing-socketcontext-classes-well.md manuscript/chapters/11-writing-socketcontextfactory-classes-well.md manuscript/chapters/12-building-the-same-protocol-over-different-lower-layers.md manuscript/parts/part-05-configuration-and-operational-behavior.md manuscript/chapters/13-configuring-applications-and-named-instances.md manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md manuscript/parts/part-06-secure-and-robust-communication.md manuscript/chapters/15-tls-across-the-framework.md manuscript/chapters/16-timeouts-retries-and-failure-modes.md manuscript/parts/part-07-web-protocols-and-web-applications.md manuscript/chapters/17-the-http-layer.md manuscript/chapters/18-the-express-like-framework.md manuscript/chapters/19-server-sent-events-and-real-time-http.md manuscript/chapters/20-websocket-and-protocol-upgrade.md manuscript/parts/part-08-iot-and-message-oriented-systems.md manuscript/chapters/21-mqtt-support-in-snodec.md manuscript/chapters/22-mqtt-over-websocket.md manuscript/chapters/23-designing-iot-systems-with-multiple-protocols.md manuscript/parts/part-09-persistence-and-full-systems.md manuscript/chapters/24-database-support-and-application-state.md manuscript/chapters/25-reading-complete-snodec-applications.md manuscript/chapters/26-from-applications-to-systems-mqttsuite.md manuscript/parts/part-10-building-porting-and-maintaining.md manuscript/chapters/27-cmake-components-and-linking-strategy.md manuscript/chapters/28-deployment-on-linux-and-openwrt.md manuscript/chapters/29-testing-debugging-and-benchmarking.md manuscript/parts/part-11-building-and-evaluating-minigateway.md manuscript/chapters/30-building-minigateway.md manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md manuscript/chapters/32-architectural-judgment-choosing-the-right-layer-and-boundary.md manuscript/parts/part-13-epilogue.md manuscript/chapters/epilogue.md manuscript/chapters/appendix-a-reading-and-extending-the-framework.md manuscript/backmatter/backmatter.md manuscript/backmatter/further-reading.md manuscript/backmatter/index.md --lua-filter /__w/SNode.C-Book/SNode.C-Book/production/filters/snodec-listings.lua --lua-filter /__w/SNode.C-Book/SNode.C-Book/production/filters/snodec-callouts.lua --filter pandoc-crossref --syntax-highlighting=idiomatic --from markdown+raw_tex+fenced_code_attributes --top-level-division=part --standalone --resource-path /__w/SNode.C-Book/SNode.C-Book:/__w/SNode.C-Book/SNode.C-Book/assets -o /__w/SNode.C-Book/SNode.C-Book/build/ci-book/snodec-book.tex && xelatex -interaction=nonstopmode -halt-on-error -output-directory /__w/SNode.C-Book/SNode.C-Book/build/ci-book /__w/SNode.C-Book/SNode.C-Book/build/ci-book/snodec-book.tex && /usr/bin/cmake -E chdir /__w/SNode.C-Book/SNode.C-Book/build/ci-book makeindex snodec-book.idx && xelatex -interaction=nonstopmode -halt-on-error -output-directory /__w/SNode.C-Book/SNode.C-Book/build/ci-book /__w/SNode.C-Book/SNode.C-Book/build/ci-book/snodec-book.tex && xelatex -interaction=nonstopmode -halt-on-error -output-directory /__w/SNode.C-Book/SNode.C-Book/build/ci-book /__w/SNode.C-Book/SNode.C-Book/build/ci-book/snodec-book.tex && /usr/bin/cmake -E copy_if_different /__w/SNode.C-Book/SNode.C-Book/build/ci-book/snodec-book.pdf /__w/SNode.C-Book/SNode.C-Book/dist/pdf/snodec-book.pdf
+2026-09-25T09:57:38.8169938Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:57:38.8170600Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:57:38.8237650Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/snodec-book.pdf 
+2026-09-25T09:57:38.8238158Z (330 pages).
+2026-09-25T09:57:38.8240711Z Output written in snodec-book.ind.
+2026-09-25T09:57:38.8292730Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:57:38.8293373Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:57:38.8353708Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/snodec-book.pdf 
+2026-09-25T09:57:38.8354031Z (330 pages).
+2026-09-25T09:57:38.8404289Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-6
+2026-09-25T09:57:38.8404911Z (/opt/texlive/texdir/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-1
+2026-09-25T09:57:38.8460955Z Output written on /__w/SNode.C-Book/SNode.C-Book/build/ci-book/snodec-book.pdf 
+2026-09-25T09:57:38.8461033Z (330 pages).
+2026-09-25T09:57:39.0652636Z Archive path check passed: 460 unique entries
+2026-09-25T09:57:39.0688412Z Book package build passed.

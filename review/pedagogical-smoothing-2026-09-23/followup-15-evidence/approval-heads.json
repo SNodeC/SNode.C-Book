@@ -1,0 +1,29 @@
+{
+  "note": "Observed default-branch HEADs; evidence only. End precedes the evidence-only commit.",
+  "repositories": [
+    {
+      "repository": "SNodeC/snode.c",
+      "branch": "master",
+      "observed_start": "07ca9a2936ee72582df7d159cb06666fe23e30f8",
+      "observed_end": "07ca9a2936ee72582df7d159cb06666fe23e30f8"
+    },
+    {
+      "repository": "SNodeC/mqttsuite",
+      "branch": "master",
+      "observed_start": "5fef5c3036928dfa40ad4f124bb237cc9c3202bb",
+      "observed_end": "5fef5c3036928dfa40ad4f124bb237cc9c3202bb"
+    },
+    {
+      "repository": "SNodeC/OpenWRT",
+      "branch": "main",
+      "observed_start": "5bef8cca5982838a7191a148633c1058f154e5eb",
+      "observed_end": "5bef8cca5982838a7191a148633c1058f154e5eb"
+    },
+    {
+      "repository": "SNodeC/SNode.C-Book",
+      "branch": "main",
+      "observed_start": "b34468b9213598e33604fbe6cc7bba2252156c04",
+      "observed_end": "98f091da1f46a32a756f0c83d06eaf8d9e192d2b"
+    }
+  ]
+}

@@ -2576,3 +2576,23 @@ recovery policy changes. The author also approved the narrow backmatter
 remains 115,000; retain all manuscript content. These approvals supersede the
 pending-decision statements above. Implementation and local/hosted verification
 are in progress; close the gate only after both hosted compiler jobs pass.
+
+### Follow-up 15 — author-approved closure complete
+
+Implementation commit `98f091d` applies the Ch16 complete-record boundary and
+the explicit backmatter 812/800 waiver. Local GCC 13.3.0 and Clang 18.1.3 each
+pass all 66 labs; the reader regression tests pass 2/2 and smoothing tests 5/5.
+Smoothing passes all 16 groups while printing the author waiver explicitly.
+Hosted companion run [36121014960](https://github.com/SNodeC/SNode.C-Book/actions/runs/36121014960)
+passes both 66/66 jobs, 185 framework and 4 consumer tests per compiler, and
+all smoke/lifetime checks. Every job and step succeeded. Hosted book-package
+run [36121014927](https://github.com/SNodeC/SNode.C-Book/actions/runs/36121014927)
+passes with matching Pandoc 3.9.0.2 and crossref ABI, producing 330 pages.
+
+Author framework HEAD/status and all external default-branch HEADs are unchanged.
+No manuscript file changed: 111,739 tokens, 115,000 absolute ceiling; backmatter
+812 under the narrow author waiver. Matrix remains 37 ● in all eight dimensions.
+The historical local Clang failure remains recorded; it is closed by the approved
+fix and fresh local/hosted evidence. FOLLOWUP-15-REPORT.md and approval-* files
+in followup-15-evidence record the final results. No approved closure item remains
+open. The manuscript is frozen again; do not start broad refinement.

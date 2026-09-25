@@ -1,0 +1,7 @@
+test_malformed_complete_record_still_fails (__main__.RecordBoundaryTests.test_malformed_complete_record_still_fails) ... ok
+test_partial_record_waits_for_newline (__main__.RecordBoundaryTests.test_partial_record_waits_for_newline) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.001s
+
+OK

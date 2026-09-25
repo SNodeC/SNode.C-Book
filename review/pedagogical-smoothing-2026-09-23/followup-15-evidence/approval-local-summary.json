@@ -1,0 +1,33 @@
+{
+  "tested_commit": "98f091da1f46a32a756f0c83d06eaf8d9e192d2b",
+  "local_labs": {
+    "gcc": {
+      "compiler": "13.3.0",
+      "passed": 66,
+      "total": 66,
+      "seconds": 80.81
+    },
+    "clang": {
+      "compiler": "18.1.3",
+      "passed": 66,
+      "total": 66,
+      "seconds": 71.96
+    }
+  },
+  "reader_regressions": {
+    "passed": 2,
+    "total": 2
+  },
+  "smoothing_regressions": {
+    "passed": 5,
+    "total": 5
+  },
+  "total_tokens": 111739,
+  "backmatter": {
+    "tokens": 812,
+    "historical_cap": 800,
+    "explicit_author_waiver_cap": 812
+  },
+  "global_ceiling": 115000,
+  "manuscript_changed": false
+}
