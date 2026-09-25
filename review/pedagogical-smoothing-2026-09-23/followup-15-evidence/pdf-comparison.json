@@ -1,0 +1,20 @@
+{
+  "snodec-book.pdf": {
+    "before_pages": 328,
+    "after_pages": 330,
+    "before_named_destinations": 4430,
+    "after_named_destinations": 4525
+  },
+  "book-proposal-package.pdf": {
+    "before_pages": 9,
+    "after_pages": 9,
+    "before_named_destinations": 37,
+    "after_named_destinations": 37
+  },
+  "book-proposal-sample-package.pdf": {
+    "before_pages": 61,
+    "after_pages": 61,
+    "before_named_destinations": 1540,
+    "after_named_destinations": 1593
+  }
+}

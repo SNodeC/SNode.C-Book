@@ -2519,3 +2519,48 @@ editing; record skipped/refuted findings. A covers source identity and external
 anchors; B technical corrections; C production/toolchain, widths, lab channel,
 index and apparatus; D linked copy-edit. Keep Ch32's paragraph in place.
 The publisher freeze resumes only after the requested local and hosted gates.
+
+
+### Follow-up 15 — scoped pass applied; final gates qualified
+
+A `6af9c81`, B `55507ca`, C `14263b0` and D `09803e1` are committed on
+main. PDF verification after the first push required the additional production
+integration commit `f6b47e0`: remove obsolete caption overrides, keep the full
+Part V heading while shortening its running head, and lay out an intact inline
+filename without overflow. This additional commit is disclosed in the report.
+No existing commit or teaching passage was removed.
+
+The manuscript contains 111,739 tokens (+669 from 8328dfc) and the main PDF
+has 330 pages (+2). All chapter floors hold; eight documented cap waivers are
+within PROMPT §4's 5% allowance. Further Reading's required bibliography
+metadata leaves total backmatter at 812 against the older cap of 800. The
+12-token exception is awaiting an author decision; no approval is assumed and
+the checker remains strict. Smoothing therefore reports that one budget error.
+Polish, final regression, references, source alignment, external anchors,
+hygiene and the matched-tool PDF/package build pass. Matrix ratings remain
+37 ● in each of eight dimensions, independently of runtime/budget gates.
+
+Local GCC 13.3.0 passes 66/66 labs. Local Clang 18.1.3 passes 65/66; the
+unchanged Ch16 live-log reader raises JSONDecodeError on an incomplete record.
+Both compilers pass 185 framework and 4 external consumer tests, all independent
+smoke/lifetime suites, and 50 IP plus 50 Unix Ch7 repetitions per compiler.
+A concrete two-line Ch16 read-boundary patch is prepared but not applied;
+author authorization is pending because unrelated test adaptations are outside
+the specified changes. Do not weaken an assertion or change a timeout.
+
+The first hosted companion run 36116892333 passes both 66/66 jobs; it does not
+erase the local failure. Hosted book-package run 36117637249 passes with
+Pandoc 3.9.0.2 and crossref built against 3.9.0.2. Final compiler run 36117636257 also passes both 66/66 jobs, all 185 framework
+and 4 consumer tests, and all smoke/lifetime steps. Every hosted job conclusion
+and actual compiler/tool version is recorded in the report.
+
+External default-branch HEADs remain unchanged. The author tree's HEAD and
+filtered porcelain status equal their start observations. No framework mutation,
+OpenWrt device validation or new Clang21 build is claimed. The feed's OpenWRT
+tag selection and Clang21 -Wnrvo issue remain outside this repository.
+
+FOLLOWUP-15-REPORT.md and followup-15-evidence contain per-item source evidence,
+full metrics, matrix, build/run records and outstanding qualifications. After the
+evidence push, keep the manuscript frozen against broad refinement. Resume only
+an explicitly approved outstanding item or an actual technical/build/reference/
+production defect or reported HEAD drift.

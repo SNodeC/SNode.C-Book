@@ -1,0 +1,1953 @@
+Start testing: Sep 25 09:16 UTC
+----------------------------------------------------------
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:54141	localhost:41562
+ipv4: producer local=('127.0.0.1', 41562), service=('127.0.0.1', 54141)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:54963	ip6-localhost:56658
+ipv6: producer local=('::1', 56658, 0, 0), service=('::1', 54963, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:46897	localhost:42058
+ipv4: producer local=('127.0.0.1', 42058), service=('127.0.0.1', 46897)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:50763	ip6-localhost:38036
+ipv6: producer local=('::1', 38036, 0, 0), service=('::1', 50763, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:60061	localhost:42538
+ipv4: producer local=('127.0.0.1', 42538), service=('127.0.0.1', 60061)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:44847	ip6-localhost:46884
+ipv6: producer local=('::1', 46884, 0, 0), service=('::1', 44847, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:46331	localhost:44412
+ipv4: producer local=('127.0.0.1', 44412), service=('127.0.0.1', 46331)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:49261	ip6-localhost:37026
+ipv6: producer local=('::1', 37026, 0, 0), service=('::1', 49261, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:43759	localhost:44006
+ipv4: producer local=('127.0.0.1', 44006), service=('127.0.0.1', 43759)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:35187	ip6-localhost:36998
+ipv6: producer local=('::1', 36998, 0, 0), service=('::1', 35187, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:54089	localhost:54278
+ipv4: producer local=('127.0.0.1', 54278), service=('127.0.0.1', 54089)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:56705	ip6-localhost:59230
+ipv6: producer local=('::1', 59230, 0, 0), service=('::1', 56705, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:46553	localhost:48560
+ipv4: producer local=('127.0.0.1', 48560), service=('127.0.0.1', 46553)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:38737	ip6-localhost:46180
+ipv6: producer local=('::1', 46180, 0, 0), service=('::1', 38737, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:34765	localhost:35202
+ipv4: producer local=('127.0.0.1', 35202), service=('127.0.0.1', 34765)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:45317	ip6-localhost:59612
+ipv6: producer local=('::1', 59612, 0, 0), service=('::1', 45317, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:43629	localhost:48134
+ipv4: producer local=('127.0.0.1', 48134), service=('127.0.0.1', 43629)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:48765	ip6-localhost:47642
+ipv6: producer local=('::1', 47642, 0, 0), service=('::1', 48765, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:48499	localhost:45046
+ipv4: producer local=('127.0.0.1', 45046), service=('127.0.0.1', 48499)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:44559	ip6-localhost:59230
+ipv6: producer local=('::1', 59230, 0, 0), service=('::1', 44559, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:50127	localhost:38522
+ipv4: producer local=('127.0.0.1', 38522), service=('127.0.0.1', 50127)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:45655	ip6-localhost:40774
+ipv6: producer local=('::1', 40774, 0, 0), service=('::1', 45655, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:56319	localhost:50812
+ipv4: producer local=('127.0.0.1', 50812), service=('127.0.0.1', 56319)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:38383	ip6-localhost:60050
+ipv6: producer local=('::1', 60050, 0, 0), service=('::1', 38383, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:58131	localhost:35706
+ipv4: producer local=('127.0.0.1', 35706), service=('127.0.0.1', 58131)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:53357	ip6-localhost:51766
+ipv6: producer local=('::1', 51766, 0, 0), service=('::1', 53357, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:53987	localhost:55972
+ipv4: producer local=('127.0.0.1', 55972), service=('127.0.0.1', 53987)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:53497	ip6-localhost:58752
+ipv6: producer local=('::1', 58752, 0, 0), service=('::1', 53497, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:48573	localhost:38220
+ipv4: producer local=('127.0.0.1', 38220), service=('127.0.0.1', 48573)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:46041	ip6-localhost:55892
+ipv6: producer local=('::1', 55892, 0, 0), service=('::1', 46041, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:51631	localhost:41898
+ipv4: producer local=('127.0.0.1', 41898), service=('127.0.0.1', 51631)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:49163	ip6-localhost:47906
+ipv6: producer local=('::1', 47906, 0, 0), service=('::1', 49163, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:33295	localhost:44892
+ipv4: producer local=('127.0.0.1', 44892), service=('127.0.0.1', 33295)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:52489	ip6-localhost:41318
+ipv6: producer local=('::1', 41318, 0, 0), service=('::1', 52489, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:34679	localhost:53142
+ipv4: producer local=('127.0.0.1', 53142), service=('127.0.0.1', 34679)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:34985	ip6-localhost:40418
+ipv6: producer local=('::1', 40418, 0, 0), service=('::1', 34985, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:58967	localhost:42174
+ipv4: producer local=('127.0.0.1', 42174), service=('127.0.0.1', 58967)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:60285	ip6-localhost:46944
+ipv6: producer local=('::1', 46944, 0, 0), service=('::1', 60285, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:47857	localhost:52414
+ipv4: producer local=('127.0.0.1', 52414), service=('127.0.0.1', 47857)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:35869	ip6-localhost:35734
+ipv6: producer local=('::1', 35734, 0, 0), service=('::1', 35869, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:55281	localhost:38922
+ipv4: producer local=('127.0.0.1', 38922), service=('127.0.0.1', 55281)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:56797	ip6-localhost:56632
+ipv6: producer local=('::1', 56632, 0, 0), service=('::1', 56797, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:49813	localhost:34700
+ipv4: producer local=('127.0.0.1', 34700), service=('127.0.0.1', 49813)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:51671	ip6-localhost:59336
+ipv6: producer local=('::1', 59336, 0, 0), service=('::1', 51671, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:37135	localhost:49846
+ipv4: producer local=('127.0.0.1', 49846), service=('127.0.0.1', 37135)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:42031	ip6-localhost:38828
+ipv6: producer local=('::1', 38828, 0, 0), service=('::1', 42031, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:39813	localhost:42648
+ipv4: producer local=('127.0.0.1', 42648), service=('127.0.0.1', 39813)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:50473	ip6-localhost:53164
+ipv6: producer local=('::1', 53164, 0, 0), service=('::1', 50473, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:37021	localhost:39078
+ipv4: producer local=('127.0.0.1', 39078), service=('127.0.0.1', 37021)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:44079	ip6-localhost:42948
+ipv6: producer local=('::1', 42948, 0, 0), service=('::1', 44079, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:53089	localhost:33394
+ipv4: producer local=('127.0.0.1', 33394), service=('127.0.0.1', 53089)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:39513	ip6-localhost:50038
+ipv6: producer local=('::1', 50038, 0, 0), service=('::1', 39513, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:47711	localhost:37472
+ipv4: producer local=('127.0.0.1', 37472), service=('127.0.0.1', 47711)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:56351	ip6-localhost:56838
+ipv6: producer local=('::1', 56838, 0, 0), service=('::1', 56351, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:52897	localhost:34658
+ipv4: producer local=('127.0.0.1', 34658), service=('127.0.0.1', 52897)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:49071	ip6-localhost:50030
+ipv6: producer local=('::1', 50030, 0, 0), service=('::1', 49071, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:54737	localhost:60762
+ipv4: producer local=('127.0.0.1', 60762), service=('127.0.0.1', 54737)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:45361	ip6-localhost:60812
+ipv6: producer local=('::1', 60812, 0, 0), service=('::1', 45361, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:54737	localhost:60774
+ipv4: producer local=('127.0.0.1', 60774), service=('127.0.0.1', 54737)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:45151	ip6-localhost:57128
+ipv6: producer local=('::1', 57128, 0, 0), service=('::1', 45151, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:53429	localhost:59618
+ipv4: producer local=('127.0.0.1', 59618), service=('127.0.0.1', 53429)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:36307	ip6-localhost:45286
+ipv6: producer local=('::1', 45286, 0, 0), service=('::1', 36307, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:46057	localhost:60170
+ipv4: producer local=('127.0.0.1', 60170), service=('127.0.0.1', 46057)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:57171	ip6-localhost:59854
+ipv6: producer local=('::1', 59854, 0, 0), service=('::1', 57171, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:33633	localhost:47858
+ipv4: producer local=('127.0.0.1', 47858), service=('127.0.0.1', 33633)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:58699	ip6-localhost:50872
+ipv6: producer local=('::1', 50872, 0, 0), service=('::1', 58699, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:39391	localhost:51934
+ipv4: producer local=('127.0.0.1', 51934), service=('127.0.0.1', 39391)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:38331	ip6-localhost:47754
+ipv6: producer local=('::1', 47754, 0, 0), service=('::1', 38331, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:49417	localhost:43082
+ipv4: producer local=('127.0.0.1', 43082), service=('127.0.0.1', 49417)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:49609	ip6-localhost:42026
+ipv6: producer local=('::1', 42026, 0, 0), service=('::1', 49609, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:33393	localhost:55150
+ipv4: producer local=('127.0.0.1', 55150), service=('127.0.0.1', 33393)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:34835	ip6-localhost:56368
+ipv6: producer local=('::1', 56368, 0, 0), service=('::1', 34835, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:55441	localhost:50348
+ipv4: producer local=('127.0.0.1', 50348), service=('127.0.0.1', 55441)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:52123	ip6-localhost:48560
+ipv6: producer local=('::1', 48560, 0, 0), service=('::1', 52123, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:34605	localhost:56794
+ipv4: producer local=('127.0.0.1', 56794), service=('127.0.0.1', 34605)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:46955	ip6-localhost:37834
+ipv6: producer local=('::1', 37834, 0, 0), service=('::1', 46955, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:59183	localhost:33850
+ipv4: producer local=('127.0.0.1', 33850), service=('127.0.0.1', 59183)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:59041	ip6-localhost:53148
+ipv6: producer local=('::1', 53148, 0, 0), service=('::1', 59041, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:48855	localhost:37616
+ipv4: producer local=('127.0.0.1', 37616), service=('127.0.0.1', 48855)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:42249	ip6-localhost:56104
+ipv6: producer local=('::1', 56104, 0, 0), service=('::1', 42249, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:16 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:16 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:56975	localhost:52574
+ipv4: producer local=('127.0.0.1', 52574), service=('127.0.0.1', 56975)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:60293	ip6-localhost:53132
+ipv6: producer local=('::1', 53132, 0, 0), service=('::1', 60293, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:17 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:43239	localhost:58530
+ipv4: producer local=('127.0.0.1', 58530), service=('127.0.0.1', 43239)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:49479	ip6-localhost:44094
+ipv6: producer local=('::1', 44094, 0, 0), service=('::1', 49479, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:17 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:46181	localhost:43084
+ipv4: producer local=('127.0.0.1', 43084), service=('127.0.0.1', 46181)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:58475	ip6-localhost:53618
+ipv6: producer local=('::1', 53618, 0, 0), service=('::1', 58475, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:17 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:38235	localhost:48042
+ipv4: producer local=('127.0.0.1', 48042), service=('127.0.0.1', 38235)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:47745	ip6-localhost:58884
+ipv6: producer local=('::1', 58884, 0, 0), service=('::1', 47745, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:17 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:57801	localhost:47644
+ipv4: producer local=('127.0.0.1', 47644), service=('127.0.0.1', 57801)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:40981	ip6-localhost:55098
+ipv6: producer local=('::1', 55098, 0, 0), service=('::1', 40981, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:17 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:54557	localhost:46852
+ipv4: producer local=('127.0.0.1', 46852), service=('127.0.0.1', 54557)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:41945	ip6-localhost:60218
+ipv6: producer local=('::1', 60218, 0, 0), service=('::1', 41945, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:17 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:51563	localhost:51516
+ipv4: producer local=('127.0.0.1', 51516), service=('127.0.0.1', 51563)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:44167	ip6-localhost:42856
+ipv6: producer local=('::1', 42856, 0, 0), service=('::1', 44167, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:17 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:50401	localhost:48432
+ipv4: producer local=('127.0.0.1', 48432), service=('127.0.0.1', 50401)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:33655	ip6-localhost:36884
+ipv6: producer local=('::1', 36884, 0, 0), service=('::1', 33655, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:17 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:34239	localhost:46342
+ipv4: producer local=('127.0.0.1', 46342), service=('127.0.0.1', 34239)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:39053	ip6-localhost:56308
+ipv6: producer local=('::1', 56308, 0, 0), service=('::1', 39053, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:17 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+13/66 Testing: exercise-ch07-ip-families
+13/66 Test: exercise-ch07-ip-families
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "ipv4" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in" "ipv6" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-in6"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-ip-families" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	localhost:36489	localhost:54324
+ipv4: producer local=('127.0.0.1', 54324), service=('127.0.0.1', 36489)
+PASS: ipv4: exact measurement bytes, matching identities, owned cleanup
+IDENTITY	ip6-localhost:55645	ip6-localhost:47956
+ipv6: producer local=('::1', 47956, 0, 0), service=('::1', 55645, 0, 0)
+PASS: ipv6: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.12 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-ip-families" end time: Sep 25 09:17 UTC
+"exercise-ch07-ip-families" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-0ugn9351/service.sock	/tmp/endpoint-lab-0ugn9351/producer.sock
+unix: producer local=/tmp/endpoint-lab-0ugn9351/producer.sock, service=/tmp/endpoint-lab-0ugn9351/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-rnrez8ke/service.sock	/tmp/endpoint-lab-rnrez8ke/producer.sock
+unix: producer local=/tmp/endpoint-lab-rnrez8ke/producer.sock, service=/tmp/endpoint-lab-rnrez8ke/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-_djwo6o8/service.sock	/tmp/endpoint-lab-_djwo6o8/producer.sock
+unix: producer local=/tmp/endpoint-lab-_djwo6o8/producer.sock, service=/tmp/endpoint-lab-_djwo6o8/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-f6rfv9e0/service.sock	/tmp/endpoint-lab-f6rfv9e0/producer.sock
+unix: producer local=/tmp/endpoint-lab-f6rfv9e0/producer.sock, service=/tmp/endpoint-lab-f6rfv9e0/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-zpf0udt5/service.sock	/tmp/endpoint-lab-zpf0udt5/producer.sock
+unix: producer local=/tmp/endpoint-lab-zpf0udt5/producer.sock, service=/tmp/endpoint-lab-zpf0udt5/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-6cnieo8y/service.sock	/tmp/endpoint-lab-6cnieo8y/producer.sock
+unix: producer local=/tmp/endpoint-lab-6cnieo8y/producer.sock, service=/tmp/endpoint-lab-6cnieo8y/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-f6tm4z_k/service.sock	/tmp/endpoint-lab-f6tm4z_k/producer.sock
+unix: producer local=/tmp/endpoint-lab-f6tm4z_k/producer.sock, service=/tmp/endpoint-lab-f6tm4z_k/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-ct3l6j_o/service.sock	/tmp/endpoint-lab-ct3l6j_o/producer.sock
+unix: producer local=/tmp/endpoint-lab-ct3l6j_o/producer.sock, service=/tmp/endpoint-lab-ct3l6j_o/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-bxoqpr59/service.sock	/tmp/endpoint-lab-bxoqpr59/producer.sock
+unix: producer local=/tmp/endpoint-lab-bxoqpr59/producer.sock, service=/tmp/endpoint-lab-bxoqpr59/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-61rbd372/service.sock	/tmp/endpoint-lab-61rbd372/producer.sock
+unix: producer local=/tmp/endpoint-lab-61rbd372/producer.sock, service=/tmp/endpoint-lab-61rbd372/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-3xeptnw_/service.sock	/tmp/endpoint-lab-3xeptnw_/producer.sock
+unix: producer local=/tmp/endpoint-lab-3xeptnw_/producer.sock, service=/tmp/endpoint-lab-3xeptnw_/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-ru0p69ki/service.sock	/tmp/endpoint-lab-ru0p69ki/producer.sock
+unix: producer local=/tmp/endpoint-lab-ru0p69ki/producer.sock, service=/tmp/endpoint-lab-ru0p69ki/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-axr1ihyr/service.sock	/tmp/endpoint-lab-axr1ihyr/producer.sock
+unix: producer local=/tmp/endpoint-lab-axr1ihyr/producer.sock, service=/tmp/endpoint-lab-axr1ihyr/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-h7y90wox/service.sock	/tmp/endpoint-lab-h7y90wox/producer.sock
+unix: producer local=/tmp/endpoint-lab-h7y90wox/producer.sock, service=/tmp/endpoint-lab-h7y90wox/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-djzlxovp/service.sock	/tmp/endpoint-lab-djzlxovp/producer.sock
+unix: producer local=/tmp/endpoint-lab-djzlxovp/producer.sock, service=/tmp/endpoint-lab-djzlxovp/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-sfz15vjj/service.sock	/tmp/endpoint-lab-sfz15vjj/producer.sock
+unix: producer local=/tmp/endpoint-lab-sfz15vjj/producer.sock, service=/tmp/endpoint-lab-sfz15vjj/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-w7retcok/service.sock	/tmp/endpoint-lab-w7retcok/producer.sock
+unix: producer local=/tmp/endpoint-lab-w7retcok/producer.sock, service=/tmp/endpoint-lab-w7retcok/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-gov6fff1/service.sock	/tmp/endpoint-lab-gov6fff1/producer.sock
+unix: producer local=/tmp/endpoint-lab-gov6fff1/producer.sock, service=/tmp/endpoint-lab-gov6fff1/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-oc5q9oh1/service.sock	/tmp/endpoint-lab-oc5q9oh1/producer.sock
+unix: producer local=/tmp/endpoint-lab-oc5q9oh1/producer.sock, service=/tmp/endpoint-lab-oc5q9oh1/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-ntsmjxkd/service.sock	/tmp/endpoint-lab-ntsmjxkd/producer.sock
+unix: producer local=/tmp/endpoint-lab-ntsmjxkd/producer.sock, service=/tmp/endpoint-lab-ntsmjxkd/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-hje0i82d/service.sock	/tmp/endpoint-lab-hje0i82d/producer.sock
+unix: producer local=/tmp/endpoint-lab-hje0i82d/producer.sock, service=/tmp/endpoint-lab-hje0i82d/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-3hymrele/service.sock	/tmp/endpoint-lab-3hymrele/producer.sock
+unix: producer local=/tmp/endpoint-lab-3hymrele/producer.sock, service=/tmp/endpoint-lab-3hymrele/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-60qzefsc/service.sock	/tmp/endpoint-lab-60qzefsc/producer.sock
+unix: producer local=/tmp/endpoint-lab-60qzefsc/producer.sock, service=/tmp/endpoint-lab-60qzefsc/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-o8c14tlf/service.sock	/tmp/endpoint-lab-o8c14tlf/producer.sock
+unix: producer local=/tmp/endpoint-lab-o8c14tlf/producer.sock, service=/tmp/endpoint-lab-o8c14tlf/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.09 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-7r_ltm7x/service.sock	/tmp/endpoint-lab-7r_ltm7x/producer.sock
+unix: producer local=/tmp/endpoint-lab-7r_ltm7x/producer.sock, service=/tmp/endpoint-lab-7r_ltm7x/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.10 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-ais79asj/service.sock	/tmp/endpoint-lab-ais79asj/producer.sock
+unix: producer local=/tmp/endpoint-lab-ais79asj/producer.sock, service=/tmp/endpoint-lab-ais79asj/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.10 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-i4hii49d/service.sock	/tmp/endpoint-lab-i4hii49d/producer.sock
+unix: producer local=/tmp/endpoint-lab-i4hii49d/producer.sock, service=/tmp/endpoint-lab-i4hii49d/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.10 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-58q0uyot/service.sock	/tmp/endpoint-lab-58q0uyot/producer.sock
+unix: producer local=/tmp/endpoint-lab-58q0uyot/producer.sock, service=/tmp/endpoint-lab-58q0uyot/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.09 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-icfzv3k6/service.sock	/tmp/endpoint-lab-icfzv3k6/producer.sock
+unix: producer local=/tmp/endpoint-lab-icfzv3k6/producer.sock, service=/tmp/endpoint-lab-icfzv3k6/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.09 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-pkz6d3qz/service.sock	/tmp/endpoint-lab-pkz6d3qz/producer.sock
+unix: producer local=/tmp/endpoint-lab-pkz6d3qz/producer.sock, service=/tmp/endpoint-lab-pkz6d3qz/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.09 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-oyco4bqf/service.sock	/tmp/endpoint-lab-oyco4bqf/producer.sock
+unix: producer local=/tmp/endpoint-lab-oyco4bqf/producer.sock, service=/tmp/endpoint-lab-oyco4bqf/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-wpd5zsyy/service.sock	/tmp/endpoint-lab-wpd5zsyy/producer.sock
+unix: producer local=/tmp/endpoint-lab-wpd5zsyy/producer.sock, service=/tmp/endpoint-lab-wpd5zsyy/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-ytufyzwn/service.sock	/tmp/endpoint-lab-ytufyzwn/producer.sock
+unix: producer local=/tmp/endpoint-lab-ytufyzwn/producer.sock, service=/tmp/endpoint-lab-ytufyzwn/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.09 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-yljcah4g/service.sock	/tmp/endpoint-lab-yljcah4g/producer.sock
+unix: producer local=/tmp/endpoint-lab-yljcah4g/producer.sock, service=/tmp/endpoint-lab-yljcah4g/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.09 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-m3m724qn/service.sock	/tmp/endpoint-lab-m3m724qn/producer.sock
+unix: producer local=/tmp/endpoint-lab-m3m724qn/producer.sock, service=/tmp/endpoint-lab-m3m724qn/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.09 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-4od9irf4/service.sock	/tmp/endpoint-lab-4od9irf4/producer.sock
+unix: producer local=/tmp/endpoint-lab-4od9irf4/producer.sock, service=/tmp/endpoint-lab-4od9irf4/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.10 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-7xhgl7he/service.sock	/tmp/endpoint-lab-7xhgl7he/producer.sock
+unix: producer local=/tmp/endpoint-lab-7xhgl7he/producer.sock, service=/tmp/endpoint-lab-7xhgl7he/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.09 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-l78oaa9r/service.sock	/tmp/endpoint-lab-l78oaa9r/producer.sock
+unix: producer local=/tmp/endpoint-lab-l78oaa9r/producer.sock, service=/tmp/endpoint-lab-l78oaa9r/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.10 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-_nfaxdz1/service.sock	/tmp/endpoint-lab-_nfaxdz1/producer.sock
+unix: producer local=/tmp/endpoint-lab-_nfaxdz1/producer.sock, service=/tmp/endpoint-lab-_nfaxdz1/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.09 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-vu7fji_v/service.sock	/tmp/endpoint-lab-vu7fji_v/producer.sock
+unix: producer local=/tmp/endpoint-lab-vu7fji_v/producer.sock, service=/tmp/endpoint-lab-vu7fji_v/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.09 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-axwlu_9e/service.sock	/tmp/endpoint-lab-axwlu_9e/producer.sock
+unix: producer local=/tmp/endpoint-lab-axwlu_9e/producer.sock, service=/tmp/endpoint-lab-axwlu_9e/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.09 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-bikdioaj/service.sock	/tmp/endpoint-lab-bikdioaj/producer.sock
+unix: producer local=/tmp/endpoint-lab-bikdioaj/producer.sock, service=/tmp/endpoint-lab-bikdioaj/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.10 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-kvkx3kp7/service.sock	/tmp/endpoint-lab-kvkx3kp7/producer.sock
+unix: producer local=/tmp/endpoint-lab-kvkx3kp7/producer.sock, service=/tmp/endpoint-lab-kvkx3kp7/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.10 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-hhwuu7ef/service.sock	/tmp/endpoint-lab-hhwuu7ef/producer.sock
+unix: producer local=/tmp/endpoint-lab-hhwuu7ef/producer.sock, service=/tmp/endpoint-lab-hhwuu7ef/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.09 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-jf1sa5cl/service.sock	/tmp/endpoint-lab-jf1sa5cl/producer.sock
+unix: producer local=/tmp/endpoint-lab-jf1sa5cl/producer.sock, service=/tmp/endpoint-lab-jf1sa5cl/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.09 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-1_l86sj5/service.sock	/tmp/endpoint-lab-1_l86sj5/producer.sock
+unix: producer local=/tmp/endpoint-lab-1_l86sj5/producer.sock, service=/tmp/endpoint-lab-1_l86sj5/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-d_bdqi4f/service.sock	/tmp/endpoint-lab-d_bdqi4f/producer.sock
+unix: producer local=/tmp/endpoint-lab-d_bdqi4f/producer.sock, service=/tmp/endpoint-lab-d_bdqi4f/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.08 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-wks36u6h/service.sock	/tmp/endpoint-lab-wks36u6h/producer.sock
+unix: producer local=/tmp/endpoint-lab-wks36u6h/producer.sock, service=/tmp/endpoint-lab-wks36u6h/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.09 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-h6gb4koh/service.sock	/tmp/endpoint-lab-h6gb4koh/producer.sock
+unix: producer local=/tmp/endpoint-lab-h6gb4koh/producer.sock, service=/tmp/endpoint-lab-h6gb4koh/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.09 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+14/66 Testing: exercise-ch07-unix-path
+14/66 Test: exercise-ch07-unix-path
+Command: "/usr/bin/python3" "/workspace/companion/exercises/ch07/families.py" "unix" "/workspace/build/ci-book-examples/companion/exercises/ch07/endpoint-un"
+Directory: /workspace/build/ci-book-examples/companion/exercises/ch07
+"exercise-ch07-unix-path" start time: Sep 25 09:17 UTC
+Output:
+----------------------------------------------------------
+IDENTITY	/tmp/endpoint-lab-cej8cq1_/service.sock	/tmp/endpoint-lab-cej8cq1_/producer.sock
+unix: producer local=/tmp/endpoint-lab-cej8cq1_/producer.sock, service=/tmp/endpoint-lab-cej8cq1_/service.sock
+PASS: unix: exact measurement bytes, matching identities, owned cleanup
+<end of output>
+Test time =   0.10 sec
+----------------------------------------------------------
+Test Passed.
+"exercise-ch07-unix-path" end time: Sep 25 09:17 UTC
+"exercise-ch07-unix-path" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Sep 25 09:17 UTC

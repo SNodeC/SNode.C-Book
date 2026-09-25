@@ -1,0 +1,206 @@
+Internal ctest changing into directory: /workspace/build/ci-book-examples
+Test project /workspace/build/ci-book-examples
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.13 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.13 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.13 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.13 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.13 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.13 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.13 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.13 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.14 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.13 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.13 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.13 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+1/2 Test #13: exercise-ch07-ip-families ........   Passed    0.13 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.09 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.09 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.09 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.09 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.09 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.09 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.09 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.09 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.09 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.09 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+2/2 Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =  10.27 sec

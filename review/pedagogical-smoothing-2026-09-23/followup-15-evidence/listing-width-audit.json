@@ -1,0 +1,480 @@
+{
+  "8328dfc": {
+    "over90": 93,
+    "over100": 53,
+    "maximum": 170,
+    "lines": [
+      {
+        "path": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+        "line": 181,
+        "width": 94
+      },
+      {
+        "path": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+        "line": 273,
+        "width": 93
+      },
+      {
+        "path": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+        "line": 281,
+        "width": 95
+      },
+      {
+        "path": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+        "line": 284,
+        "width": 124
+      },
+      {
+        "path": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+        "line": 288,
+        "width": 91
+      },
+      {
+        "path": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+        "line": 291,
+        "width": 119
+      },
+      {
+        "path": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+        "line": 295,
+        "width": 122
+      },
+      {
+        "path": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+        "line": 338,
+        "width": 93
+      },
+      {
+        "path": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+        "line": 346,
+        "width": 95
+      },
+      {
+        "path": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+        "line": 349,
+        "width": 124
+      },
+      {
+        "path": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+        "line": 353,
+        "width": 91
+      },
+      {
+        "path": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+        "line": 356,
+        "width": 119
+      },
+      {
+        "path": "manuscript/chapters/03-your-first-working-program-the-echo-pair.md",
+        "line": 360,
+        "width": 122
+      },
+      {
+        "path": "manuscript/chapters/06-core-runtime-and-event-processing.md",
+        "line": 71,
+        "width": 92
+      },
+      {
+        "path": "manuscript/chapters/14-logging-diagnostics-and-runtime-introspection.md",
+        "line": 250,
+        "width": 91
+      },
+      {
+        "path": "manuscript/chapters/17-the-http-layer.md",
+        "line": 178,
+        "width": 94
+      },
+      {
+        "path": "manuscript/chapters/17-the-http-layer.md",
+        "line": 198,
+        "width": 115
+      },
+      {
+        "path": "manuscript/chapters/17-the-http-layer.md",
+        "line": 201,
+        "width": 105
+      },
+      {
+        "path": "manuscript/chapters/18-the-express-like-framework.md",
+        "line": 42,
+        "width": 94
+      },
+      {
+        "path": "manuscript/chapters/19-server-sent-events-and-real-time-http.md",
+        "line": 173,
+        "width": 91
+      },
+      {
+        "path": "manuscript/chapters/19-server-sent-events-and-real-time-http.md",
+        "line": 177,
+        "width": 100
+      },
+      {
+        "path": "manuscript/chapters/19-server-sent-events-and-real-time-http.md",
+        "line": 198,
+        "width": 100
+      },
+      {
+        "path": "manuscript/chapters/19-server-sent-events-and-real-time-http.md",
+        "line": 237,
+        "width": 92
+      },
+      {
+        "path": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
+        "line": 148,
+        "width": 103
+      },
+      {
+        "path": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
+        "line": 245,
+        "width": 111
+      },
+      {
+        "path": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
+        "line": 246,
+        "width": 106
+      },
+      {
+        "path": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
+        "line": 250,
+        "width": 94
+      },
+      {
+        "path": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
+        "line": 298,
+        "width": 98
+      },
+      {
+        "path": "manuscript/chapters/20-websocket-and-protocol-upgrade.md",
+        "line": 304,
+        "width": 94
+      },
+      {
+        "path": "manuscript/chapters/21-mqtt-support-in-snodec.md",
+        "line": 219,
+        "width": 92
+      },
+      {
+        "path": "manuscript/chapters/24-database-support-and-application-state.md",
+        "line": 178,
+        "width": 99
+      },
+      {
+        "path": "manuscript/chapters/24-database-support-and-application-state.md",
+        "line": 180,
+        "width": 94
+      },
+      {
+        "path": "manuscript/chapters/24-database-support-and-application-state.md",
+        "line": 194,
+        "width": 92
+      },
+      {
+        "path": "manuscript/chapters/24-database-support-and-application-state.md",
+        "line": 197,
+        "width": 98
+      },
+      {
+        "path": "manuscript/chapters/24-database-support-and-application-state.md",
+        "line": 202,
+        "width": 94
+      },
+      {
+        "path": "manuscript/chapters/24-database-support-and-application-state.md",
+        "line": 208,
+        "width": 100
+      },
+      {
+        "path": "manuscript/chapters/24-database-support-and-application-state.md",
+        "line": 214,
+        "width": 93
+      },
+      {
+        "path": "manuscript/chapters/25-reading-complete-snodec-applications.md",
+        "line": 243,
+        "width": 102
+      },
+      {
+        "path": "manuscript/chapters/28-deployment-on-linux-and-openwrt.md",
+        "line": 186,
+        "width": 93
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 315,
+        "width": 91
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 372,
+        "width": 92
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 589,
+        "width": 140
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 591,
+        "width": 132
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 593,
+        "width": 170
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 596,
+        "width": 160
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 599,
+        "width": 126
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 601,
+        "width": 144
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 658,
+        "width": 138
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 679,
+        "width": 139
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 682,
+        "width": 133
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 688,
+        "width": 125
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 691,
+        "width": 128
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 786,
+        "width": 98
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 799,
+        "width": 131
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 807,
+        "width": 112
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 810,
+        "width": 98
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 819,
+        "width": 114
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 820,
+        "width": 93
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 834,
+        "width": 125
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 835,
+        "width": 112
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 982,
+        "width": 140
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 993,
+        "width": 101
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 1002,
+        "width": 118
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 1006,
+        "width": 128
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 1011,
+        "width": 139
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 1069,
+        "width": 99
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 1071,
+        "width": 112
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 1074,
+        "width": 116
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 1103,
+        "width": 135
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 1107,
+        "width": 144
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 1108,
+        "width": 106
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 1111,
+        "width": 102
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 1114,
+        "width": 91
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 1115,
+        "width": 103
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 1116,
+        "width": 104
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 1156,
+        "width": 125
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 1185,
+        "width": 92
+      },
+      {
+        "path": "manuscript/chapters/30-building-minigateway.md",
+        "line": 1207,
+        "width": 126
+      },
+      {
+        "path": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
+        "line": 134,
+        "width": 94
+      },
+      {
+        "path": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
+        "line": 146,
+        "width": 91
+      },
+      {
+        "path": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
+        "line": 207,
+        "width": 125
+      },
+      {
+        "path": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
+        "line": 228,
+        "width": 91
+      },
+      {
+        "path": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
+        "line": 229,
+        "width": 94
+      },
+      {
+        "path": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
+        "line": 232,
+        "width": 127
+      },
+      {
+        "path": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
+        "line": 265,
+        "width": 99
+      },
+      {
+        "path": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
+        "line": 267,
+        "width": 112
+      },
+      {
+        "path": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
+        "line": 270,
+        "width": 116
+      },
+      {
+        "path": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
+        "line": 292,
+        "width": 135
+      },
+      {
+        "path": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
+        "line": 297,
+        "width": 107
+      },
+      {
+        "path": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
+        "line": 332,
+        "width": 131
+      },
+      {
+        "path": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
+        "line": 380,
+        "width": 113
+      },
+      {
+        "path": "manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md",
+        "line": 445,
+        "width": 116
+      },
+      {
+        "path": "manuscript/chapters/appendix-a-reading-and-extending-the-framework.md",
+        "line": 224,
+        "width": 116
+      }
+    ]
+  },
+  "working": {
+    "over90": 0,
+    "over100": 0,
+    "maximum": 90,
+    "lines": []
+  }
+}

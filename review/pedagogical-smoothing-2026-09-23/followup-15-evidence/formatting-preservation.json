@@ -1,0 +1,98 @@
+{
+  "companion/examples/EchoPair/EchoSocketContext.cpp": {
+    "same_nonwhitespace": true,
+    "same_string_literals": true
+  },
+  "companion/examples/EchoPair/echoclient.cpp": {
+    "same_nonwhitespace": true,
+    "same_string_literals": true
+  },
+  "companion/examples/EchoPair/echoserver.cpp": {
+    "same_nonwhitespace": true,
+    "same_string_literals": true
+  },
+  "companion/examples/MariaDB-Minimal/main.cpp": {
+    "same_nonwhitespace": true,
+    "same_string_literals": true
+  },
+  "companion/examples/MiniGateway-Extended/MeasurementUnixSocketContext.h": {
+    "same_nonwhitespace": true,
+    "same_string_literals": true
+  },
+  "companion/examples/MiniGateway-Extended/MeasurementUnixSocketContextFactory.cpp": {
+    "same_nonwhitespace": true,
+    "same_string_literals": true
+  },
+  "companion/examples/MiniGateway-Extended/MeasurementUnixSocketContextFactory.h": {
+    "same_nonwhitespace": true,
+    "same_string_literals": true
+  },
+  "companion/examples/MiniGateway-Extended/MeasurementUnixSocketServer.cpp": {
+    "same_nonwhitespace": true,
+    "same_string_literals": true
+  },
+  "companion/examples/MiniGateway-Extended/MeasurementUnixSocketServer.h": {
+    "same_nonwhitespace": true,
+    "same_string_literals": true
+  },
+  "companion/examples/MiniGateway/ConfigSections.cpp": {
+    "same_nonwhitespace": true,
+    "same_string_literals": true
+  },
+  "companion/examples/MiniGateway/Measurement.h": {
+    "same_nonwhitespace": true,
+    "same_string_literals": true
+  },
+  "companion/examples/MiniGateway/MeasurementJsonCodec.cpp": {
+    "same_nonwhitespace": true,
+    "same_string_literals": true
+  },
+  "companion/examples/MiniGateway/MiniGatewayMqtt.cpp": {
+    "same_nonwhitespace": true,
+    "same_string_literals": true
+  },
+  "companion/examples/MiniGateway/MiniGatewayMqttClient.cpp": {
+    "same_nonwhitespace": true,
+    "same_string_literals": true
+  },
+  "companion/examples/MiniGateway/MiniGatewayMqttClient.h": {
+    "same_nonwhitespace": true,
+    "same_string_literals": true
+  },
+  "companion/examples/MiniGateway/MiniGatewayMqttSocketContextFactory.cpp": {
+    "same_nonwhitespace": true,
+    "same_string_literals": true
+  },
+  "companion/examples/MiniGateway/MiniGatewayMqttSocketContextFactory.h": {
+    "same_nonwhitespace": true,
+    "same_string_literals": true
+  },
+  "companion/examples/MiniGateway/MiniGatewayWeb.cpp": {
+    "same_nonwhitespace": true,
+    "same_string_literals": true
+  },
+  "companion/examples/MiniGateway/SocketStateReporter.cpp": {
+    "same_nonwhitespace": true,
+    "same_string_literals": true
+  },
+  "companion/examples/MiniGateway/SocketStateReporter.h": {
+    "same_nonwhitespace": true,
+    "same_string_literals": true
+  },
+  "companion/examples/SSE-EventSource-Client/main.cpp": {
+    "same_nonwhitespace": true,
+    "same_string_literals": true
+  },
+  "companion/examples/SSE-Server/main.cpp": {
+    "same_nonwhitespace": true,
+    "same_string_literals": true
+  },
+  "companion/examples/SemanticLogging/main.cpp": {
+    "same_nonwhitespace": true,
+    "same_string_literals": true
+  },
+  "companion/exercises/ch18/dispatch.cpp": {
+    "same_nonwhitespace": true,
+    "same_string_literals": true
+  }
+}

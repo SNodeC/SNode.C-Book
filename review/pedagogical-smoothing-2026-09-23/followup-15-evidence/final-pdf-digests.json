@@ -1,0 +1,14 @@
+{
+  "dist/pdf/snodec-book.pdf": {
+    "sha256": "8dda944e63fe2fc6c4e11b0ef8a4db764cefee0e4a077c285c3f7baa5ee3382e",
+    "bytes": 1831978
+  },
+  "dist/pdf/book-proposal-package.pdf": {
+    "sha256": "7aaf265cc1165997f4097a3e8c61b9fd61b431e083cd65ceed91ff0a3a4c46b2",
+    "bytes": 83899
+  },
+  "dist/pdf/book-proposal-sample-package.pdf": {
+    "sha256": "02b39453ecb0943eec0d80eefa97ad8ed008909f224ce2684050dca9af460794",
+    "bytes": 414797
+  }
+}

@@ -1,0 +1,16 @@
+2026-09-25T09:10:22.4586407Z [36;1mecho "Observed SNode.C master HEAD: $(git -C external/snode.c rev-parse HEAD)"[0m
+2026-09-25T09:10:22.4689999Z Observed SNode.C master HEAD: 07ca9a2936ee72582df7d159cb06666fe23e30f8
+2026-09-25T09:10:23.7722986Z Observed SNodeC/mqttsuite master HEAD: 5fef5c3036928dfa40ad4f124bb237cc9c3202bb
+2026-09-25T09:10:24.3170540Z Observed SNodeC/OpenWRT main HEAD: 5bef8cca5982838a7191a148633c1058f154e5eb
+2026-09-25T09:10:24.4092962Z Observed SNode.C master HEAD: 07ca9a2936ee72582df7d159cb06666fe23e30f8
+2026-09-25T09:10:24.6665376Z -- The C compiler identification is GNU 13.3.0
+2026-09-25T09:10:24.7750952Z -- The CXX compiler identification is GNU 13.3.0
+2026-09-25T09:21:05.3747745Z 100% tests passed, 0 tests failed out of 185
+2026-09-25T09:21:06.1220647Z -- The CXX compiler identification is GNU 13.3.0
+2026-09-25T09:21:11.3681657Z 100% tests passed, 0 tests failed out of 4
+2026-09-25T09:21:11.4108695Z -- The CXX compiler identification is GNU 13.3.0
+2026-09-25T09:22:37.2150084Z 32/66 Test #32: exercise-ch16-part-checkpoint ...........   Passed    1.23 sec
+2026-09-25T09:23:37.2725880Z 100% tests passed, 0 tests failed out of 66
+2026-09-25T09:23:39.3293245Z Behavioral smoke tests passed.
+2026-09-25T09:23:39.4565988Z -- The CXX compiler identification is GNU 13.3.0
+2026-09-25T09:23:59.5323585Z All selected example lifetime/echo checks passed.

@@ -1,0 +1,7 @@
+{
+  "gcc_full_workflow_exit": 0,
+  "clang_full_workflow_exit": 8,
+  "clang_remaining_workflow_and_C3_exit": 0,
+  "book_package_exit": 0,
+  "local_compiled_inputs_equal_final_main": true
+}

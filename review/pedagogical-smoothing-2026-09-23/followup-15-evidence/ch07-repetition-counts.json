@@ -1,0 +1,10 @@
+{
+  "gcc": {
+    "exercise-ch07-ip-families": 50,
+    "exercise-ch07-unix-path": 50
+  },
+  "clang": {
+    "exercise-ch07-ip-families": 50,
+    "exercise-ch07-unix-path": 50
+  }
+}

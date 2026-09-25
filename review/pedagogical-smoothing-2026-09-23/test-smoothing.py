@@ -25,6 +25,9 @@ class SmoothingTests(unittest.TestCase):
         cls.review=cls.root/'review/pedagogical-smoothing-2026-09-23'
         cls.review.mkdir(parents=True)
         shutil.copyfile(HERE/'smoothing-structure.json',cls.review/'smoothing-structure.json')
+        for name in ('cap-waivers.md', 'floor-waivers.md'):
+            if (HERE/name).exists():
+                shutil.copyfile(HERE/name, cls.review/name)
         cls.structure=json.loads((HERE/'smoothing-structure.json').read_text())
 
     @classmethod

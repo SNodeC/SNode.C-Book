@@ -1,0 +1,27 @@
+[1/9] Building CXX object companion/examples/LineProtocol-Server/CMakeFiles/line-protocol-server.dir/LineCommandServerContext.cpp.o
+[2/9] Building CXX object companion/examples/LineProtocol-Server/CMakeFiles/line-protocol-server.dir/main.cpp.o
+[3/9] Linking CXX executable companion/examples/LineProtocol-Server/line-protocol-server
+[4/9] Building CXX object companion/exercises/ch11/CMakeFiles/line-refusal.dir/refusal.cpp.o
+[5/9] Building CXX object companion/exercises/ch11/CMakeFiles/line-refusal.dir/__/__/examples/LineProtocol-Server/LineCommandServerContext.cpp.o
+[6/9] Linking CXX executable companion/exercises/ch11/line-refusal
+[7/9] Building CXX object companion/exercises/ch12/CMakeFiles/line-unix.dir/__/__/examples/LineProtocol-Server/LineCommandServerContext.cpp.o
+[8/9] Building CXX object companion/exercises/ch12/CMakeFiles/line-unix.dir/unix-main.cpp.o
+[9/9] Linking CXX executable companion/exercises/ch12/line-unix
+Internal ctest changing into directory: /workspace/build/ci-book-examples
+Test project /workspace/build/ci-book-examples
+    Start 19: exercise-ch10-framing
+1/6 Test #19: exercise-ch10-framing ...................   Passed    0.19 sec
+    Start 20: exercise-ch10-limits
+2/6 Test #20: exercise-ch10-limits ....................   Passed    0.29 sec
+    Start 23: exercise-ch12-part-checkpoint
+3/6 Test #23: exercise-ch12-part-checkpoint ...........   Passed    0.34 sec
+    Start 24: exercise-ch12-endpoint-failure
+4/6 Test #24: exercise-ch12-endpoint-failure ..........   Passed    0.08 sec
+    Start 65: exercise-appendix-a-source-consumer
+5/6 Test #65: exercise-appendix-a-source-consumer .....   Passed    4.40 sec
+    Start 66: exercise-appendix-a-carrier-extension
+6/6 Test #66: exercise-appendix-a-carrier-extension ...   Passed    0.37 sec
+
+100% tests passed, 0 tests failed out of 6
+
+Total Test time (real) =   5.67 sec

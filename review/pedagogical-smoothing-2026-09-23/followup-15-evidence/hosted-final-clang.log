@@ -1,0 +1,21 @@
+2026-09-25T09:17:56.5468132Z Source alignment passed: 33 chapter/appendix evidence records, 37 exact complete listings; SNode.C 2.0.0, master content manifest 2face99fc58fb1ec5374c35d88e6fcd9c7a7d56b52ea44cb00e49eb4825b9a2b
+2026-09-25T09:18:19.5026384Z [36;1mecho "Observed SNode.C master HEAD: $(git -C external/snode.c rev-parse HEAD)"[0m
+2026-09-25T09:18:19.5201341Z Observed SNode.C master HEAD: 07ca9a2936ee72582df7d159cb06666fe23e30f8
+2026-09-25T09:18:19.6781280Z Source alignment passed: 33 chapter/appendix evidence records, 37 exact complete listings; SNode.C 2.0.0, master content manifest 2face99fc58fb1ec5374c35d88e6fcd9c7a7d56b52ea44cb00e49eb4825b9a2b
+2026-09-25T09:18:20.8796785Z Observed SNodeC/mqttsuite master HEAD: 5fef5c3036928dfa40ad4f124bb237cc9c3202bb
+2026-09-25T09:18:21.4325148Z Observed SNodeC/OpenWRT main HEAD: 5bef8cca5982838a7191a148633c1058f154e5eb
+2026-09-25T09:18:21.4423977Z External anchors passed; source existence only, not execution.
+2026-09-25T09:18:21.5391531Z Source alignment passed: 33 chapter/appendix evidence records, 37 exact complete listings; SNode.C 2.0.0, master content manifest 2face99fc58fb1ec5374c35d88e6fcd9c7a7d56b52ea44cb00e49eb4825b9a2b
+2026-09-25T09:18:21.5465154Z Observed SNode.C master HEAD: 07ca9a2936ee72582df7d159cb06666fe23e30f8
+2026-09-25T09:18:21.6929575Z Source alignment passed: 33 chapter/appendix evidence records, 37 exact complete listings; SNode.C 2.0.0, master content manifest 2face99fc58fb1ec5374c35d88e6fcd9c7a7d56b52ea44cb00e49eb4825b9a2b
+2026-09-25T09:18:25.1314839Z -- The C compiler identification is Clang 18.1.3
+2026-09-25T09:18:25.5704863Z -- The CXX compiler identification is Clang 18.1.3
+2026-09-25T09:34:02.8803855Z 100% tests passed, 0 tests failed out of 185
+2026-09-25T09:34:03.6388267Z -- The CXX compiler identification is Clang 18.1.3
+2026-09-25T09:34:10.9821753Z 100% tests passed, 0 tests failed out of 4
+2026-09-25T09:34:11.1127715Z -- The CXX compiler identification is Clang 18.1.3
+2026-09-25T09:36:25.9644563Z 32/66 Test #32: exercise-ch16-part-checkpoint ...........   Passed    1.35 sec
+2026-09-25T09:37:42.7020519Z 100% tests passed, 0 tests failed out of 66
+2026-09-25T09:37:44.8419712Z Behavioral smoke tests passed.
+2026-09-25T09:37:45.0852817Z -- The CXX compiler identification is Clang 18.1.3
+2026-09-25T09:38:20.5177085Z All selected example lifetime/echo checks passed.

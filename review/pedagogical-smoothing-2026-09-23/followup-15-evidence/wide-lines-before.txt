@@ -1,0 +1,63 @@
+manuscript/chapters/03-your-first-working-program-the-echo-pair.md:284: 124 [cpp]                     snode::log::application("echo").info() << instanceName << ": listening on '" << socketAddress.toString()
+manuscript/chapters/03-your-first-working-program-the-echo-pair.md:291: 119 [cpp]                     snode::log::application("echo").error() << instanceName << ": " << socketAddress.toString() << ": "
+manuscript/chapters/03-your-first-working-program-the-echo-pair.md:295: 122 [cpp]                     snode::log::application("echo").critical() << instanceName << ": " << socketAddress.toString() << ": "
+manuscript/chapters/03-your-first-working-program-the-echo-pair.md:349: 124 [cpp]                     snode::log::application("echo").info() << instanceName << ": connected to '" << socketAddress.toString()
+manuscript/chapters/03-your-first-working-program-the-echo-pair.md:356: 119 [cpp]                     snode::log::application("echo").error() << instanceName << ": " << socketAddress.toString() << ": "
+manuscript/chapters/03-your-first-working-program-the-echo-pair.md:360: 122 [cpp]                     snode::log::application("echo").critical() << instanceName << ": " << socketAddress.toString() << ": "
+manuscript/chapters/17-the-http-layer.md:198: 115 [cpp]         snode::log::application().trace() << "upgrade request initiation: " << (success ? "accepted" : "rejected");
+manuscript/chapters/17-the-http-layer.md:201: 105 [cpp]         snode::log::application().trace() << "upgrade response: " << (success ? "accepted" : "rejected");
+manuscript/chapters/19-server-sent-events-and-real-time-http.md:177: 100 [cpp]             const auto subscription = measurements.subscribe([res](const Measurement& measurement) {
+manuscript/chapters/19-server-sent-events-and-real-time-http.md:198: 100 [cpp]         snode::log::application().trace() << "SSE server listening on " << socketAddress.toString();
+manuscript/chapters/20-websocket-and-protocol-upgrade.md:148: 103 [text]   ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/snode.c/web/http/upgrade/websocket/<application-name>
+manuscript/chapters/20-websocket-and-protocol-upgrade.md:245: 111 [cpp]         snode::log::application().trace() << "WebSocket echo server received bytes: " << currentMessage.size();
+manuscript/chapters/20-websocket-and-protocol-upgrade.md:246: 106 [cpp]         subProtocolContext->sendMessage(currentMessageType, currentMessage.data(), currentMessage.size());
+manuscript/chapters/20-websocket-and-protocol-upgrade.md:298: 98 [cpp]         snode::log::application().trace() << "WebSocket echo client received: " << currentMessage;
+manuscript/chapters/24-database-support-and-application-state.md:178: 99 [cpp]     database::mariadb::MariaDBClient db(details, [](const database::mariadb::MariaDBState& state) {
+manuscript/chapters/24-database-support-and-application-state.md:197: 98 [cpp]                       snode::log::application().error() << "affectedRows error " << number << ": "
+manuscript/chapters/24-database-support-and-application-state.md:208: 100 [cpp]                   snode::log::application().trace() << "measurement: " << row[0] << " = " << row[1];
+manuscript/chapters/25-reading-complete-snodec-applications.md:244: 102 [cpp]         snode::log::application().systemError(snode::log::Level::Error, errnum) << "Pipe not created";
+manuscript/chapters/30-building-minigateway.md:589: 140 [cpp]               setConfigurable(addOption("--client-id", "MQTT Client-ID", "string", "minigateway", CLI::TypeValidator<std::string>()), true))
+manuscript/chapters/30-building-minigateway.md:591: 132 [cpp]               addOption("--keep-alive", "MQTT keep-alive in seconds", "uint16_t", "30", CLI::TypeValidator<std::uint16_t>()), true))
+manuscript/chapters/30-building-minigateway.md:593: 170 [cpp]               addOption("--measurement-input-topic", "MQTT measurement input topic", "string", "minigateway/measurement/input", CLI::TypeValidator<std::string>()), true))
+manuscript/chapters/30-building-minigateway.md:596: 160 [cpp]                   "--measurement-output-topic", "MQTT measurement output topic", "string", "minigateway/measurement/output", CLI::TypeValidator<std::string>()),
+manuscript/chapters/30-building-minigateway.md:599: 126 [cpp]               addOption("--qos", "MQTT QoS for MiniGateway input and output topics", "uint8_t", "0", CLI::Range(0, 2)), true))
+manuscript/chapters/30-building-minigateway.md:601: 144 [cpp]               addFlag("--retain{true}", "Retain outgoing measurement publications", "bool", "false", CLI::IsMember({"true", "false"})), true)) {
+manuscript/chapters/30-building-minigateway.md:658: 138 [cpp]     void reportState(const std::string& instanceName, const core::socket::SocketAddress& socketAddress, const core::socket::State& state);
+manuscript/chapters/30-building-minigateway.md:679: 139 [cpp]     void reportState(const std::string& instanceName, const core::socket::SocketAddress& socketAddress, const core::socket::State& state) {
+manuscript/chapters/30-building-minigateway.md:682: 133 [cpp]                 snode::log::application().trace() << instanceName << ": connected/listening on '" << socketAddress.toString() << "'";
+manuscript/chapters/30-building-minigateway.md:688: 125 [cpp]                 snode::log::application().error() << instanceName << " " << socketAddress.toString() << ": " << state.what();
+manuscript/chapters/30-building-minigateway.md:691: 128 [cpp]                 snode::log::application().critical() << instanceName << " " << socketAddress.toString() << ": " << state.what();
+manuscript/chapters/30-building-minigateway.md:788: 98 [cpp]         void registerWebRoutes(const MiniGatewayWebApp& app, MeasurementModel& measurementModel) {
+manuscript/chapters/30-building-minigateway.md:801: 131 [cpp]                     res->set("Content-Type", "text/event-stream").set("Cache-Control", "no-cache").set("Connection", "keep-alive");
+manuscript/chapters/30-building-minigateway.md:809: 112 [cpp]                     const auto subscription = measurementModel.subscribe([res](const Measurement& measurement) {
+manuscript/chapters/30-building-minigateway.md:812: 98 [cpp]                     res->getSocketContext()->setOnDisconnected([&measurementModel, subscription] {
+manuscript/chapters/30-building-minigateway.md:821: 114 [cpp]                 const Measurement measurement = makeSimulatedMeasurement(measurementModel.current().sequence + 1);
+manuscript/chapters/30-building-minigateway.md:836: 125 [cpp]                    [instanceName = app.getConfig()->getInstanceName()](const MiniGatewayWebApp::SocketAddress& socketAddress,
+manuscript/chapters/30-building-minigateway.md:837: 112 [cpp]                                                                        const core::socket::State& listenState) {
+manuscript/chapters/30-building-minigateway.md:984: 140 [cpp]         snode::log::application().trace() << "MQTT: exit due to signal " << signum << " (SIG" << utils::system::sigabbrev_np(signum) << ")";
+manuscript/chapters/30-building-minigateway.md:995: 101 [cpp]             sendSubscribe(std::list<iot::mqtt::Topic>{iot::mqtt::Topic(measurementInputTopic, qoS)});
+manuscript/chapters/30-building-minigateway.md:1004: 118 [cpp]             snode::log::application().trace() << "Ignoring MQTT publish on unsubscribed topic " << publish.getTopic();
+manuscript/chapters/30-building-minigateway.md:1008: 128 [cpp]         snode::log::application().trace() << "MQTT measurement input on " << publish.getTopic() << ": " << publish.getMessage();
+manuscript/chapters/30-building-minigateway.md:1013: 139 [cpp]             snode::log::application().warn() << "Ignoring invalid MQTT measurement payload on " << publish.getTopic() << ": " << ex.what();
+manuscript/chapters/30-building-minigateway.md:1071: 99 [cpp]     class MiniGatewayMqttSocketContextFactory : public core::socket::stream::SocketContextFactory {
+manuscript/chapters/30-building-minigateway.md:1073: 112 [cpp]         explicit MiniGatewayMqttSocketContextFactory(std::reference_wrapper<MeasurementModel> measurementModel);
+manuscript/chapters/30-building-minigateway.md:1076: 116 [cpp]         core::socket::stream::SocketContext* create(core::socket::stream::SocketConnection* socketConnection) final;
+manuscript/chapters/30-building-minigateway.md:1105: 135 [cpp]     MiniGatewayMqttSocketContextFactory::MiniGatewayMqttSocketContextFactory(std::reference_wrapper<MeasurementModel> measurementModel)
+manuscript/chapters/30-building-minigateway.md:1109: 144 [cpp]     core::socket::stream::SocketContext* MiniGatewayMqttSocketContextFactory::create(core::socket::stream::SocketConnection* socketConnection) {
+manuscript/chapters/30-building-minigateway.md:1110: 106 [cpp]         const ConfigMqtt* configMqtt = socketConnection->getConfigInstance()->getSubCommand<ConfigMqtt>();
+manuscript/chapters/30-building-minigateway.md:1113: 102 [cpp]                                             new MiniGatewayMqtt(socketConnection->getConnectionName(),
+manuscript/chapters/30-building-minigateway.md:1117: 103 [cpp]                                                                 configMqtt->getMeasurementInputTopic(),
+manuscript/chapters/30-building-minigateway.md:1118: 104 [cpp]                                                                 configMqtt->getMeasurementOutputTopic(),
+manuscript/chapters/30-building-minigateway.md:1158: 125 [cpp]         net::in::stream::legacy::SocketClient<MiniGatewayMqttSocketContextFactory, std::reference_wrapper<MeasurementModel>>;
+manuscript/chapters/30-building-minigateway.md:1209: 126 [cpp]         socketClient.connect([](const MiniGatewayMqttClient::SocketAddress& socketAddress, const core::socket::State& state) {
+manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md:207: 125 [cpp]         net::un::stream::legacy::SocketServer<MeasurementUnixSocketContextFactory, std::reference_wrapper<MeasurementModel>>;
+manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md:232: 127 [cpp]                             [](const MeasurementSocketServer::SocketAddress& socketAddress, const core::socket::State& state) {
+manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md:265: 99 [cpp]     class MeasurementUnixSocketContextFactory : public core::socket::stream::SocketContextFactory {
+manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md:267: 112 [cpp]         explicit MeasurementUnixSocketContextFactory(std::reference_wrapper<MeasurementModel> measurementModel);
+manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md:270: 116 [cpp]         core::socket::stream::SocketContext* create(core::socket::stream::SocketConnection* socketConnection) final;
+manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md:292: 135 [cpp]     MeasurementUnixSocketContextFactory::MeasurementUnixSocketContextFactory(std::reference_wrapper<MeasurementModel> measurementModel)
+manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md:297: 107 [cpp]     MeasurementUnixSocketContextFactory::create(core::socket::stream::SocketConnection* socketConnection) {
+manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md:332: 131 [cpp]         MeasurementUnixSocketContext(core::socket::stream::SocketConnection* socketConnection, MeasurementModel& measurementModel);
+manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md:380: 113 [cpp]             snode::log::application().warn() << "Measurement socket line exceeds 4096 bytes; closing connection";
+manuscript/chapters/31-extending-minigateway-with-a-new-network-role.md:445: 116 [cpp]             snode::log::application().warn() << "Ignoring invalid measurement line '" << line << "': " << ex.what();
+manuscript/chapters/appendix-a-reading-and-extending-the-framework.md:224: 116 [cpp]             snode::log::application().warn() << "Ignoring invalid measurement line '" << line << "': " << ex.what();

@@ -1,0 +1,267 @@
+2026-09-25T09:19:33.4031171Z [36;1mpandoc --version[0m
+2026-09-25T09:19:33.4031451Z [36;1mpandoc-crossref --version[0m
+2026-09-25T09:19:33.4031758Z [36;1mxelatex --version | grep -F 'TeX Live 2026'[0m
+2026-09-25T09:19:43.9021510Z pandoc 3.9.0.2
+2026-09-25T09:19:43.9052139Z pandoc-crossref v0.3.24 git commit UNKNOWN (UNKNOWN) built with Pandoc v3.9.0.2, pandoc-types v1.23.1.1 and GHC 9.8.4
+2026-09-25T09:19:43.9086710Z XeTeX 3.141592653-2.6-0.999998 (TeX Live 2026)
+2026-09-25T09:19:44.0110507Z Publication tool compatibility passed: Pandoc 3.9.0.2; crossref built with Pandoc 3.9.0.2
+2026-09-25T09:19:45.2191106Z Publication tool compatibility passed: Pandoc 3.9.0.2; crossref built with Pandoc 3.9.0.2
+2026-09-25T09:19:54.3509531Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:19:54.5535026Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:19:54.7231683Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:19:54.7820816Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:19:55.0887498Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:19:55.1095926Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:19:56.1515475Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:19:56.2419867Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:19:56.5028146Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:19:56.6007801Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:19:56.8102876Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:19:57.3078816Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:19:57.9090253Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:19:57.9266360Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:19:58.2172823Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:19:58.5825987Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:19:58.7405155Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:19:58.9567129Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:19:59.4583268Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:20:00.3755827Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:20:00.3784872Z sheet/figures-contact-sheet.pdf (2 pages).
+2026-09-25T09:20:05.9991544Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:20:06.0175107Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 444--445
+2026-09-25T09:20:06.0176312Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 445--446
+2026-09-25T09:20:06.0177715Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 446--447
+2026-09-25T09:20:06.0178910Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 447--449
+2026-09-25T09:20:06.0180335Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 449--451
+2026-09-25T09:20:06.0181519Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 451--453
+2026-09-25T09:20:06.0182696Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 453--455
+2026-09-25T09:20:06.0183895Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 455--457
+2026-09-25T09:20:06.0185082Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 457--459
+2026-09-25T09:20:06.0186257Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 459--461
+2026-09-25T09:20:06.0187442Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 461--463
+2026-09-25T09:20:06.0188637Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 463--465
+2026-09-25T09:20:06.0190020Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 465--467
+2026-09-25T09:20:06.0191196Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 467--469
+2026-09-25T09:20:06.0192406Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 469--470
+2026-09-25T09:20:06.0193807Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 471--472
+2026-09-25T09:20:06.0205709Z ckage.pdf (9 pages).
+2026-09-25T09:20:06.0207417Z This is makeindex, version 2.18 [TeX Live 2026] (kpathsea + Thai support).
+2026-09-25T09:20:06.0210609Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:20:06.0391016Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 444--445
+2026-09-25T09:20:06.0392237Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 445--446
+2026-09-25T09:20:06.0393444Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 446--447
+2026-09-25T09:20:06.0394637Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 447--449
+2026-09-25T09:20:06.0396017Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 449--451
+2026-09-25T09:20:06.0397215Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 451--453
+2026-09-25T09:20:06.0398417Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 453--455
+2026-09-25T09:20:06.0399797Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 455--457
+2026-09-25T09:20:06.0400989Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 457--459
+2026-09-25T09:20:06.0402199Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 459--461
+2026-09-25T09:20:06.0403391Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 461--463
+2026-09-25T09:20:06.0404575Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 463--465
+2026-09-25T09:20:06.0405939Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 465--467
+2026-09-25T09:20:06.0407126Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 467--469
+2026-09-25T09:20:06.0408317Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 469--470
+2026-09-25T09:20:06.0409690Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 471--472
+2026-09-25T09:20:06.0416742Z ckage.pdf (9 pages).
+2026-09-25T09:20:06.0418531Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:20:06.0588802Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 444--445
+2026-09-25T09:20:06.0590249Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 445--446
+2026-09-25T09:20:06.0591452Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 446--447
+2026-09-25T09:20:06.0592636Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 447--449
+2026-09-25T09:20:06.0593819Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 449--451
+2026-09-25T09:20:06.0595015Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 451--453
+2026-09-25T09:20:06.0596201Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 453--455
+2026-09-25T09:20:06.0597568Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 455--457
+2026-09-25T09:20:06.0598751Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 457--459
+2026-09-25T09:20:06.0600130Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 459--461
+2026-09-25T09:20:06.0601320Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 461--463
+2026-09-25T09:20:06.0603135Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 463--465
+2026-09-25T09:20:06.0604356Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 465--467
+2026-09-25T09:20:06.0605553Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 467--469
+2026-09-25T09:20:06.0606737Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 469--470
+2026-09-25T09:20:06.0607921Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 471--472
+2026-09-25T09:20:06.0615338Z ckage.pdf (9 pages).
+2026-09-25T09:20:12.0264038Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:20:12.0428875Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 459--460
+2026-09-25T09:20:12.0429730Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 460--461
+2026-09-25T09:20:12.0430428Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 461--462
+2026-09-25T09:20:12.0431257Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 462--464
+2026-09-25T09:20:12.0431951Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 464--466
+2026-09-25T09:20:12.0432651Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 466--468
+2026-09-25T09:20:12.0433340Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 468--470
+2026-09-25T09:20:12.0434017Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 470--472
+2026-09-25T09:20:12.0434702Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 472--474
+2026-09-25T09:20:12.0435390Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 474--476
+2026-09-25T09:20:12.0436220Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 476--478
+2026-09-25T09:20:12.0436906Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 478--480
+2026-09-25T09:20:12.0437594Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 480--482
+2026-09-25T09:20:12.0438280Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 482--484
+2026-09-25T09:20:12.0438972Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 484--485
+2026-09-25T09:20:12.0439852Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 486--487
+2026-09-25T09:20:12.0452580Z LaTeX Warning: There were undefined references.
+2026-09-25T09:20:12.0454438Z mple-package.pdf (61 pages).
+2026-09-25T09:20:12.0455520Z This is makeindex, version 2.18 [TeX Live 2026] (kpathsea + Thai support).
+2026-09-25T09:20:12.0458434Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:20:12.0556923Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 459--460
+2026-09-25T09:20:12.0557813Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 460--461
+2026-09-25T09:20:12.0558501Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 461--462
+2026-09-25T09:20:12.0559184Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 462--464
+2026-09-25T09:20:12.0560043Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 464--466
+2026-09-25T09:20:12.0560730Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 466--468
+2026-09-25T09:20:12.0561417Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 468--470
+2026-09-25T09:20:12.0562096Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 470--472
+2026-09-25T09:20:12.0562788Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 472--474
+2026-09-25T09:20:12.0563615Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 474--476
+2026-09-25T09:20:12.0564295Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 476--478
+2026-09-25T09:20:12.0564979Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 478--480
+2026-09-25T09:20:12.0565667Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 480--482
+2026-09-25T09:20:12.0566353Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 482--484
+2026-09-25T09:20:12.0567041Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 484--485
+2026-09-25T09:20:12.0567720Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 486--487
+2026-09-25T09:20:12.0575374Z mple-package.pdf (61 pages).
+2026-09-25T09:20:12.0576482Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:20:12.0683675Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 459--460
+2026-09-25T09:20:12.0684397Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 460--461
+2026-09-25T09:20:12.0685087Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 461--462
+2026-09-25T09:20:12.0685778Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 462--464
+2026-09-25T09:20:12.0686465Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 464--466
+2026-09-25T09:20:12.0687152Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 466--468
+2026-09-25T09:20:12.0687832Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 468--470
+2026-09-25T09:20:12.0688511Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 470--472
+2026-09-25T09:20:12.0689206Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 472--474
+2026-09-25T09:20:12.0690025Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 474--476
+2026-09-25T09:20:12.0690733Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 476--478
+2026-09-25T09:20:12.0691425Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 478--480
+2026-09-25T09:20:12.0692120Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 480--482
+2026-09-25T09:20:12.0692957Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 482--484
+2026-09-25T09:20:12.0693648Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 484--485
+2026-09-25T09:20:12.0694336Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 486--487
+2026-09-25T09:20:12.0702080Z mple-package.pdf (61 pages).
+2026-09-25T09:20:44.2269026Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:20:44.2441360Z LaTeX Warning: There were undefined references.
+2026-09-25T09:20:44.2443323Z (317 pages).
+2026-09-25T09:20:44.2444284Z This is makeindex, version 2.18 [TeX Live 2026] (kpathsea + Thai support).
+2026-09-25T09:20:44.2446728Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:20:44.2587614Z (330 pages).
+2026-09-25T09:20:44.2588616Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:20:44.2683566Z (330 pages).
+2026-09-25T09:20:53.0158424Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:20:53.0367545Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 444--445
+2026-09-25T09:20:53.0368747Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 445--446
+2026-09-25T09:20:53.0370319Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 446--447
+2026-09-25T09:20:53.0371504Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 447--449
+2026-09-25T09:20:53.0372722Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 449--451
+2026-09-25T09:20:53.0373917Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 451--453
+2026-09-25T09:20:53.0375092Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 453--455
+2026-09-25T09:20:53.0376276Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 455--457
+2026-09-25T09:20:53.0377468Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 457--459
+2026-09-25T09:20:53.0378639Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 459--461
+2026-09-25T09:20:53.0380075Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 461--463
+2026-09-25T09:20:53.0381259Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 463--465
+2026-09-25T09:20:53.0382457Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 465--467
+2026-09-25T09:20:53.0383637Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 467--469
+2026-09-25T09:20:53.0384785Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 469--470
+2026-09-25T09:20:53.0386130Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 471--472
+2026-09-25T09:20:53.0393281Z ckage.pdf (9 pages).
+2026-09-25T09:20:53.0394985Z This is makeindex, version 2.18 [TeX Live 2026] (kpathsea + Thai support).
+2026-09-25T09:20:53.0398137Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:20:53.0566282Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 444--445
+2026-09-25T09:20:53.0567483Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 445--446
+2026-09-25T09:20:53.0568673Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 446--447
+2026-09-25T09:20:53.0570061Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 447--449
+2026-09-25T09:20:53.0571265Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 449--451
+2026-09-25T09:20:53.0572455Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 451--453
+2026-09-25T09:20:53.0573642Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 453--455
+2026-09-25T09:20:53.0574828Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 455--457
+2026-09-25T09:20:53.0576358Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 457--459
+2026-09-25T09:20:53.0577554Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 459--461
+2026-09-25T09:20:53.0578723Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 461--463
+2026-09-25T09:20:53.0580131Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 463--465
+2026-09-25T09:20:53.0581307Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 465--467
+2026-09-25T09:20:53.0582480Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 467--469
+2026-09-25T09:20:53.0583661Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 469--470
+2026-09-25T09:20:53.0584844Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 471--472
+2026-09-25T09:20:53.0592350Z ckage.pdf (9 pages).
+2026-09-25T09:20:53.0594142Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:20:53.0772953Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 444--445
+2026-09-25T09:20:53.0774176Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 445--446
+2026-09-25T09:20:53.0775385Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 446--447
+2026-09-25T09:20:53.0776565Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 447--449
+2026-09-25T09:20:53.0777975Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 449--451
+2026-09-25T09:20:53.0779157Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 451--453
+2026-09-25T09:20:53.0780588Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 453--455
+2026-09-25T09:20:53.0781756Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 455--457
+2026-09-25T09:20:53.0782910Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 457--459
+2026-09-25T09:20:53.0784104Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 459--461
+2026-09-25T09:20:53.0785220Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 461--463
+2026-09-25T09:20:53.0786568Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 463--465
+2026-09-25T09:20:53.0787739Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 465--467
+2026-09-25T09:20:53.0788915Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 467--469
+2026-09-25T09:20:53.0790304Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 469--470
+2026-09-25T09:20:53.0791472Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 471--472
+2026-09-25T09:20:53.0798476Z ckage.pdf (9 pages).
+2026-09-25T09:20:58.9223816Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:20:58.9326089Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 459--460
+2026-09-25T09:20:58.9326815Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 460--461
+2026-09-25T09:20:58.9327510Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 461--462
+2026-09-25T09:20:58.9328197Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 462--464
+2026-09-25T09:20:58.9328882Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 464--466
+2026-09-25T09:20:58.9329691Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 466--468
+2026-09-25T09:20:58.9330374Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 468--470
+2026-09-25T09:20:58.9331062Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 470--472
+2026-09-25T09:20:58.9331907Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 472--474
+2026-09-25T09:20:58.9332592Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 474--476
+2026-09-25T09:20:58.9333276Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 476--478
+2026-09-25T09:20:58.9333959Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 478--480
+2026-09-25T09:20:58.9334637Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 480--482
+2026-09-25T09:20:58.9335316Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 482--484
+2026-09-25T09:20:58.9335986Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 484--485
+2026-09-25T09:20:58.9336786Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 486--487
+2026-09-25T09:20:58.9344227Z mple-package.pdf (61 pages).
+2026-09-25T09:20:58.9345282Z This is makeindex, version 2.18 [TeX Live 2026] (kpathsea + Thai support).
+2026-09-25T09:20:58.9348159Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:20:58.9455715Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 459--460
+2026-09-25T09:20:58.9456461Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 460--461
+2026-09-25T09:20:58.9457171Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 461--462
+2026-09-25T09:20:58.9457870Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 462--464
+2026-09-25T09:20:58.9458695Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 464--466
+2026-09-25T09:20:58.9459547Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 466--468
+2026-09-25T09:20:58.9460250Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 468--470
+2026-09-25T09:20:58.9460939Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 470--472
+2026-09-25T09:20:58.9461633Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 472--474
+2026-09-25T09:20:58.9462357Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 474--476
+2026-09-25T09:20:58.9463064Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 476--478
+2026-09-25T09:20:58.9463757Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 478--480
+2026-09-25T09:20:58.9464486Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 480--482
+2026-09-25T09:20:58.9465169Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 482--484
+2026-09-25T09:20:58.9465867Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 484--485
+2026-09-25T09:20:58.9466563Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 486--487
+2026-09-25T09:20:58.9474192Z mple-package.pdf (61 pages).
+2026-09-25T09:20:58.9475462Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:20:58.9573400Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 459--460
+2026-09-25T09:20:58.9574115Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 460--461
+2026-09-25T09:20:58.9574794Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 461--462
+2026-09-25T09:20:58.9575474Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 462--464
+2026-09-25T09:20:58.9576143Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 464--466
+2026-09-25T09:20:58.9576822Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 466--468
+2026-09-25T09:20:58.9577491Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 468--470
+2026-09-25T09:20:58.9578168Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 470--472
+2026-09-25T09:20:58.9578987Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 472--474
+2026-09-25T09:20:58.9579821Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 474--476
+2026-09-25T09:20:58.9580495Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 476--478
+2026-09-25T09:20:58.9581164Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 478--480
+2026-09-25T09:20:58.9581835Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 480--482
+2026-09-25T09:20:58.9582523Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 482--484
+2026-09-25T09:20:58.9583196Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 484--485
+2026-09-25T09:20:58.9583999Z Overfull \hbox (0.70139pt too wide) in paragraph at lines 486--487
+2026-09-25T09:20:58.9591361Z mple-package.pdf (61 pages).
+2026-09-25T09:21:30.3000096Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:21:30.3139484Z (330 pages).
+2026-09-25T09:21:30.3140438Z This is makeindex, version 2.18 [TeX Live 2026] (kpathsea + Thai support).
+2026-09-25T09:21:30.3142865Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:21:30.3273748Z (330 pages).
+2026-09-25T09:21:30.3274754Z This is XeTeX, Version 3.141592653-2.6-0.999998 (TeX Live 2026) (preloaded format=xelatex)
+2026-09-25T09:21:30.3407891Z (330 pages).
+2026-09-25T09:21:30.6547012Z Archive path check passed: 459 unique entries
+2026-09-25T09:21:30.6578512Z Book package build passed.

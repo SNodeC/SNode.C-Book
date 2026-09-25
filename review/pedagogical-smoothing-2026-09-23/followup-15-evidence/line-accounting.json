@@ -1,0 +1,30 @@
+{
+  "Application C++": [
+    252,
+    178
+  ],
+  "Exercise code/drivers": [
+    14,
+    7
+  ],
+  "CI validation/build support": [
+    174,
+    18
+  ],
+  "CI regression tests": [
+    49,
+    0
+  ],
+  "Production CMake/LaTeX": [
+    9,
+    3
+  ],
+  "Workflow configuration": [
+    10,
+    5
+  ],
+  "Editorial regression checks/tests": [
+    115,
+    2
+  ]
+}

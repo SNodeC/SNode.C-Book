@@ -1,0 +1,415 @@
+PASS: four semantic records; component Debug overrides global Info; event and typed error; no invented peer
+PASS: Chapter 3 server reflects a controlled byte sequence
+PASS: Chapter 3 client initiates and reflects with a controlled peer
+Using example build directory: /workspace/build/ci-book-examples
+Using SNode.C install prefix: /workspace/install/snodec
+SSE-Server smoke endpoint: http://127.0.0.1:60043/events
+MiniGateway Extended smoke endpoint: http://127.0.0.1:34911
+MiniGateway Extended Unix socket: /tmp/snodec-book-smoke-1413098.sock
+Starting sse-server: /workspace/build/ci-book-examples/companion/examples/SSE-Server/sse-server legacy local --port 60043
+SSE-Server runtime smoke test passed.
+Starting minigateway-extended: /workspace/build/ci-book-examples/companion/examples/MiniGateway-Extended/minigateway-extended web local --host 127.0.0.1 --port 34911 measurement-input local --sun-path /tmp/snodec-book-smoke-1413098.sock mqtt-uplink remote --host 127.0.0.1 --port 1883
+MiniGateway Extended Unix-input runtime smoke test passed.
+Starting line-length: /workspace/build/ci-book-examples/companion/examples/LineProtocol-Server/line-protocol-server lineprotocolserver local --host 127.0.0.1 --port 53343
+Line length: exact boundary accepted; overlong whole/split records rejected.
+Starting minigateway-mqtt-wire: /workspace/build/ci-book-examples/companion/examples/MiniGateway/minigateway web --disabled mqtt-uplink remote --host 127.0.0.1 --port 52865
+Starting minigateway-extended-mqtt-wire: /workspace/build/ci-book-examples/companion/examples/MiniGateway-Extended/minigateway-extended web --disabled mqtt-uplink remote --host 127.0.0.1 --port 48011 measurement-input --disabled
+Both gateways send CONNECT with MQTT protocol level 4; no private bit.
+Behavioral smoke tests passed.
+-- Install configuration: ""
+-- Installing: /workspace/install/snodec/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-server.so.2
+-- Set non-toolchain portion of runtime path of "/workspace/install/snodec/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-server.so.2" to "/usr/local/lib"
+-- Up-to-date: /workspace/install/snodec/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-server.so
+-- Installing: /workspace/install/snodec/include/snodec-book/examples/WebSocket-Echo-ServerSubprotocol/EchoServer.h
+-- Installing: /workspace/install/snodec/include/snodec-book/examples/WebSocket-Echo-ServerSubprotocol/EchoServerFactory.h
+-- Install configuration: ""
+-- Installing: /workspace/install/snodec/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-client.so.2
+-- Set non-toolchain portion of runtime path of "/workspace/install/snodec/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-client.so.2" to "/usr/local/lib"
+-- Up-to-date: /workspace/install/snodec/lib/snode.c/web/http/upgrade/websocket/libsnodec-websocket-echo-client.so
+-- Installing: /workspace/install/snodec/include/snodec-book/examples/WebSocket-Echo-ClientSubprotocol/EchoClient.h
+-- Installing: /workspace/install/snodec/include/snodec-book/examples/WebSocket-Echo-ClientSubprotocol/EchoClientFactory.h
+http-server-express-legacy-in: loading dependencies 'net-in-stream-legacy, http-server-express'
+  net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+    net-in-stream: loading dependencies 'net-in-phy-stream'
+      net-in-phy-stream: loading dependencies 'net-in-phy'
+        net-in-phy: loading dependencies 'net-in'
+          net-in: loading dependencies 'net'
+            net: loading dependencies 'core-socket'
+              core-socket: loading dependencies 'core'
+                core: loading dependencies 'mux-epoll, utils'
+                  mux-epoll: loaded
+                  utils: loading dependencies 'logger'
+                    logger: loaded
+                  utils: loaded
+                core: loaded
+              core-socket: loaded
+            net: loaded
+          net-in: loaded
+        net-in-phy: loaded
+      net-in-phy-stream: loaded
+    net-in-stream: loaded
+    core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+      core-socket-stream: loading dependencies 'core-socket'
+        core-socket: already loaded
+      core-socket-stream: loaded
+    core-socket-stream-legacy: loaded
+  net-in-stream-legacy: loaded
+  http-server-express: loading dependencies 'http-server'
+    http-server: loading dependencies 'http'
+      http: loading dependencies 'core-socket-stream'
+        core-socket-stream: already loaded
+      http: loaded
+      http: configured
+    http-server: loaded
+  http-server-express: loaded
+http-server-express-legacy-in: loaded
+http-server-express-legacy-in: loading dependencies 'net-in-stream-legacy, http-server-express'
+  net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+    net-in-stream: loading dependencies 'net-in-phy-stream'
+      net-in-phy-stream: loading dependencies 'net-in-phy'
+        net-in-phy: loading dependencies 'net-in'
+          net-in: loading dependencies 'net'
+            net: loading dependencies 'core-socket'
+              core-socket: loading dependencies 'core'
+                core: loading dependencies 'mux-epoll, utils'
+                  mux-epoll: loaded
+                  utils: loading dependencies 'logger'
+                    logger: loaded
+                  utils: loaded
+                core: loaded
+              core-socket: loaded
+            net: loaded
+          net-in: loaded
+        net-in-phy: loaded
+      net-in-phy-stream: loaded
+    net-in-stream: loaded
+    core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+      core-socket-stream: loading dependencies 'core-socket'
+        core-socket: already loaded
+      core-socket-stream: loaded
+    core-socket-stream-legacy: loaded
+  net-in-stream-legacy: loaded
+  http-server-express: loading dependencies 'http-server'
+    http-server: loading dependencies 'http'
+      http: loading dependencies 'core-socket-stream'
+        core-socket-stream: already loaded
+      http: loaded
+      http: configured
+    http-server: loaded
+  http-server-express: loaded
+http-server-express-legacy-in: loaded
+net-in-stream-legacy: already loaded
+mqtt-client: loading dependencies 'mqtt'
+  mqtt: loading dependencies 'core-socket-stream'
+    core-socket-stream: already loaded
+  mqtt: loaded
+mqtt-client: loaded
+http-server-express-legacy-in: loading dependencies 'net-in-stream-legacy, http-server-express'
+  net-in-stream-legacy: loading dependencies 'net-in-stream, core-socket-stream-legacy'
+    net-in-stream: loading dependencies 'net-in-phy-stream'
+      net-in-phy-stream: loading dependencies 'net-in-phy'
+        net-in-phy: loading dependencies 'net-in'
+          net-in: loading dependencies 'net'
+            net: loading dependencies 'core-socket'
+              core-socket: loading dependencies 'core'
+                core: loading dependencies 'mux-epoll, utils'
+                  mux-epoll: loaded
+                  utils: loading dependencies 'logger'
+                    logger: loaded
+                  utils: loaded
+                core: loaded
+              core-socket: loaded
+            net: loaded
+          net-in: loaded
+        net-in-phy: loaded
+      net-in-phy-stream: loaded
+    net-in-stream: loaded
+    core-socket-stream-legacy: loading dependencies 'core-socket-stream'
+      core-socket-stream: loading dependencies 'core-socket'
+        core-socket: already loaded
+      core-socket-stream: loaded
+    core-socket-stream-legacy: loaded
+  net-in-stream-legacy: loaded
+  http-server-express: loading dependencies 'http-server'
+    http-server: loading dependencies 'http'
+      http: loading dependencies 'core-socket-stream'
+        core-socket-stream: already loaded
+      http: loaded
+      http: configured
+    http-server: loaded
+  http-server-express: loaded
+http-server-express-legacy-in: loaded
+net-in-stream-legacy: already loaded
+mqtt-client: loading dependencies 'mqtt'
+  mqtt: loading dependencies 'core-socket-stream'
+    core-socket-stream: already loaded
+  mqtt: loaded
+mqtt-client: loaded
+net-un-stream-legacy: loading dependencies 'net-un-stream, core-socket-stream-legacy'
+  net-un-stream: loading dependencies 'net-un-phy-stream'
+    net-un-phy-stream: loading dependencies 'net-un-phy'
+      net-un-phy: loading dependencies 'net-un'
+        net-un: loading dependencies 'net'
+          net: already loaded
+        net-un: loaded
+      net-un-phy: loaded
+    net-un-phy-stream: loaded
+  net-un-stream: loaded
+  core-socket-stream-legacy: already loaded
+net-un-stream-legacy: loaded
+-- Configuring done (0.0s)
+-- Generating done (0.0s)
+-- Build files have been written to: /workspace/build/example-lifetime-checks/fixture-build
+[  4%] Building CXX object SSE-Server/CMakeFiles/sse-server.dir/main.cpp.o
+[  8%] Building CXX object MiniGateway/CMakeFiles/minigateway.dir/MeasurementModel.cpp.o
+[ 12%] Building CXX object MiniGateway/CMakeFiles/minigateway.dir/main.cpp.o
+[ 16%] Building CXX object MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/main.cpp.o
+[ 20%] Building CXX object MiniGateway/CMakeFiles/minigateway.dir/MeasurementJsonCodec.cpp.o
+[ 24%] Building CXX object MiniGateway/CMakeFiles/minigateway.dir/MiniGatewayWeb.cpp.o
+[ 28%] Building CXX object MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MeasurementModel.cpp.o
+[ 32%] Building CXX object MiniGateway/CMakeFiles/minigateway.dir/MiniGatewayMqttClient.cpp.o
+[ 36%] Building CXX object MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MeasurementJsonCodec.cpp.o
+[ 40%] Linking CXX executable sse-server
+[ 40%] Built target sse-server
+[ 44%] Building CXX object MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MiniGatewayWeb.cpp.o
+[ 48%] Building CXX object MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MeasurementUnixSocketServer.cpp.o
+[ 52%] Building CXX object MiniGateway/CMakeFiles/minigateway.dir/MiniGatewayMqtt.cpp.o
+[ 56%] Building CXX object MiniGateway/CMakeFiles/minigateway.dir/MiniGatewayMqttSocketContextFactory.cpp.o
+[ 60%] Building CXX object MiniGateway/CMakeFiles/minigateway.dir/SocketStateReporter.cpp.o
+[ 64%] Building CXX object MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MeasurementUnixSocketContext.cpp.o
+[ 68%] Building CXX object MiniGateway/CMakeFiles/minigateway.dir/ConfigSections.cpp.o
+[ 72%] Building CXX object MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MeasurementUnixSocketContextFactory.cpp.o
+[ 76%] Building CXX object MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MiniGatewayMqttClient.cpp.o
+[ 80%] Building CXX object MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MiniGatewayMqtt.cpp.o
+[ 84%] Building CXX object MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/MiniGatewayMqttSocketContextFactory.cpp.o
+[ 88%] Linking CXX executable minigateway
+[ 88%] Built target minigateway
+[ 92%] Building CXX object MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/SocketStateReporter.cpp.o
+[ 96%] Building CXX object MiniGateway-Extended/CMakeFiles/minigateway-extended.dir/ConfigSections.cpp.o
+[100%] Linking CXX executable minigateway-extended
+[100%] Built target minigateway-extended
+Starting SSE-Server: /workspace/build/example-lifetime-checks/fixture-build/SSE-Server/sse-server --log-level=3 legacy local --host=127.0.0.1 --port=36619
+PASS: SSE-Server idle FIN/RST churn wave 1, only the live observer retained
+PASS: SSE-Server idle FIN/RST churn wave 2, only the live observer retained
+PASS: SSE-Server idle FIN/RST churn wave 3, only the live observer retained
+PASS: SSE-Server surviving observer receives the next measurement; final idle cleanup releases all responses
+Starting MiniGateway: /workspace/build/example-lifetime-checks/fixture-build/MiniGateway/minigateway --log-level=3 web local --host=127.0.0.1 --port=38993 mqtt-uplink --disabled
+PASS: MiniGateway idle FIN/RST churn wave 1, only the live observer retained
+PASS: MiniGateway idle FIN/RST churn wave 2, only the live observer retained
+PASS: MiniGateway idle FIN/RST churn wave 3, only the live observer retained
+PASS: MiniGateway surviving observer receives the next measurement; final idle cleanup releases all responses
+Starting MiniGateway-Extended: /workspace/build/example-lifetime-checks/fixture-build/MiniGateway-Extended/minigateway-extended --log-level=3 web local --host=127.0.0.1 --port=43135 mqtt-uplink --disabled measurement-input --disabled
+PASS: MiniGateway-Extended idle FIN/RST churn wave 1, only the live observer retained
+PASS: MiniGateway-Extended idle FIN/RST churn wave 2, only the live observer retained
+PASS: MiniGateway-Extended idle FIN/RST churn wave 3, only the live observer retained
+PASS: MiniGateway-Extended surviving observer receives the next measurement; final idle cleanup releases all responses
+Starting websocket-echo: /workspace/build/ci-book-examples/companion/examples/HttpUpgrade-Server/http-upgrade-server --log-level=3 legacy local --host=127.0.0.1 --port=50795
+PASS: unchanged teaching client receives hello and closes
+PASS: WebSocket text/binary type, exact bytes, NUL/non-UTF8 binary, empty/sequential/fragmented messages, interleaved ping and close
+All selected example lifetime/echo checks passed.
+Internal ctest changing into directory: /workspace/build/ci-book-examples
+Test project /workspace/build/ci-book-examples
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.13 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.13 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.13 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.13 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.13 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.13 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.13 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.13 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.14 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.13 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.13 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.13 sec
+    Start 13: exercise-ch07-ip-families
+    Test #13: exercise-ch07-ip-families ........   Passed    0.12 sec
+    Start 13: exercise-ch07-ip-families
+1/2 Test #13: exercise-ch07-ip-families ........   Passed    0.13 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.09 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.09 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.09 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.09 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.09 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.09 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.09 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.09 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.09 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.09 sec
+    Start 14: exercise-ch07-unix-path
+    Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+    Start 14: exercise-ch07-unix-path
+2/2 Test #14: exercise-ch07-unix-path ..........   Passed    0.08 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =  10.27 sec
